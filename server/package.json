@@ -4,7 +4,9 @@
   "description": "fin system",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "npm run server:dev",
+    "server:prod": "NODE_ENV=production node app.js",
+    "server:dev": "NODE_ENV=develop node app.js"
   },
   "repository": {
     "type": "git",
