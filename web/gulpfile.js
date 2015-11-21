@@ -26,7 +26,7 @@ var gulp        = require('gulp'),
     },
     src:{
         html    : 'src/*.html',
-            jade    : 'src/jade/*.jade',
+        jade    : 'src/jade/*.jade',
         js      : 'src/js/main.js',
         css     : 'src/style/main.scss',
         img     : 'src/img/**/*.*',
