@@ -1,0 +1,7 @@
+{
+  "port": 80,
+  "app":{
+    "serverUrl":"http://vanillajs.ru",
+    "socketOrigin":"http://vanillajs.ru:*"
+  }
+}
