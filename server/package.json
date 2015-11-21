@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "npm run server:dev",
-    "server:prod": "NODE_ENV=production node app.js",
-    "server:dev": "NODE_ENV=develop node app.js"
+    "server:prod": "NODE_ENV=production node server.js",
+    "server:dev": "NODE_ENV=develop node server.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/RSamokhin/fin#readme",
   "dependencies": {
+    "forever-monitor": "^1.7.0",
     "koa": "^1.1.2",
     "koa-route": "^3.0.0",
     "koa-static": "^1.5.2",
