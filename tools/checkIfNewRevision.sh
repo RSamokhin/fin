@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [[ -z $(ps -ax | 'grep' 'reBuildProject' | grep -v grep) ]];
+if [[ -z $(ps ax | 'grep' 'reBuildProject' | grep -v grep) ]];
 	then
 		echo No reBuild Processes
 
