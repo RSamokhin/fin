@@ -4,6 +4,7 @@ var gulp        = require('gulp'),
     gulpif = require('gulp-if'),
     prefixer    = require('gulp-autoprefixer'),
     path = require('../config.js').path,
+    connect = require('gulp-connect'),
     cssmin      = require('gulp-cssmin');
 
 
