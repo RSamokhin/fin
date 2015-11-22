@@ -11,7 +11,7 @@ module.exports = {
         },
         src: {
             jade: 'src/jade/**/*.jade',
-            js: 'src/js/main.js',
+            js: 'src/**/*.js',
             css: 'src/style/main.scss',
             img: 'src/img/**/*.*',
             fonts: 'src/fonts/**/*.*',
