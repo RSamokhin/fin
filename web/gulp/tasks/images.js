@@ -3,6 +3,7 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     pngquant = require('imagemin-pngquant'),
     connect = require('gulp-connect'),
+    plumber = require('gulp-plumber'),
     path = require('../config.js').path;
 
 
