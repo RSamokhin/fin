@@ -14,3 +14,13 @@ gulp.task('jade',function jadeCompile () {
         .pipe(gulp.dest(path.build.jade))
         .pipe(gulpif(global.watch, connect.reload()));
 });
+
+gulp.task('jade_client',function jadeCompile () {
+    return gulp.src(path.src.jade)
+        .pipe(plumber())
+        .pipe(jade({
+            client: true
+        }))
+        .pipe(gulp.dest(path.build.jade))
+        .pipe(gulpif(global.watch, connect.reload()));
+});
