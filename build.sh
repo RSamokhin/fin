@@ -10,3 +10,10 @@ bower prune
 bower update
 bower install
 gulp build
+
+cd ../server
+npm install -g forever
+npm prune
+npm install
+npm update
+

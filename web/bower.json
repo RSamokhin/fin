@@ -8,7 +8,6 @@
   "description": "Template",
   "dependencies": {
     "jquery": "2.*",
-    "jquery-tmpl": "*",
     "normalize.css": "*",
     "jquery.cookie": "jquery-cookie#~1.4.1"
   }

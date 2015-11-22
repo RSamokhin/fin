@@ -2,7 +2,6 @@
  * third party
  */
 //= ../../bower_components/jquery/dist/jquery.min.js
-//= ../../bower_components/jquery-tmpl/jquery.tmpl.min.js
 //= ../../bower_components/jquery.cookie/jquery.cookie.js
 
 /*

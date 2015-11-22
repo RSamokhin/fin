@@ -1,8 +1,7 @@
 {
-  "name": "Template",
+  "name": "fin",
   "version": "0.0.1",
-  "description": "Roman Samokhin <poshliemail@googlemail.com>",
-  "author": "Roman Samokhin",
+  "author": "Pomanob,RSamokhin",
   "devDependencies": {
     "bower": "*",
     "gulp": "^3.8.11",
