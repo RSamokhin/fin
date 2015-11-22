@@ -11,6 +11,6 @@ gulp.task('jade',function jadeCompile () {
         .pipe(jade({
             pretty: true
         }))
-        .pipe(gulp.dest(path.build.html))
+        .pipe(gulp.dest(path.build.jade))
         .pipe(gulpif(global.watch, connect.reload()));
 });

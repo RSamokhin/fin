@@ -1,6 +1,7 @@
 module.exports = {
     path: {
         build: {
+            jade: 'build/',
             js: 'build/js/',
             css: 'build/css/',
             img: 'build/img/',
