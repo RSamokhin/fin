@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+    watch = require('gulp-watch'),
     path = require('../config.js').path;
 
 gulp.task('watch',function(){
