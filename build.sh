@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+git pull
 rm -rf web/build
 cd web
 npm install -g bower gulp
