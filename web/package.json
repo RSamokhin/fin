@@ -24,6 +24,8 @@
     "browser-sync": "^2.10.0",
     "del": "^2.1.0",
     "gulp": "^3.9.0",
+    "gulp-if": "^2.0.0",
+    "plumber": "^0.4.8",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.5"
   }
