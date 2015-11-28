@@ -17,6 +17,7 @@ gulp.task('build', function buildTask(cb) {
         'scripts',
         'css',
         'jade',
+        'jade_client',
         cb
     );
 });

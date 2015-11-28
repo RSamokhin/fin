@@ -2,6 +2,7 @@ module.exports = {
     path: {
         build: {
             jade: 'build/',
+            jade_client: 'build/js/jade',
             js: 'build/js/',
             css: 'build/css/',
             img: 'build/img/',
