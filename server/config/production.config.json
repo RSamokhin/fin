@@ -3,5 +3,12 @@
   "app":{
     "serverUrl":"http://vanillajs.ru",
     "socketOrigin":"http://vanillajs.ru:*"
+  },
+  "database": {
+    "user": "postgres",
+    "password": "123qwe",
+    "server": "localhost",
+    "database": "fin",
+    "dialect": "postgres"
   }
 }

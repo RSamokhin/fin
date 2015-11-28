@@ -1,7 +1,14 @@
 {
   "port": 3000,
-  "app":{
+  "app": {
     "serverUrl":"http://127.0.0.1:3000",
     "socketOrigin":"http://127.0.0.1:*"
+  },
+  "database": {
+    "user": "postgres",
+    "password": "123qwe",
+    "server": "localhost",
+    "database": "fin",
+    "dialect": "postgres"
   }
 }
