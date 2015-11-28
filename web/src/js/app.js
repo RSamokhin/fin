@@ -1,7 +1,7 @@
 require(
     ['menu', 'lib/jquery'],
-    function(menu, $ )
+    function(menu)
     {
-        alert(menu.renderMenu(document.body));
+        menu(document.body);
     }
 );

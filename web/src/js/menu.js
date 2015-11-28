@@ -1,13 +1,21 @@
 define(
     'menu',
-    ['lib/jquery', 'jade/includes/menu'],
-    function($, menu)
+    [
+        'jade/static/menu',
+        'clients'
+    ],
+    function(menu)
     {
-        return {
-            renderMenu: function(element)
+        return function(element) {
+            $(element).prepend(menu());
+            $('ul.menu li', element).on('click', function(e)
             {
-                return $(element).append(menu());
-            }
+                var module = $(this).data('module');
+                if (module === undefined)
+                    return;
+                module = require(module);
+                module.show($('#content'));
+            })
         };
     }
 );

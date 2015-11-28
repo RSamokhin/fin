@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     connect     = require('gulp-connect');
 
 gulp.task('jade',function jadeCompile () {
-    return gulp.src(path.src.jade)
+    return gulp.src(path.src.jade_static)
         .pipe(plumber())
         .pipe(jade({
             pretty: true
@@ -21,7 +21,10 @@ gulp.task('jade_client',function jadeCompile () {
         .pipe(jade({
             pretty: true,
             client: true
-        })).pipe(wrap())
+        })).pipe(wrap({
+            deps: ['lib/runtime'],
+            params: ['jade']
+        }))
         .pipe(gulp.dest(path.build.jade_client))
         .pipe(gulpif(global.watch, connect.reload()));
 });
