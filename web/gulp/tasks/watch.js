@@ -5,6 +5,7 @@ var gulp = require('gulp'),
 gulp.task('watch',function(){
     watch([path.watch.jade],function(){
         gulp.start('jade');
+        gulp.start('jade_client');
     });
     watch([path.watch.js],function(){
         gulp.start('scripts');

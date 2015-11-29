@@ -37,5 +37,5 @@ var clientList = function *list() {
 
 module.exports.register = function(app)
 {
-    app.use(route.get('/', clientList));
+    app.use(route.get('/clients', clientList));
 };
