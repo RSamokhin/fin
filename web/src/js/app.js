@@ -1,7 +1,15 @@
+require.config({
+    shim : {
+        "bootstrap" : { "deps" :['jquery'] }
+    },
+    paths: {
+        "jquery" : "lib/jquery",
+        "bootstrap" :  "lib/bootstrap.min"
+    }
+});
 require(
-    ['menu', 'lib/jquery'],
-    function(menu)
+    ["jquery", "bootstrap"],
+    function($)
     {
-        menu(document.body);
     }
 );
