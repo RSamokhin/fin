@@ -5,12 +5,15 @@ var config = require('./config'),
     route = require('koa-route'),
     serve = require('koa-static');
 
+var models = require("./models");
+var clients = require("./controllers/clients");
+
+clients.register(app);
+
 app.use(serve('../web/build/'));
 
-var models = require("./models");
-
 co(function * (){
-    yield models.sequelize.sync({force: true});
-    //app.listen(config.get('port'));
+    //yield models.sequelize.sync({force: true});
+    app.listen(config.get('port'));
     console.log('server listening on port ' + config.get('port'));
 });
