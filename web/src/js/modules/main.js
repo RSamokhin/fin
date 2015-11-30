@@ -2,9 +2,10 @@
 define(
     'modules/main',
     [
-        'jquery'
+        'jquery',
+        'lib/socket'
     ],
-    function($){
+    function($, Socket){
         var user,
             $parentContainer = $('body');
 
@@ -12,6 +13,9 @@ define(
             require([ 'jade/login-form' ], function(LoginForm) {
                 $parentContainer.html(LoginForm());
             });
+
+            var socket = Socket();
+            socket.emit('chat.message', 'sdsd');
         }
 
     }
