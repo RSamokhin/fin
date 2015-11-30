@@ -2,7 +2,10 @@
  * third party
  */
 @import "CSS:../../bower_components/normalize.css/normalize.css";
+@import "partials/font-awesome.scss";
+
 /*
  * my scripts
  */
-@import "partials/init";
+@import "partials/main";
+@import "partials/login-form";

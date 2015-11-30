@@ -1,7 +1,19 @@
-require(
-    ['modules/background', 'jquery'],
-    function( Module, $ ){
-        console.log('main = ' + $);
-        $('body').append( Module.foo );
+
+define(
+    'modules/main',
+    [
+        'jquery'
+    ],
+    function($){
+        var user,
+            $parentContainer = $('body');
+
+        if (!user) {
+            require([ 'jade/login-form' ], function(LoginForm) {
+                $parentContainer.html(LoginForm());
+            });
+        }
+
     }
 );
+

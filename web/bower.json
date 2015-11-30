@@ -11,6 +11,6 @@
     "normalize.css": "*",
     "jquery.cookie": "jquery-cookie#~1.4.1",
     "requirejs": "~2.1.22",
-    "jade-runtime": "~0.0.2"
+    "jade": "~1.11.0"
   }
 }

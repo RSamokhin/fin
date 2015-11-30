@@ -22,7 +22,7 @@ module.exports = {
         watch: {
             jade: 'src/jade/**/*.jade',
             js: 'src/js/**/*.js',
-            css: 'src/style/**/*.scss',
+            css: 'src/style/**/*.*',
             img: 'src/img/**/*.*',
             fonts: 'src/fonts/**/*.*'
         },
