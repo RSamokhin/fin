@@ -15,7 +15,7 @@ define(
             });
 
             var socket = Socket();
-            socket.emit('chat.message', 'sdsd');
+            socket.emit('tst', 'test');
         }
 
     }
