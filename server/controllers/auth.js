@@ -18,23 +18,23 @@ module.exports.check = function (opt_redirect) {
         catch(e)
         {
             if (opt_redirect)
-                this.response.redirect('/login?redirect=' + encodeURIComponent(this.request.url));
+                this.response.redirect('/login.html?redirect=' + encodeURIComponent(this.request.url));
             else
-                this.response.redirect('/login');
+                this.response.redirect('/login.html');
             return;
         }
         yield next;
     };
 };
 
-router.get('/logout', function * (){
+router.get('/logout.html', function * (){
     this.cookies.set(config.cookie);
     this.response.redirect('/');
 });
-router.get('/login', function * (){
-    this.body = yield render('login');
+router.get('/login.html', function * (){
+    this.body = yield render('login.html');
 });
-router.post('/login', koaBody, koaValidate, function * (){
+router.post('/login.html', koaBody, koaValidate, function * (){
     this.checkBody('login').notEmpty();
     this.checkBody('password').notEmpty();
 
@@ -52,7 +52,7 @@ router.post('/login', koaBody, koaValidate, function * (){
     });
     if (subject === null || subject.encryptPassword(this.request.body.password) !== subject.password)
     {
-        this.response.redirect('/login');
+        this.response.redirect('/login.html');
         return;
     }
 
