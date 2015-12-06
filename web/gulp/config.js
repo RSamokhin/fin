@@ -18,7 +18,7 @@ module.exports = {
             ico: 'src/*.ico'
         },
         watch: {
-            jade: 'src/jade/static/*.jade',
+            jade: 'src/jade/**/*.jade',
             js: 'src/js/**/*.js',
             css: 'src/style/**/*.*',
             img: 'src/img/**/*.*',

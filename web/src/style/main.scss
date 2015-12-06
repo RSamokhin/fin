@@ -7,19 +7,5 @@
 /*
  * my scripts
  */
-@import "partials/menu";
-
-body
-{
-  padding-top: 50px;
-}
-#content
-{
-  padding-top: 20px;
-}
-.base-table-sort-icon
-{
-  width: 14px;
-  height: 14px;
-  display: inline-block;
-}
+@import "partials/main";
+@import "partials/login-form";
