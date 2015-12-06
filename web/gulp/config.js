@@ -10,7 +10,7 @@ module.exports = {
 
         },
         src: {
-            jade: 'src/jade/static/*.jade',
+            jade: 'src/jade/**/*.jade',
             js: 'src/js/**/*.js',
             css: 'src/style/main.scss',
             img: 'src/img/**/*.*',
@@ -20,7 +20,7 @@ module.exports = {
         watch: {
             jade: 'src/jade/**/*.jade',
             js: 'src/js/**/*.js',
-            css: 'src/style/**/*.*',
+            css: 'src/style/**/*.scss',
             img: 'src/img/**/*.*',
             fonts: 'src/fonts/**/*.*'
         },

@@ -8,14 +8,19 @@ var gulp        = require('gulp'),
     cssmin      = require('gulp-cssmin');
 
 
-
-gulp.task('css',function cssCompile (){
+gulp.task('sass',function cssCompile (){
     return gulp
-        .src(path.src.css)
+        .src(path.src.sass)
         .pipe(plumber())
         .pipe(sass())
         .pipe(prefixer())
         .pipe(cssmin())
+        .pipe(gulp.dest(path.build.css))
+        .pipe(gulpif(global.watch, connect.reload()));
+});
+gulp.task('css',function cssCompile (){
+    return gulp
+        .src(path.src.css)
         .pipe(gulp.dest(path.build.css))
         .pipe(gulpif(global.watch, connect.reload()));
 });

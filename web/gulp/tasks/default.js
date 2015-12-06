@@ -16,7 +16,9 @@ gulp.task('build', function buildTask(cb) {
         'images',
         'scripts',
         'css',
+        'sass',
         'jade',
+        'jade_client',
         cb
     );
 });
