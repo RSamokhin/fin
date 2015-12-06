@@ -32,7 +32,7 @@ router.get('/logout.html', function * (){
     this.response.redirect('/');
 });
 router.get('/login.html', function * (){
-    this.body = yield render('login.html');
+    this.body = yield render('login');
 });
 router.post('/login.html', koaBody, koaValidate, function * (){
     this.checkBody('login').notEmpty();
@@ -40,7 +40,7 @@ router.post('/login.html', koaBody, koaValidate, function * (){
 
     if (this.errors)
     {
-        this.response.redirect('/login');
+        this.response.redirect('/login.html');
         // TODO this.errors
         return;
     }
