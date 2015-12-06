@@ -40,8 +40,8 @@ var buildOrderHeaderLinks = function(request, opts)
 };
 var buildOrder = function(request, opts)
 {
-    request.baseTable.order = [];
-    request.baseTable.orderColumn = null;
+    request.baseTable.order = [opts.defaultOrder];
+    request.baseTable.orderColumn = opts.defaultOrder[0];
     var queryOrder = (request.query && request.query.order) || '';
     var order = queryOrder.toString().split(',');
     if (order.length <= 0)

@@ -64,10 +64,8 @@ var render = require('../views');
 var clientList = function *list()
 {
     console.log(this.baseTable);
-    var order = this.baseTable.order.length ? this.baseTable.order : [['id', 'asc']];
-
     var clients = yield models.Subject.findAll({
-        order: order
+        order: this.baseTable.order
     });
 
     this.body = yield render('clients', {
@@ -75,15 +73,24 @@ var clientList = function *list()
             'id': '#',
             'login': 'Логин',
             'name': 'Имя',
-            'description': 'Описание'
+            'description': 'Описание',
+            'accounts': {
+                name: 'Счета',
+                type: 'link'
+            }
         },
-        data: clients.map(client => client.toJSON()),
+        data: clients.map(function(client){
+            var data = client.toJSON();
+            data['accounts'] = '/accounts/' + client.id;
+            return data;
+        }),
         baseTable: this.baseTable
     });
 };
 
 router.get('/clients', auth.check(), baseTable({
-    columns: ['id', 'name', 'description', 'login']
+    columns: ['id', 'name', 'description', 'login'],
+    defaultOrder: ['id', 'asc']
 }), clientList);
 
 module.exports.registerApp = function(app)

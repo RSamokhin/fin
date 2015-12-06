@@ -4,6 +4,7 @@ table.base-table.table.table-striped
 			each column, name in columns
 				td
 					span.base-table-sort-icon
+					if (typeof column === "string")
 						if baseTable.orderColumn == name
 							- var isAsc = baseTable.orderLinks[name].indexOf('asc') === -1
 							if (isAsc)
@@ -12,10 +13,16 @@ table.base-table.table.table-striped
 								span.glyphicon.glyphicon-arrow-down
 						else
 							span.glyphicon.glyphicon-minus
-					a(href='?order=' + baseTable.orderLinks[name])= column
+						a(href='?order=' + baseTable.orderLinks[name])= column
 	tbody
 		each row in data
 			tr
 				each column, name in columns
-					td= row[name]
+					td
+						if (typeof column === "string")
+							=row[name]
+						else
+							case column.type
+								when 'link'
+									a(href=row[name])= column.name
 
