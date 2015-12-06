@@ -1,8 +1,7 @@
 module.exports = {
     path: {
         build: {
-            jade_static: 'build/',
-            jade_client: 'build/js/jade',
+            jade: 'build/',
             js: 'build/js/',
             css: 'build/css/',
             img: 'build/img/',
@@ -11,8 +10,7 @@ module.exports = {
 
         },
         src: {
-            jade_client: 'src/jade/modules/*.jade',
-            jade_static: 'src/jade/static/**/*.jade',
+            jade: 'src/jade/static/*.jade',
             js: 'src/js/**/*.js',
             css: 'src/style/main.scss',
             img: 'src/img/**/*.*',
