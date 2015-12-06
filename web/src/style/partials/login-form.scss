@@ -2,6 +2,11 @@ $loginHeaderBG: #373e4a;
 $loginFormBg: #303641;
 $loginFormInputsBg: #373E4A;
 $loginIconColor: #919191;
+html.m-login, html.m-login>body {
+    height: 100%;
+    width: 100%;
+    background-color: $loginFormBg;
+}
 @mixin no-select() {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
