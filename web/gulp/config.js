@@ -2,6 +2,7 @@ module.exports = {
     path: {
         build: {
             jade: 'build/',
+            jade_client: 'build/js/jade',
             js: 'build/js/',
             css: 'build/css/',
             img: 'build/img/',
@@ -11,8 +12,10 @@ module.exports = {
         },
         src: {
             jade: 'src/jade/**/*.jade',
+            jade_static: 'src/jade/static/**/*.jade',
             js: 'src/js/**/*.js',
-            css: 'src/style/main.scss',
+            css: 'src/style/**/*.css',
+            sass: 'src/style/main.scss',
             img: 'src/img/**/*.*',
             fonts: 'src/fonts/**/*.*',
             ico: 'src/*.ico'
@@ -20,7 +23,8 @@ module.exports = {
         watch: {
             jade: 'src/jade/**/*.jade',
             js: 'src/js/**/*.js',
-            css: 'src/style/**/*.scss',
+            css: 'src/style/**/*.css',
+            sass: 'src/style/**/*.scss',
             img: 'src/img/**/*.*',
             fonts: 'src/fonts/**/*.*'
         },
