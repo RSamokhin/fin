@@ -2,33 +2,60 @@
 var parse = require('co-body');
 var router = require('koa-router')();
 
+var models = require("../models");
 var baseTable = require('./basetable');
+var auth = require('./auth');
 
 var clients = [
     {
-        "index": 0,
-        "name": "Kelli Snyder",
-        "description": "Irure excepteur elit consequat et ."
+        "description": "cillum sint velit reprehenderit id",
+        "login": "lou",
+        "name": "Lou Osborne"
     },
     {
-        "index": 1,
-        "name": "Campbell Romero",
-        "description": "Id proident consequat occaecat esse esse reprehenderit."
+        "description": "aute nostrud cillum amet proident",
+        "login": "santiago",
+        "name": "Santiago Sheppard"
     },
     {
-        "index": 2,
-        "name": "Hunter Allen",
-        "description": "Consequat aliquip ea consequat occaecat incididunt ."
+        "description": "quis dolore pariatur amet eiusmod",
+        "login": "wade",
+        "name": "Wade Pittman"
     },
     {
-        "index": 3,
-        "name": "Calhoun Leon",
-        "description": "Aliquip ex Lorem nulla anim. Ex eu id amet quis duis ."
+        "description": "ipsum voluptate nostrud proident ea",
+        "login": "bennett",
+        "name": "Bennett Oneil"
     },
     {
-        "index": 4,
-        "name": "Mays Dickerson",
-        "description": "Tempor cillum eu culpa Lorem consectetur sit cillum. ."
+        "description": "enim officia velit est Lorem",
+        "login": "viola",
+        "name": "Viola Walls"
+    },
+    {
+        "description": "officia deserunt occaecat in reprehenderit",
+        "login": "schwartz",
+        "name": "Schwartz Malone"
+    },
+    {
+        "description": "anim laborum ullamco ea sit",
+        "login": "lacy",
+        "name": "Lacy Norris"
+    },
+    {
+        "description": "labore sunt sunt ad officia",
+        "login": "luisa",
+        "name": "Luisa Benson"
+    },
+    {
+        "description": "laborum sunt amet sunt non",
+        "login": "lana",
+        "name": "Lana Mercer"
+    },
+    {
+        "description": "elit deserunt officia pariatur eu",
+        "login": "cleo",
+        "name": "Cleo Gilmore"
     }
 ];
 
@@ -37,22 +64,29 @@ var render = require('../views');
 var clientList = function *list()
 {
     console.log(this.baseTable);
+    var order = this.baseTable.order.length ? this.baseTable.order : [['id', 'asc']];
+
+    var clients = yield models.Subject.findAll({
+        order: order
+    });
+
     this.body = yield render('clients', {
         columns: {
             'id': '#',
+            'login': 'Логин',
             'name': 'Имя',
             'description': 'Описание'
         },
-        data: clients,
+        data: clients.map(client => client.toJSON()),
         baseTable: this.baseTable
     });
 };
 
-router.get('/clients', baseTable({
-    columns: ['id', 'name', 'description']
+router.get('/clients', auth.check(), baseTable({
+    columns: ['id', 'name', 'description', 'login']
 }), clientList);
 
-module.exports.register = function(app)
+module.exports.registerApp = function(app)
 {
     app
         .use(router.routes())

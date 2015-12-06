@@ -16,6 +16,6 @@ table.base-table.table.table-striped
 	tbody
 		each row in data
 			tr
-				each item in row
-					td= item
+				each column, name in columns
+					td= row[name]
 

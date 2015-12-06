@@ -7,8 +7,10 @@ var config = require('./config'),
 
 var models = require("./models");
 var clients = require("./controllers/clients");
+var auth = require("./controllers/auth");
 
-clients.register(app);
+clients.registerApp(app);
+auth.registerApp(app);
 
 app.use(serve('../web/build/'));
 
