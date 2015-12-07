@@ -7,12 +7,17 @@ var config = require('./config'),
 
 var models = require("./models");
 var clients = require("./controllers/clients");
+var user = require("./controllers/user");
 var auth = require("./controllers/auth");
+var pageNotFound = require("./controllers/404");
 
 app.use(serve('../web/build/'));
 
 auth.registerApp(app);
+
 clients.registerApp(app);
+user.registerApp(app);
+pageNotFound.registerApp(app);
 
 co(function * (){
     //yield models.sequelize.sync({force: true});
