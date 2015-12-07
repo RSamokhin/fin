@@ -68,24 +68,30 @@ var clientList = function *list()
         order: this.baseTable.order
     });
 
-    this.body = yield render('clients', {
-        columns: {
-            'id': '#',
-            'login': 'Логин',
-            'name': 'Имя',
-            'description': 'Описание',
-            'accounts': {
-                name: 'Счета',
-                type: 'link'
-            }
-        },
-        data: clients.map(function(client){
-            var data = client.toJSON();
-            data['accounts'] = '/accounts/' + client.id;
-            return data;
-        }),
-        baseTable: this.baseTable
-    });
+    // this.body = yield render('clients', {
+        // columns: {
+            // 'id': '#',
+            // 'login': 'Логин',
+            // 'name': 'Имя',
+            // 'description': 'Описание',
+            // 'accounts': {
+                // name: 'Счета',
+                // type: 'link'
+            // }
+        // },
+        // data: clients.map(function(client){
+            // var data = client.toJSON();
+            // data['accounts'] = '/accounts/' + client.id;
+            // return data;
+        // }),
+        // baseTable: this.baseTable
+    // });
+	this.body = lients.map(function(client){
+		var data = client.tojson();
+		data['accounts'] = '/accounts/' + client.id;
+		return data;
+	});
+	
 };
 
 router.get('/clients', baseTable({
