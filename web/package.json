@@ -12,10 +12,10 @@
     "gulp-cssmin": "^0.1.7",
     "gulp-if": "^2.0.0",
     "gulp-imagemin": "^2.4.0",
+    "gulp-jade": "^1.1.0",
     "gulp-plumber": "^1.0.1",
     "gulp-sass": "^2.1.0",
     "gulp-watch": "^4.3.5",
-    "gulp-wrap-amd": "^0.5.0",
     "imagemin-pngquant": "^4.2.0",
     "require-dir": "^0.3.0",
     "run-sequence": "^1.1.5"
