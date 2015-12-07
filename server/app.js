@@ -9,11 +9,10 @@ var models = require("./models");
 var clients = require("./controllers/clients");
 var auth = require("./controllers/auth");
 
+app.use(serve('../web/build/'));
+
 auth.registerApp(app);
 clients.registerApp(app);
-
-
-app.use(serve('../web/build/'));
 
 co(function * (){
     //yield models.sequelize.sync({force: true});
