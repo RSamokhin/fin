@@ -1,12 +1,12 @@
 doctype html
 html(class='m-main')
-    head
-        title FinSystem
-        link(rel='stylesheet' href='/css/main.css')
-    body
-        include ./modules/head.jade
+	head
+		title FinSystem
+		link(rel='stylesheet' href='/css/main.css')
+	body
+		include ./modules/head.jade
 
+		block content
 
-
-        include ./modules/footer.jade
-    script(src="/js/app.js")
+		include ./modules/footer.jade
+		script(src="/js/app.js")

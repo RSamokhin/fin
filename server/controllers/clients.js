@@ -86,8 +86,8 @@ var clientList = function *list()
         // }),
         // baseTable: this.baseTable
     // });
-	this.body = lients.map(function(client){
-		var data = client.tojson();
+	this.body = clients.map(function(client){
+		var data = client.toJSON();
 		data['accounts'] = '/accounts/' + client.id;
 		return data;
 	});

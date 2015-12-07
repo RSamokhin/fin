@@ -13,7 +13,8 @@ module.exports.check = function (opt_redirect) {
         var token = this.cookies.get(config.cookie);
         try
         {
-            yield jwt.verify(token, config.secret);
+            var data = yield jwt.verify(token, config.secret);
+            this.userId = data['userId'];
         }
         catch(e)
         {
@@ -68,5 +69,5 @@ module.exports.registerApp = function(app)
     app
         .use(router.routes())
         .use(router.allowedMethods())
-		.use(module.exports.check());
+        .use(module.exports.check());
 };

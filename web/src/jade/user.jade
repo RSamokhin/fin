@@ -1,0 +1,11 @@
+extends ./index.jade
+block content
+	form(action='user', method='post', enctype='application/x-www-form-urlencoded')
+		div
+			input(name='name', placeholder='Имя', autocomplete='off', value=name)
+		div
+			input(name='description', placeholder='Описание', autocomplete='off', value=description)
+		div
+			input(name='password', placeholder='Пароль', autocomplete='off')
+		div
+			input(type='submit', value='Сохранить')
