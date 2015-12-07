@@ -1,15 +1,44 @@
-div(class='main__header')
-    div(class='main__header-logo')
-        span(class='main__header-logo__caption') finSystem
-    div(class='main__header-menu')
-        div(class='main__header-menu__point') Клиенты
-        div(class='main__header-menu__point m-selected') Операции
-        div(class='main__header-menu__point') Касса
-    div(class='main__header-buttons')
-        div(class='main__header-button' title='Домой')
-            i(class='fa fa-home main__header-button__picture')
-        div(class='main__header-button' title='Настройки')
-            i(class='fa fa-cog main__header-button__picture')
-        div(class='main__header-button' title='Выход')
-            i(class='fa fa-external-link main__header-button__picture')
-div(class='main__header-splitter')
+header
+    div(class='main__header')
+        div(class='main__header-logo')
+            span(class='main__header-logo__caption') finSystem
+        div(class='main__header-menu')
+            div(class='main__header-menu__point') Клиенты
+            div(class='main__header-menu__point m-active') Операции
+            div(class='main__header-menu__point') Касса
+        div(class='main__header-buttons')
+            div(class='main__header-button' title='Домой')
+                i(class='fa fa-home main__header-button__picture')
+            div(class='main__header-button' title='Настройки')
+                i(class='fa fa-cog main__header-button__picture')
+            div(class='main__header-button' title='Выход')
+                i(class='fa fa-external-link main__header-button__picture')
+    div(class='main__header-splitter' title='Наверх') Главное меню
+    div(class='main__header-info__container')
+        div(class='main__header-info__courses')
+            div(class='main__header-info__courses-switch')
+                span(class='m-active' data-currency-type='buy') ПОКУПКА
+                span() &nbsp/&nbsp
+                span(data-currency-type='sell') ПРОДАЖА
+            i(class='fa fa-archive main__header-info__courses-archieve' title='История курсов')
+            div(class='main__header-info__course')
+                i(class='fa fa-arrow-down main__header-info__course-down')
+                span(class='main__header-info__course-value') 69,49
+                i(class='fa fa-usd main__header-info__course-icon')
+            div(class='main__header-info__course')
+                i(class='fa fa-arrow-up main__header-info__course-up')
+                span(class='main__header-info__course-value') 75,37
+                i(class='fa fa-eur main__header-info__course-icon')
+            div(class='main__header-info__course')
+                i(class='fa fa-arrow-up main__header-info__course-up' )
+                span(class='main__header-info__course-value') 1.08
+                i(class='fa fa-eur main__header-info__course-icon')
+            i(class='fa fa-undo main__header-info__courses-refresh' title='Обновить курсы')
+        div(class='main__header-info__views')
+            div(class='main__header-info__view m-active') ПОЛНОЕ МЕНЮ
+            div(class='main__header-info__view') ИЗБРАННОЕ
+        div(class='main__header-info__button i-logging' title='Логи')
+        div(class='main__header-info__button i-notifications' data-notifications-count='17' title='Уведомления')
+
+
+
