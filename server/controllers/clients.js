@@ -88,7 +88,7 @@ var clientList = function *list()
     });
 };
 
-router.get('/clients', auth.check(), baseTable({
+router.get('/clients', baseTable({
     columns: ['id', 'name', 'description', 'login'],
     defaultOrder: ['id', 'asc']
 }), clientList);

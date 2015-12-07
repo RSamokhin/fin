@@ -9,8 +9,9 @@ var models = require("./models");
 var clients = require("./controllers/clients");
 var auth = require("./controllers/auth");
 
-clients.registerApp(app);
 auth.registerApp(app);
+clients.registerApp(app);
+
 
 app.use(serve('../web/build/'));
 

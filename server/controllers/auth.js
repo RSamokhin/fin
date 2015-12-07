@@ -67,5 +67,6 @@ module.exports.registerApp = function(app)
 {
     app
         .use(router.routes())
-        .use(router.allowedMethods());
+        .use(router.allowedMethods())
+		.use(module.exports.check());
 };
