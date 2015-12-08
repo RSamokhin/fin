@@ -1,9 +1,10 @@
 html.m-main, html.m-main>body {
     width: 100%;
     background-color: #E6E6E6;
+    min-width: 1024px;
 }
 body {
-    height: 10000px;
+    min-height: 800px;
 }
 @mixin no-select() {
     -webkit-touch-callout: none;
@@ -199,6 +200,7 @@ header {
                 opacity: 0.7;
                 top: 0;
                 transition: all 4s ease;
+                z-index: 1;
                 &:hover {
                     opacity: 1;
                 }
