@@ -1,0 +1,18 @@
+doctype html
+html(class='m-main')
+	head
+		title FinSystem
+		link(rel='stylesheet' href='/css/main.css')
+	body
+		include ./head.jade
+
+		table
+			for subject in subjects
+				tr
+					td= subject.id
+					td= subject.name
+					td= subject.description
+
+		include ./footer.jade
+	script(src="/js/lib/jquery.js")
+	script(src="/js/app.js")

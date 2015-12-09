@@ -10,6 +10,13 @@ var render = require('../views');
 
 module.exports.check = function (opt_redirect) {
     return function * (next) {
+
+        if (this.request.url.match(/^\/(login.html)|(js\/)|(fonts\/)|(img\/)|(css\/)/))
+        {
+            yield next;
+            return;
+        }
+
         var token = this.cookies.get(config.cookie);
         try
         {
@@ -46,19 +53,19 @@ router.post('/login.html', koaBody, koaValidate, function * (){
         return;
     }
 
-    var subject = yield models.Subject.findOne({
+    var user = yield models.User.findOne({
         where: {
             login: this.request.body.login
         }
     });
-    if (subject === null || subject.encryptPassword(this.request.body.password) !== subject.password)
+    if (user === null || user.encryptPassword(this.request.body.password) !== user.password)
     {
         this.response.redirect('/login.html');
         return;
     }
 
     this.cookies.set(config.cookie, jwt.sign({
-        userId: subject.id
+        userId: user.id
     }, config.secret));
 
     this.response.redirect('/');
