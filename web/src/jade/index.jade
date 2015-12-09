@@ -4,11 +4,20 @@ html(class='m-main')
         title FinSystem
         link(rel='stylesheet' href='/css/main.css')
     body
+
+
         include ./modules/head.jade
 
+        -var showAddForm = false;
+        -var showFavForm = true;
+        include ./modules/clietns-block.jade
+
+        -var showAddForm = false;
+        -var showFavForm = false;
         include ./modules/clietns-block.jade
 
         -var showAddForm = true;
+        -var showFavForm = false;
         include ./modules/clietns-block.jade
 
         include ./modules/footer.jade

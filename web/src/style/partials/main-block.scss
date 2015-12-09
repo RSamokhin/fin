@@ -16,6 +16,19 @@
 	margin-left: auto;
 	margin-right: auto;
 	cursor: pointer;
+	&-menu {
+		&__hider {
+			width: 100%;
+			height: 25px;
+			cursor: pointer;
+			text-align: center;
+			color: white;
+			font-size: 22px;
+			&:hover {
+				opacity: 0.8;
+			}
+		}
+	}
 	&.m-2x {
 		width: 1024px;
 		position: relative;
