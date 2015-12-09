@@ -4,8 +4,42 @@ html(class='m-main')
         title FinSystem
         link(rel='stylesheet' href='/css/main.css')
     body
+
+
         include ./modules/head.jade
 
+        -
+            var showAddForm,
+                showFavForm,
+                collapsedModifier,
+                blockInFavModifier;
+
+        -
+            showAddForm = false;
+            showFavForm = false;
+            collapsedModifier = 'm-collapsed';
+            blockInFavModifier = '';
+        include ./modules/clietns-block.jade
+
+        -
+             showAddForm = false;
+             showFavForm = false;
+             collapsedModifier = '';
+             blockInFavModifier = 'm-active';
+        include ./modules/clietns-block.jade
+
+        -
+            showAddForm = true;
+            showFavForm = false;
+            collapsedModifier = '';
+            blockInFavModifier = '';
+        include ./modules/clietns-block.jade
+
+        -
+            showAddForm = false;
+            showFavForm = true;
+            collapsedModifier = '';
+            blockInFavModifier = '';
         include ./modules/clietns-block.jade
 
         include ./modules/footer.jade
