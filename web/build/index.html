@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html class="m-main">
+  <head>
+    <title>FinSystem</title>
+    <link rel="stylesheet" href="/css/main.css">
+  </head>
+  <body>
+    <header>
+      <div class="main__header">
+        <div class="main__header-logo"><span class="main__header-logo__caption">finSystem</span></div>
+        <div class="main__header-menu">
+          <div class="main__header-menu__point">Клиенты</div>
+          <div class="main__header-menu__point m-active">Операции</div>
+          <div class="main__header-menu__point">Касса</div>
+        </div>
+        <div class="main__header-buttons">
+          <div title="Домой" class="main__header-button"><i class="fa fa-home main__header-button__picture"></i></div>
+          <div title="Настройки" class="main__header-button"><i class="fa fa-cog main__header-button__picture"></i></div>
+          <div title="Выход" class="main__header-button"><i class="fa fa-external-link main__header-button__picture"></i></div>
+        </div>
+      </div>
+      <div title="Наверх" class="main__header-splitter">Главное меню</div>
+      <div class="main__header-info__container">
+        <div class="main__header-info__courses">
+          <div class="main__header-info__courses-switch"><span data-currency-type="buy" class="m-active">ПОКУПКА</span><span>&nbsp/&nbsp</span><span data-currency-type="sell">ПРОДАЖА</span></div><i title="История курсов" class="fa fa-archive main__header-info__courses-archieve"></i>
+          <div class="main__header-info__course"><i class="fa fa-arrow-down main__header-info__course-down"></i><span class="main__header-info__course-value">69,49</span><i class="fa fa-usd main__header-info__course-icon"></i></div>
+          <div class="main__header-info__course"><i class="fa fa-arrow-up main__header-info__course-up"></i><span class="main__header-info__course-value">75,37</span><i class="fa fa-eur main__header-info__course-icon"></i></div>
+          <div class="main__header-info__course"><i class="fa fa-arrow-up main__header-info__course-up"></i><span class="main__header-info__course-value">1.08</span><i class="fa fa-eur main__header-info__course-icon"></i></div><i title="Обновить курсы" class="fa fa-undo main__header-info__courses-refresh"></i>
+        </div>
+        <div class="main__header-info__views">
+          <div class="main__header-info__view m-active">ПОЛНОЕ МЕНЮ</div>
+          <div class="main__header-info__view">ИЗБРАННОЕ</div>
+        </div>
+        <div title="Логи" class="main__header-info__button i-logging"></div>
+        <div data-notifications-count="17" title="Уведомления" class="main__header-info__button i-notifications"></div>
+      </div>
+    </header>
+    <div class="main__block m-2x">
+      <div class="main__block-logo m-clients__block-logo"></div>
+      <div class="main__block-title">Субъекты системы</div>
+      <div class="main__block-search__container">
+        <input placeholder="Введите запрос" autocomplete="off" class="main__block-search__input">
+        <div class="main__block-search__button">Найти</div>
+        <div class="main__block-search__results"></div>
+        <div title="Карасева" class="main__block-search__result">Карасева</div>
+        <div title="444555687456765" class="main__block-search__result">444555687456765</div>
+        <div title="ООО Игарка" class="main__block-search__result">ООО Игарка</div>
+        <div title="ИП Казаков Иван Васильевич" class="main__block-search__result">ИП Казаков Иван Васильевич</div>
+      </div>
+      <hr class="main__block-hr">
+      <div class="main__block-controls">
+        <div class="main__block-control">
+          <div class="main__block-control__number">1</div>
+          <div class="main__block-control__text">Расширенный поиск</div>
+        </div>
+        <div class="main__block-control">
+          <div class="main__block-control__number">2</div>
+          <div class="main__block-control__text">Полный список</div>
+        </div>
+        <div class="main__block-control">
+          <div class="main__block-control__number">3</div>
+          <div class="main__block-control__text">Добавить</div>
+        </div>
+        <div class="main__block-control">
+          <div class="main__block-control__number">4</div>
+          <div class="main__block-control__text">Избранное</div>
+        </div>
+      </div>
+    </div>
+    <div class="main__footer">R&S 2015-2016</div>
+  </body>
+  <script src="/js/lib/jquery.js"></script>
+  <script src="/js/app.js"></script>
+</html>

@@ -3,7 +3,7 @@
 node_modules
 */node_modules
 bower_components
-*/build
+#*/build
 logs
 node-debug.log
 *.iml
