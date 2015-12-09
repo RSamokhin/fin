@@ -8,16 +8,33 @@ html(class='m-main')
 
         include ./modules/head.jade
 
-        -var showAddForm = false;
-        -var showFavForm = true;
+        -
+            var showAddForm = false,
+                showFavForm = false,
+                collapsedModifier = 'm-collapsed';
+
+        -
+            showAddForm = false;
+            showFavForm = false;
+            collapsedModifier = 'm-collapsed';
         include ./modules/clietns-block.jade
 
-        -var showAddForm = false;
-        -var showFavForm = false;
+        -
+             showAddForm = false;
+             showFavForm = false;
+             collapsedModifier = '';
         include ./modules/clietns-block.jade
 
-        -var showAddForm = true;
-        -var showFavForm = false;
+        -
+            showAddForm = true;
+            showFavForm = false;
+            collapsedModifier = '';
+        include ./modules/clietns-block.jade
+
+        -
+            showAddForm = false;
+            showFavForm = true;
+            collapsedModifier = '';
         include ./modules/clietns-block.jade
 
         include ./modules/footer.jade
