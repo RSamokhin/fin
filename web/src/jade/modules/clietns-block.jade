@@ -2,8 +2,8 @@ extends ./main-block
 
 block vars
     -
-        var blockIcon = 'm-clients__block-logo';
-            blockTitle = 'Субъекты системы';
+        var blockIcon = 'm-clients__block-logo',
+            blockTitle = 'Картотека субъектов',
             blockControls = [
                 {
                     id: 1,
@@ -18,5 +18,51 @@ block vars
                     id: 4,
                     name: 'Избранное'
                 }
-            ];
+            ],
             searchResults = ['Карасева', '444555687456765', 'ООО Игарка', 'ИП Казаков Иван Васильевич'];
+
+
+block forms
+    - var classAdd = 'm-hidden';
+    if showAddForm
+        -
+            classAdd = '';
+            var addFormFields = [
+                {
+                    name: 'Тип субъекта',
+                    dataType: 'selector',
+                    defaultValue: 'Компания',
+                    data: ['Компания', 'ИП', 'Физ-лицо'],
+                    fName: 'type'
+                },{
+                    name: 'Название/Фио',
+                    dataType: 'text',
+                    placeholder: 'Полное наименование субъекта',
+                    fName: 'name'
+                },{
+                    name: 'ИНН',
+                    dataType: 'text',
+                    placeholder: 'ИНН субъекта',
+                    fName: 'INN'
+                },{
+                    name: 'КПП',
+                    dataType: 'text',
+                    placeholder: 'КПП субъекта',
+                    fName: 'KPP'
+                },{
+                    name: 'Описание',
+                    dataType: 'textarea',
+                    placeholder: 'Комментарии',
+                    fName: 'description'
+                },{
+                    name: 'Системная организация',
+                    dataType: 'bool',
+                    default: false,
+                    fName: 'isSystem'
+                }
+            ],
+            fName = 'Добавление субъекта',
+            bName = 'Сохранить';
+        include ./search-form-simple.jade
+
+
