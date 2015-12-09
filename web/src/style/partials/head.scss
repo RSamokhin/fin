@@ -155,6 +155,7 @@ header {
                 margin-top: 20px;
                 position: relative;
                 cursor: pointer;
+                box-sizing: border-box;
                 &.i-notifications {
                     background: url('/img/icon/i-notifications.png') no-repeat center;
                     &:after {

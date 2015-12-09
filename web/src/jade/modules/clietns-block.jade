@@ -77,4 +77,17 @@ block forms
             bName = 'Сохранить';
         include ./search-form-simple.jade
 
+    if showFavForm
+        -
+            var fName = 'Избранные субъекты',
+                bName = 'Скрыть',
+                favs = [
+                    'ООО Рога и Копыта',
+                    'ИП Кузнецов Владимир Иванович',
+                    'Паваротти Вениамин',
+                    'ООО Очень Длинное Название Фирмы Для Проверки'
+                ];
+
+        include ./fav-form-cards
+
 

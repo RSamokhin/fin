@@ -1,0 +1,53 @@
+.favs {
+    &__block {
+        display: inline-block;
+        height: 52px;
+        color: white;
+        margin: 10px;
+        text-align: center;
+        position: relative;
+        padding-left: 40px;
+        padding-right: 30px;
+        margin-left: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 350px;
+        box-sizing: border-box;
+        &:hover {
+            & .favs__icon-remove {
+                display: block;
+                visibility: visible;
+            }
+            border-bottom: 1px solid lightgrey;
+            opacity: 0.8;
+        }
+    }
+    &__text {
+        font-size: 18px;
+        line-height: 50px;
+        white-space: nowrap;
+    }
+    &__icon {
+        &-star {
+            position: absolute;
+            color: yellow;
+            top: 0;
+            bottom: 0;
+            margin-top: auto;
+            margin-bottom: auto;
+            left: 0;
+            font-size: 26px;
+            height: 26px;
+        }
+        &-remove {
+            position: absolute;
+            color: #B88B58;
+            font-size: 20px;
+            top: 0;
+            right: 0;
+            visibility: hidden;
+            display: none;
+        }
+    }
+
+}
