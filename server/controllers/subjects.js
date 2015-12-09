@@ -16,6 +16,12 @@ router.get('/subjects', baseTable({
         order: this.baseTable.order
     });
 
+    if (this.accepts('html', 'json') === 'json')
+    {
+        this.body = subjects.map(subject => subject.toJSON());
+        return;
+    }
+
     this.body = yield render('modules/subjects', {
         subjects: subjects.map(subject => subject.toJSON()),
         order: this.baseTable.order
