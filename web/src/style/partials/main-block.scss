@@ -32,10 +32,24 @@
 		display: none;
 		visibility: hidden;
 	}
+	&-in-fav {
+		position: absolute;
+		top: 27px;
+		left: 25px;
+		color: #fff;
+		font-size: 25px;
+		cursor: pointer;
+		&.m-active {
+			color:red;
+		}
+		&:hover {
+			opacity: 0.8;
+		}
+	}
 	&.m-collapsed {
 		min-height: 80px;
 		& *{
-			&:not(.main__block-title):not(.main__block-logo):not(.main__block-uncollapse) {
+			&:not(.main__block-title):not(.main__block-in-fav):not(.main__block-logo):not(.main__block-uncollapse) {
 				display: none;
 				visibility: hidden;
 			}
