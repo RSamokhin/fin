@@ -1,4 +1,4 @@
-div(class='fav-form-cards-div toggled-clients-block-form', style='display: none')
+div(class='fav-form-cards-div m-hidden', data-form='fav')
 	include ./block-form-divider
 	div(class='sfs__container')
 		each fav, index in favs
@@ -6,4 +6,4 @@ div(class='fav-form-cards-div toggled-clients-block-form', style='display: none'
 				i(class='fa fa-star favs__icon-star')
 				span(class='favs__text') #{fav}
 				i(class='fa fa-times-circle favs__icon-remove')
-		div(class='sfs__button') #{bName}
+		div(class='sfs__button' data-bind-click='blockFormCollapse') #{bName}

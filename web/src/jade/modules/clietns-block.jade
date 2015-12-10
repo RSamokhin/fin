@@ -8,88 +8,86 @@ block vars
                 {
                     id: 1,
                     name: 'Расширенный поиск',
+                    formName: 'no-form'
                 },{
                     id: 2,
-                    name: 'Полный список'
+                    name: 'Полный список',
+                    formName: 'no-form'
                 },{
                     id: 3,
                     name: 'Добавить',
-                    formName: 'search-form-simple'
+                    formName: 'add-form'
                 },{
                     id: 4,
                     name: 'Избранное',
-                    formName: 'fav-form-cards-div'
+                    formName: 'fav'
                 }
             ],
             searchResults = ['Карасева', '444555687456765', 'ООО Игарка', 'ИП Казаков Иван Васильевич'];
 
 
 block forms
-    - var classAdd = 'm-hidden';
-    if showAddForm
-        -
-            classAdd = '';
-            var addFormFields = [
-                {
-                    name: 'Тип субъекта',
-                    dataType: 'selector',
-                    defaultValue: 'Компания',
-                    data: ['Компания', 'ИП', 'Физ-лицо'],
-                    fName: 'type',
-                    width: 1,
-                    height: 1
-                },{
-                    name: 'Название/Фио',
-                    dataType: 'text',
-                    placeholder: 'Полное наименование субъекта',
-                    fName: 'name',
-                    width: 1,
-                    height: 1
-                },{
-                    name: 'ИНН',
-                    dataType: 'text',
-                    placeholder: 'ИНН субъекта',
-                    fName: 'INN',
-                    width: 1,
-                    height: 1
-                },{
-                    name: 'КПП',
-                    dataType: 'text',
-                    placeholder: 'КПП субъекта',
-                    fName: 'KPP',
-                    width: 1,
-                    height: 1
-                },{
-                    name: 'Описание',
-                    dataType: 'textarea',
-                    placeholder: 'Комментарии',
-                    fName: 'description',
-                    width: 2,
-                    height: 4
-                },{
-                    name: 'Системная организация',
-                    dataType: 'bool',
-                    default: false,
-                    fName: 'isSystem',
-                    width: 1,
-                    height: 1
-                }
-            ],
-            fName = 'Добавление субъекта',
-            bName = 'Сохранить';
-        include ./search-form-simple.jade
+    -
+        var addFormFields = [
+            {
+                name: 'Тип субъекта',
+                dataType: 'selector',
+                defaultValue: 'Компания',
+                data: ['Компания', 'ИП', 'Физ-лицо'],
+                fName: 'type',
+                width: 1,
+                height: 1
+            },{
+                name: 'Название/Фио',
+                dataType: 'text',
+                placeholder: 'Полное наименование субъекта',
+                fName: 'name',
+                width: 1,
+                height: 1
+            },{
+                name: 'ИНН',
+                dataType: 'text',
+                placeholder: 'ИНН субъекта',
+                fName: 'INN',
+                width: 1,
+                height: 1
+            },{
+                name: 'КПП',
+                dataType: 'text',
+                placeholder: 'КПП субъекта',
+                fName: 'KPP',
+                width: 1,
+                height: 1
+            },{
+                name: 'Описание',
+                dataType: 'textarea',
+                placeholder: 'Комментарии',
+                fName: 'description',
+                width: 2,
+                height: 4
+            },{
+                name: 'Системная организация',
+                dataType: 'bool',
+                default: false,
+                fName: 'isSystem',
+                width: 1,
+                height: 1
+            }
+        ],
+        fName = 'Добавление субъекта',
+        bName = 'Сохранить';
+    include ./add-form-simple.jade
 
-    if showFavForm
-        -
-            var fName = 'Избранные субъекты',
-                bName = 'Скрыть',
-                favs = [
-                    'ООО Рога и Копыта',
-                    'ИП Кузнецов Владимир Иванович',
-                    'Паваротти Вениамин',
-                    'ООО Очень Длинное Название Фирмы Для Проверки'
-                ];
+    -
+        var fName = 'Избранные субъекты',
+            bName = 'Скрыть',
+            favs = [
+                'ООО Рога и Копыта',
+                'ИП Кузнецов Владимир Иванович',
+                'Паваротти Вениамин',
+                'ООО Очень Длинное Название Фирмы Для Проверки'
+            ];
 
-        include ./fav-form-cards
+    include ./fav-form-cards
 
 

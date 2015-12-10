@@ -9,53 +9,12 @@ html(class='m-main')
         include ./modules/head.jade
 
         -
-            var showAddForm,
-                showFavForm,
-                collapsedModifier,
-                blockInFavModifier,
-                noForm;
+            var collapsedModifier='m-collapsed',
+                blockInFavModifier='m-active';
 
-
-        -noForm = 1;
-        -showAddForm = 0;
-        -showFavForm = 0;
-        -collapsedModifier = '';
-        -blockInFavModifier = '';
-        include ./modules/clietns-block.jade
-
-
-        -noForm = 0;
-        -showAddForm = 0;
-        -showFavForm = 0;
-        -collapsedModifier = 'm-collapsed';
-        -blockInFavModifier = '';
-        include ./modules/clietns-block.jade
-
-
-        -noForm = 0;
-        -showAddForm = 0;
-        -showFavForm = 0;
-        -collapsedModifier = '';
-        -blockInFavModifier = 'm-active';
-        include ./modules/clietns-block.jade
-
-
-        -noForm = 1;
-        -showAddForm = 1;
-        -showFavForm = 0;
-        -collapsedModifier = '';
-        -blockInFavModifier = '';
-        include ./modules/clietns-block.jade
-
-
-        -noForm = 0;
-        -showAddForm = 0;
-        -showFavForm = 1;
-        -collapsedModifier = '';
-        -blockInFavModifier = '';
-        include ./modules/clietns-block.jade
-
-        -var showAddForm = 1;
+        -
+            collapsedModifier = '';
+            blockInFavModifier='';
         include ./modules/clietns-block.jade
 
         include ./modules/footer.jade

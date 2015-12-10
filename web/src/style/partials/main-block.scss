@@ -17,6 +17,10 @@
 	margin-right: auto;
 	cursor: pointer;
 	position: relative;
+	& .m-hidden {
+		display: none;
+		visibility: hidden;
+	}
 	&-collapse, &-uncollapse {
 		position: absolute;
 		top: 10px;
