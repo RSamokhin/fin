@@ -48,7 +48,7 @@
 	}
 	&.m-collapsed {
 		min-height: 80px;
-		& *{
+		& * {
 			&:not(.main__block-title):not(.main__block-in-fav):not(.main__block-logo):not(.main__block-uncollapse) {
 				display: none;
 				visibility: hidden;

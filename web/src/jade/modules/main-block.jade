@@ -27,3 +27,11 @@ div(class='main__block m-2x #{collapsedModifier}')
                 div(class='main__block-control__text') #{control.name}
 
     block forms
+
+    if noForm
+        -
+            var bName = 'Скрыть',
+                fName ='Данный раздел находится в разработке';
+
+        include ./no-form
+

@@ -12,37 +12,50 @@ html(class='m-main')
             var showAddForm,
                 showFavForm,
                 collapsedModifier,
-                blockInFavModifier;
+                blockInFavModifier,
+                noForm;
 
-        -
-            showAddForm = false;
-            showFavForm = false;
-            collapsedModifier = 'm-collapsed';
-            blockInFavModifier = '';
+
+        -noForm = 1;
+        -showAddForm = 0;
+        -showFavForm = 0;
+        -collapsedModifier = '';
+        -blockInFavModifier = '';
         include ./modules/clietns-block.jade
 
-        -
-             showAddForm = false;
-             showFavForm = false;
-             collapsedModifier = '';
-             blockInFavModifier = 'm-active';
+
+        -noForm = 0;
+        -showAddForm = 0;
+        -showFavForm = 0;
+        -collapsedModifier = 'm-collapsed';
+        -blockInFavModifier = '';
         include ./modules/clietns-block.jade
 
-        -
-            showAddForm = true;
-            showFavForm = false;
-            collapsedModifier = '';
-            blockInFavModifier = '';
+
+        -noForm = 0;
+        -showAddForm = 0;
+        -showFavForm = 0;
+        -collapsedModifier = '';
+        -blockInFavModifier = 'm-active';
         include ./modules/clietns-block.jade
 
-        -
-            showAddForm = false;
-            showFavForm = true;
-            collapsedModifier = '';
-            blockInFavModifier = '';
+
+        -noForm = 1;
+        -showAddForm = 1;
+        -showFavForm = 0;
+        -collapsedModifier = '';
+        -blockInFavModifier = '';
         include ./modules/clietns-block.jade
 
-        -var showAddForm = true;
+
+        -noForm = 0;
+        -showAddForm = 0;
+        -showFavForm = 1;
+        -collapsedModifier = '';
+        -blockInFavModifier = '';
+        include ./modules/clietns-block.jade
+
+        -var showAddForm = 1;
         include ./modules/clietns-block.jade
 
         include ./modules/footer.jade
