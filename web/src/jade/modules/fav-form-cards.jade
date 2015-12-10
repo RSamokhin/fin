@@ -1,8 +1,9 @@
-include ./block-form-divider
-div(class='sfs__container')
-    each fav, index in favs
-        div(class='favs__block' title='#{fav}')
-            i(class='fa fa-star favs__icon-star')
-            span(class='favs__text') #{fav}
-            i(class='fa fa-times-circle favs__icon-remove')
-    div(class='sfs__button') #{bName}
+div(class='fav-form-cards-div toggled-clients-block-form', style='display: none')
+	include ./block-form-divider
+	div(class='sfs__container')
+		each fav, index in favs
+			div(class='favs__block' title='#{fav}')
+				i(class='fa fa-star favs__icon-star')
+				span(class='favs__text') #{fav}
+				i(class='fa fa-times-circle favs__icon-remove')
+		div(class='sfs__button') #{bName}

@@ -22,7 +22,7 @@ div(class='main__block m-2x #{collapsedModifier}')
     hr(class='main__block-hr')
     div(class='main__block-controls')
         for control in blockControls
-            div(class='main__block-control')
+            div(class='main__block-control', data-bind-click="showToggledForm", data-form-name=control.formName)
                 div(class='main__block-control__number') #{control.id}
                 div(class='main__block-control__text') #{control.name}
 

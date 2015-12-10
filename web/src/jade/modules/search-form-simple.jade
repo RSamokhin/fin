@@ -1,18 +1,19 @@
-include ./block-form-divider
+div(class='search-form-simple toggled-clients-block-form', style='display: none')
+	include ./block-form-divider
 
-form(class='sfs__container')
-    each field in addFormFields
-        div(class='sfs__field-container m-#{field.width}')
-            case field.dataType
-                when 'text'
-                    input(name='#{field.fName}' class='sfs__field-input' placeholder='   #{field.placeholder}' autocomplete='off')
-                when 'selector'
-                    select(name='#{field.fName}' class='sfs__field-select')
-                        each d in field.data
-                            option(value='#{d}') #{d}
-                when 'textarea'
-                    textarea(name='#{field.fName}' class='sfs__field-textarea' placeholder='   #{field.placeholder}' rows='#{field.height}')
-                when 'bool'
-                    input(name='#{field.fName}' class='sfs__field-checkbox' type='checkbox' )
-            span(class='sfs__field-title') #{field.name}
-    div(class='sfs__button') #{bName}
+	form(class='sfs__container')
+		each field in addFormFields
+			div(class='sfs__field-container m-#{field.width}')
+				case field.dataType
+					when 'text'
+						input(name='#{field.fName}' class='sfs__field-input' placeholder='   #{field.placeholder}' autocomplete='off')
+					when 'selector'
+						select(name='#{field.fName}' class='sfs__field-select')
+							each d in field.data
+								option(value='#{d}') #{d}
+					when 'textarea'
+						textarea(name='#{field.fName}' class='sfs__field-textarea' placeholder='   #{field.placeholder}' rows='#{field.height}')
+					when 'bool'
+						input(name='#{field.fName}' class='sfs__field-checkbox' type='checkbox' )
+				span(class='sfs__field-title') #{field.name}
+		div(class='sfs__button') #{bName}
