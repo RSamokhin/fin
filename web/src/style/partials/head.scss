@@ -2,6 +2,7 @@ html.m-main, html.m-main>body {
     width: 100%;
     background-color: #E6E6E6;
     min-width: 1060px;
+    border-bottom: 30px solid transparent;
 }
 body {
     min-height: 800px;
@@ -154,6 +155,7 @@ header {
                 margin-top: 20px;
                 position: relative;
                 cursor: pointer;
+                box-sizing: border-box;
                 &.i-notifications {
                     background: url('/img/icon/i-notifications.png') no-repeat center;
                     &:after {

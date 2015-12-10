@@ -131,6 +131,8 @@ SELECT pg_catalog.setval('"Subjects_id_seq"', 101, true);
 --
 
 COPY "Users" (id, login, password, "firstName", "lastName", phone, "createdAt", "updatedAt") FROM stdin;
+1	user	00700b7885f95361590e8dd4a6bd53b567a37f98	user	user	2015-12-06 00:18:12.542+03	2015-12-06 12:51:41.052+03
+
 \.
 
 

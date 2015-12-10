@@ -2,8 +2,8 @@ extends ./main-block
 
 block vars
     -
-        var blockIcon = 'm-clients__block-logo';
-            blockTitle = 'Субъекты системы';
+        var blockIcon = 'm-clients__block-logo',
+            blockTitle = 'Картотека субъектов',
             blockControls = [
                 {
                     id: 1,
@@ -18,5 +18,76 @@ block vars
                     id: 4,
                     name: 'Избранное'
                 }
-            ];
+            ],
             searchResults = ['Карасева', '444555687456765', 'ООО Игарка', 'ИП Казаков Иван Васильевич'];
+
+
+block forms
+    - var classAdd = 'm-hidden';
+    if showAddForm
+        -
+            classAdd = '';
+            var addFormFields = [
+                {
+                    name: 'Тип субъекта',
+                    dataType: 'selector',
+                    defaultValue: 'Компания',
+                    data: ['Компания', 'ИП', 'Физ-лицо'],
+                    fName: 'type',
+                    width: 1,
+                    height: 1
+                },{
+                    name: 'Название/Фио',
+                    dataType: 'text',
+                    placeholder: 'Полное наименование субъекта',
+                    fName: 'name',
+                    width: 1,
+                    height: 1
+                },{
+                    name: 'ИНН',
+                    dataType: 'text',
+                    placeholder: 'ИНН субъекта',
+                    fName: 'INN',
+                    width: 1,
+                    height: 1
+                },{
+                    name: 'КПП',
+                    dataType: 'text',
+                    placeholder: 'КПП субъекта',
+                    fName: 'KPP',
+                    width: 1,
+                    height: 1
+                },{
+                    name: 'Описание',
+                    dataType: 'textarea',
+                    placeholder: 'Комментарии',
+                    fName: 'description',
+                    width: 2,
+                    height: 4
+                },{
+                    name: 'Системная организация',
+                    dataType: 'bool',
+                    default: false,
+                    fName: 'isSystem',
+                    width: 1,
+                    height: 1
+                }
+            ],
+            fName = 'Добавление субъекта',
+            bName = 'Сохранить';
+        include ./search-form-simple.jade
+
+    if showFavForm
+        -
+            var fName = 'Избранные субъекты',
+                bName = 'Скрыть',
+                favs = [
+                    'ООО Рога и Копыта',
+                    'ИП Кузнецов Владимир Иванович',
+                    'Паваротти Вениамин',
+                    'ООО Очень Длинное Название Фирмы Для Проверки'
+                ];
+
+        include ./fav-form-cards
+
+
