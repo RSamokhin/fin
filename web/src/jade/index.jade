@@ -42,6 +42,9 @@ html(class='m-main')
             blockInFavModifier = '';
         include ./modules/clietns-block.jade
 
+        -var showAddForm = true;
+        include ./modules/clietns-block.jade
+
         include ./modules/footer.jade
     script(src="/js/lib/jquery.js")
     script(src="/js/app.js")
