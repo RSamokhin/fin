@@ -16,6 +16,32 @@ window.Handlers = {
         blockToogleFavs: function () {
             $(this).closest('[data-main-block=true]').find('[data-block-fav=true]').toggleClass('m-active');
         }
+    },
+    submit: {
+        addSubject: function(){
+
+            var submit = $(this).find('input[type=submit]');
+            submit.attr('disabled', 'disabled');
+            var data = $(this).serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            data['_csrf'] = $.cookie('csrfToken');
+            $.post($(this).attr('action'), data, function(data){
+                submit.removeAttr('disabled');
+                if (data.errors)
+                {
+                    alert(data.errors.map(function(error){
+                        return Object.keys(error).map(function(field){
+                            return error[field];
+                        }).join(',');
+                    }).join('\n'));
+                    return;
+                }
+                alert('OK');
+            });
+            return false;
+        }
     }
 };
 

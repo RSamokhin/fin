@@ -2,6 +2,7 @@ var parse = require('co-body');
 var jwt = require('koa-jwt');
 var router = require('koa-router')();
 var koaBody = require('koa-body')();
+var csrf = require('koa-csrf');
 var koaValidate = require('koa-validate')();
 
 var config = require('../config').get('jwt');
@@ -40,9 +41,11 @@ router.get('/logout.html', function * (){
     this.response.redirect('/');
 });
 router.get('/login.html', function * (){
-    this.body = yield render('login');
+    this.body = yield render('login', {
+        csrf: this.csrf
+    });
 });
-router.post('/login.html', koaBody, koaValidate, function * (){
+router.post('/login.html', koaBody, koaValidate, csrf.middleware, function * (){
     this.checkBody('login').notEmpty();
     this.checkBody('password').notEmpty();
 
@@ -71,10 +74,19 @@ router.post('/login.html', koaBody, koaValidate, function * (){
     this.response.redirect('/');
 });
 
+var addCSRFCookie = function * (next)
+{
+    this.cookies.set('csrfToken', this.csrf, {
+        httpOnly: false
+    });
+    yield next;
+};
+
 module.exports.registerApp = function(app)
 {
     app
         .use(router.routes())
         .use(router.allowedMethods())
-        .use(module.exports.check());
+        .use(module.exports.check())
+        .use(addCSRFCookie);
 };
