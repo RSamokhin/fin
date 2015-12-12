@@ -6,7 +6,7 @@ window.Handlers = {
                 $parent = $button.closest('[data-main-block=true]');
             var $needForm = $parent.find('[data-form=' + fName + ']');
             var isShowed = !$needForm.parent().hasClass('m-hidden');
-            $parent.find('.main-block-form-cntainer').addClass('m-hidden');
+            $parent.find('.main-block-form-container').addClass('m-hidden');
             if (isShowed)
                 return;
             $needForm.parent().removeClass('m-hidden');
