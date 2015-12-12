@@ -1,23 +1,11 @@
-doctype html
-html(class='m-main')
-    head
-        title FinSystem
-        link(rel='stylesheet' href='/css/main.css')
-    body
+extends ./main
 
+block content
+    -
+        var collapsedModifier='m-collapsed',
+            blockInFavModifier='m-active';
 
-        include ./modules/head.jade
-
-        -
-            var collapsedModifier='m-collapsed',
-                blockInFavModifier='m-active';
-
-        -
-            collapsedModifier = '';
-            blockInFavModifier='';
-        include ./modules/clietns-block.jade
-
-        include ./modules/footer.jade
-    script(src="/js/lib/jquery.js")
-    script(src="/js/lib/jquery.cookie.js")
-    script(src="/js/app.js")
+    -
+        collapsedModifier = '';
+        blockInFavModifier='';
+    include ./modules/clietns-block.jade

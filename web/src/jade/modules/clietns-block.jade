@@ -82,12 +82,14 @@ block forms
         var fName = 'Избранные субъекты',
             bName = 'Скрыть',
             favs = [
-                'ООО Рога и Копыта',
-                'ИП Кузнецов Владимир Иванович',
-                'Паваротти Вениамин',
-                'ООО Очень Длинное Название Фирмы Для Проверки'
+                {"id":1,"order":0,"createdAt":"2015-12-12T12:35:26.051Z","updatedAt":"2015-12-12T12:35:30.537Z","SubjectId":1,"UserId":1,"Subject":{"id":1,"name":"Lucille","description":"Sit ut enim esse Lorem ea ex qui cillum eu dolor non laborum.","INN":"2177361034","KPP":"9098586338","type":"ИП","isSystem":true,"createdAt":"2015-12-08T19:59:36.572Z","updatedAt":"2015-12-08T19:59:36.572Z"}},{"id":2,"order":0,"createdAt":"2015-12-12T12:36:59.143Z","updatedAt":"2015-12-12T12:37:02.357Z","SubjectId":2,"UserId":1,"Subject":{"id":2,"name":"Mckee","description":"Ea veniam ut eu ad est sint occaecat consectetur ex consequat.","INN":"2361384589","KPP":"1881450886","type":"Компания","isSystem":false,"createdAt":"2015-12-08T19:59:36.586Z","updatedAt":"2015-12-08T19:59:36.586Z"}}
             ];
 
     include ./fav-form-cards
 
+    -
+        var bName = 'Скрыть',
+        fName ='Данный раздел находится в разработке';
+
+    include ./no-form
 

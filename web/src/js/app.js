@@ -5,7 +5,15 @@ window.Handlers = {
                 fName = $button.attr('data-form-name'),
                 $parent = $button.closest('[data-main-block=true]');
             $parent.find('[data-form][data-form!=' + fName + ']').addClass('m-hidden');
-            $parent.find('[data-form=' + fName + ']').toggleClass('m-hidden');
+            var form = $parent.find('[data-form=' + fName + ']').toggleClass('m-hidden');
+            if (form.hasClass('m-hidden'))
+                return;
+            var onOpen = form.data('onOpen');
+            var handler = onOpen && window.Handlers.onToggledFormOpen && window.Handlers.onToggledFormOpen[onOpen];
+            if (handler)
+            {
+                handler.call(form);
+            }
         },
         blockFormCollapse: function () {
             $(this).closest('[data-form]').addClass('m-hidden');
@@ -15,6 +23,16 @@ window.Handlers = {
         },
         blockToogleFavs: function () {
             $(this).closest('[data-main-block=true]').find('[data-block-fav=true]').toggleClass('m-active');
+        },
+        deleteFav: function() {
+            var favId = $(this).data('favId');
+            var $block = $(this).closest('.favs__block');
+            var data = {};
+            data['_csrf'] = $.cookie('csrfToken');
+            $.post('/fav/delete/' + favId, data, function(){
+                $block.remove();
+            });
+            return false;
         }
     },
     submit: {
@@ -42,9 +60,17 @@ window.Handlers = {
             });
             return false;
         }
+    },
+    onToggledFormOpen: {
+        loadFavs: function() {
+            this.addClass('m-hidden');
+            var form = this;
+            $.get('/fav', function(favs){
+                form.replaceWith(favs);
+            }, 'html');
+        }
     }
 };
-
 
 $(function(){
     Object.keys(window.Handlers).forEach(function (bindFunctionEvent) {

@@ -52,3 +52,5 @@ module.exports.registerApp = function(app)
         .use(router.routes())
         .use(router.allowedMethods());
 };
+
+module.exports.loadUser = loadUser;
