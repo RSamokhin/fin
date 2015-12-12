@@ -17,8 +17,6 @@ div(class='main__block m-2x #{collapsedModifier}' data-main-block='true')
                     div(class='main__block-search__result' title='#{searchResult}') #{searchResult}
                     - i = i + 1;
 
-
-
     hr(class='main__block-hr')
     div(class='main__block-controls')
         for control in blockControls
@@ -27,9 +25,5 @@ div(class='main__block m-2x #{collapsedModifier}' data-main-block='true')
                 div(class='main__block-control__text') #{control.name}
 
     block forms
-    -
-       var bName = 'Скрыть',
-           fName ='Данный раздел находится в разработке';
 
-    include ./no-form
 

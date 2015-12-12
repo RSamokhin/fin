@@ -76,18 +76,19 @@ block forms
         ],
         fName = 'Добавление субъекта',
         bName = 'Сохранить';
-    include ./add-form-simple.jade
+    div.main-block-form-cntainer.m-hidden
+        include ./add-form-simple.jade
 
     -
         var fName = 'Избранные субъекты',
             bName = 'Скрыть',
-            favs = [
-                'ООО Рога и Копыта',
-                'ИП Кузнецов Владимир Иванович',
-                'Паваротти Вениамин',
-                'ООО Очень Длинное Название Фирмы Для Проверки'
-            ];
+            favs = [];
+    div.main-block-form-cntainer.m-hidden
+        include ./fav-form-cards
 
-    include ./fav-form-cards
-
+    -
+        var bName = 'Скрыть',
+        fName ='Данный раздел находится в разработке';
+    div.main-block-form-cntainer.m-hidden
+        include ./no-form
 

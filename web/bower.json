@@ -10,6 +10,7 @@
     "jquery": "2.*",
     "normalize.css": "*",
     "jquery.cookie": "jquery-cookie#~1.4.1",
-    "font-awesome": "fontawesome#~4.5.0"
+    "font-awesome": "fontawesome#~4.5.0",
+    "js-cookie": "~2.0.4"
   }
 }

@@ -1,9 +1,9 @@
-div(class='fav-form-cards-div m-hidden', data-form='fav')
+div(class='fav-form-cards-div', data-form='fav' data-on-open='loadFavs')
 	include ./block-form-divider
 	div(class='sfs__container')
 		each fav, index in favs
-			div(class='favs__block' title='#{fav}')
+			div(class='favs__block' title='#{fav.Subject.name}')
 				i(class='fa fa-star favs__icon-star')
-				span(class='favs__text') #{fav}
-				i(class='fa fa-times-circle favs__icon-remove')
+				span(class='favs__text') #{fav.Subject.name}
+				i(class='fa fa-times-circle favs__icon-remove', data-bind-click='deleteFav', data-fav-id=fav.id)
 		div(class='sfs__button' data-bind-click='blockFormCollapse') #{bName}

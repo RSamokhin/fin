@@ -1,7 +1,7 @@
-div(class='add-form-simple m-hidden', data-form='add-form')
+div(class='add-form-simple', data-form='add-form')
 	include ./block-form-divider
 
-	form(class='sfs__container')
+	form(class='sfs__container', data-bind-submit='addSubject', action='/subjects')
 		each field in addFormFields
 			div(class='sfs__field-container m-#{field.width}')
 				case field.dataType
@@ -16,4 +16,4 @@ div(class='add-form-simple m-hidden', data-form='add-form')
 					when 'bool'
 						input(name='#{field.fName}' class='sfs__field-checkbox' type='checkbox' )
 				span(class='sfs__field-title') #{field.name}
-		div(class='sfs__button') #{bName}
+		input(type='submit', class='sfs__button', value=bName)

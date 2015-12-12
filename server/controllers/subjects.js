@@ -3,6 +3,7 @@ var baseTable = require('./basetable');
 var router = require('koa-router')();
 var koaBody = require('koa-body')();
 var koaValidate = require('koa-validate')();
+var csrf = require('koa-csrf');
 
 var models = require("../models");
 
@@ -28,12 +29,12 @@ router.get('/subjects', baseTable({
     });
 });
 
-router.post('/subjects', koaBody, koaValidate, function * (){
+router.post('/subjects', koaBody, koaValidate, csrf.middleware, function * (){
     this.checkBody('name').notEmpty().trim().len(1, 255);
     this.checkBody('description').notEmpty().trim().len(1, 255);
     this.checkBody('INN').notEmpty().trim().len(1, 12);
     this.checkBody('KPP').notEmpty().trim().len(1, 30);
-    this.checkBody('isSystem').trim().notEmpty().toBoolean();
+    this.checkBody('isSystem').optional().toBoolean();
     this.checkBody('type').notEmpty().trim().isIn(['Компания', 'ИП', 'Физ-лицо']);
 
     if (this.errors)
@@ -53,9 +54,7 @@ router.post('/subjects', koaBody, koaValidate, function * (){
         'KPP': data['KPP']
     });
 
-    //this.body = client.toJSON();
-
-    this.response.redirect('/subjects');
+    this.body = client.toJSON();
 });
 
 module.exports.registerApp = function(app)

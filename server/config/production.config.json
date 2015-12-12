@@ -16,5 +16,6 @@
   "jwt": {
     "secret": "asdasdasd12313",
     "cookie": "token"
-  }
+  },
+  "sessionKey": "Asd132@asdf"
 }
