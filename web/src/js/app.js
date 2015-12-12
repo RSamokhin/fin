@@ -4,15 +4,17 @@ window.Handlers = {
             var $button = $(this),
                 fName = $button.attr('data-form-name'),
                 $parent = $button.closest('[data-main-block=true]');
-            $parent.find('[data-form][data-form!=' + fName + ']').addClass('m-hidden');
-            var form = $parent.find('[data-form=' + fName + ']').toggleClass('m-hidden');
-            if (form.hasClass('m-hidden'))
+            var $needForm = $parent.find('[data-form=' + fName + ']');
+            var isShowed = !$needForm.parent().hasClass('m-hidden');
+            $parent.find('.main-block-form-cntainer').addClass('m-hidden');
+            if (isShowed)
                 return;
-            var onOpen = form.data('onOpen');
+            $needForm.parent().removeClass('m-hidden');
+            var onOpen = $needForm.data('onOpen');
             var handler = onOpen && window.Handlers.onToggledFormOpen && window.Handlers.onToggledFormOpen[onOpen];
             if (handler)
             {
-                handler.call(form);
+                handler.call($needForm);
             }
         },
         blockFormCollapse: function () {
