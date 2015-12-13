@@ -65,10 +65,12 @@ function * getCBRRates(currency, fromDate, toDate)
         var date = record['$']['Date'];
         var value = record['Value'];
         var nominal = record['Nominal'];
+        assert(value.length === 1);
+        assert(nominal.length === 1);
         return {
-            date: date,
-            value: parseFloat(value),
-            nominal: parseInt(nominal)
+            date: moment(date, 'DD.MM.YYYY').toDate(),
+            value: parseFloat(value[0].replace(',', '.')),
+            nominal: parseInt(nominal[0].replace(',', '.'))
         }
     });
 }

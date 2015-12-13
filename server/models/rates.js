@@ -2,8 +2,8 @@
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define("Rates", {
         date: DataTypes.DATE,
-        value: DataTypes.DECIMAL,
-        nominal: DataTypes.DECIMAL
+        value: DataTypes.DECIMAL(10, 4),
+        nominal: DataTypes.DECIMAL(10, 4)
     }, {
         classMethods: {
             associate: function(models) {

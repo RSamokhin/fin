@@ -4,10 +4,10 @@ module.exports = function(sequelize, DataTypes) {
         date: DataTypes.DATE,
         type: DataTypes.STRING(20),
         orderNumber: DataTypes.STRING(64),
-        tax: DataTypes.DECIMAL,
-        paid: DataTypes.DECIMAL,
-        mustPay: DataTypes.DECIMAL,
-        given: DataTypes.DECIMAL
+        tax: DataTypes.DECIMAL(20, 2),
+        paid: DataTypes.DECIMAL(20, 2),
+        mustPay: DataTypes.DECIMAL(20, 2),
+        given: DataTypes.DECIMAL(20, 2)
     }, {
         classMethods: {
             associate: function(models) {

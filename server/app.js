@@ -18,6 +18,7 @@ var user = require("./controllers/user");
 var auth = require("./controllers/auth");
 var pageNotFound = require("./controllers/404");
 var fav = require("./controllers/fav");
+var currency = require("./controllers/currency");
 
 auth.registerApp(app);
 
@@ -25,6 +26,7 @@ subjects.registerApp(app);
 user.registerApp(app);
 pageNotFound.registerApp(app);
 fav.registerApp(app);
+currency.registerApp(app);
 
 app.use(serve('../web/build/'));
 
