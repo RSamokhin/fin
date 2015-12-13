@@ -33,7 +33,12 @@ function * loadCurrency ()
 function * updateCurrrencyRate(currency)
 {
     var lastDate = yield getLastUpdateDate(currency);
+    lastDate = lastDate.add(1, 'days');
     var currDate = moment();
+    var duration = moment.duration(currDate.diff(lastDate));
+    var days = duration.asDays();
+    if (days < 1)
+        return;
     var rates = yield getCBRRates(currency, lastDate, currDate);
     yield insertNewRates(currency, rates);
 }
