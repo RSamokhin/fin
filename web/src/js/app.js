@@ -5,11 +5,11 @@ window.Handlers = {
                 fName = $button.attr('data-form-name'),
                 $parent = $button.closest('[data-main-block=true]');
             var $needForm = $parent.find('[data-form=' + fName + ']');
-            var isShowed = !$needForm.parent().hasClass('m-hidden');
-            $parent.find('.main-block-form-container').addClass('m-hidden');
+            var isShowed = !$needForm.hasClass('m-hidden');
+            $parent.find('[data-form]').addClass('m-hidden');
             if (isShowed)
                 return;
-            $needForm.parent().removeClass('m-hidden');
+            $needForm.removeClass('m-hidden');
             var onOpen = $needForm.data('onOpen');
             var handler = onOpen && window.Handlers.onToggledFormOpen && window.Handlers.onToggledFormOpen[onOpen];
             if (handler)
@@ -79,6 +79,12 @@ $(function(){
         Object.keys(window.Handlers[bindFunctionEvent]).forEach(function (bindFunctionName) {
             $(document.body).on(bindFunctionEvent, '[data-bind-'+bindFunctionEvent+'*='+bindFunctionName+']', window.Handlers[bindFunctionEvent][bindFunctionName]);
         });
+        $('#example').DataTable( {
+            paging:   true,
+            ordering: true,
+            info:     true,
+            destroy: true
+        } );
     });
 });
 
