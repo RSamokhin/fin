@@ -79,7 +79,7 @@ $(function(){
         Object.keys(window.Handlers[bindFunctionEvent]).forEach(function (bindFunctionName) {
             $(document.body).on(bindFunctionEvent, '[data-bind-'+bindFunctionEvent+'*='+bindFunctionName+']', window.Handlers[bindFunctionEvent][bindFunctionName]);
         });
-        $('#example').DataTable( {
+        $('[data-table-source=subjects]').DataTable( {
             paging:   true,
             ordering: true,
             info:     true,
