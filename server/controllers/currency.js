@@ -46,7 +46,7 @@ router.get('/currency/rates', function * (){
         });
     }
 
-    this.body = yield render('modules/currency-rates', result);
+    this.body = result;
 });
 
 module.exports.registerApp = function(app)
