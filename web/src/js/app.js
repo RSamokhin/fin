@@ -3,19 +3,34 @@ window.Handlers = {
         showToggledForm: function() {
             var $button = $(this),
                 fName = $button.attr('data-form-name'),
-                $parent = $button.closest('[data-main-block=true]');
-            var $needForm = $parent.find('[data-form=' + fName + ']');
-            var isShowed = !$needForm.parent().hasClass('m-hidden');
-            $parent.find('.main-block-form-cntainer').addClass('m-hidden');
-            if (isShowed)
+                $parent = $button.closest('[data-main-block=true]'),
+                $needForm = $parent.find('[data-form=' + fName + ']'),
+                isShowed = !$needForm.hasClass('m-hidden'),
+                dataAttrs = $button.attr('data-attrs') ? JSON.parse($button.attr('data-attrs')) : {};
+            Object.keys(dataAttrs).forEach(function (key) {
+                $button.attr(key, dataAttrs[key]);
+            });
+            $button.removeAttr('data-attrs');
+            $parent.find('[data-form]').addClass('m-hidden');
+            if (isShowed) {
                 return;
-            $needForm.parent().removeClass('m-hidden');
+            }
+            $needForm.removeClass('m-hidden');
             var onOpen = $needForm.data('onOpen');
             var handler = onOpen && window.Handlers.onToggledFormOpen && window.Handlers.onToggledFormOpen[onOpen];
-            if (handler)
-            {
+            if (handler) {
                 handler.call($needForm);
             }
+        },
+        loadTableFromUrl: function () {
+            var $button = $(this),
+                tableUrl = $button.attr('data-table'),
+                $container = $button.closest('[data-main-block=true]').find('[data-append-table="' + tableUrl + '"]');
+            $.get(tableUrl, {
+                fromAjax: true
+            }, function (data) {
+                $container.html(data);
+            }, 'html')
         },
         blockFormCollapse: function () {
             $(this).closest('[data-form]').addClass('m-hidden');
@@ -35,6 +50,9 @@ window.Handlers = {
                 $block.remove();
             });
             return false;
+        },
+        goHome: function () {
+            location.replace('/');
         }
     },
     submit: {
@@ -79,6 +97,13 @@ $(function(){
         Object.keys(window.Handlers[bindFunctionEvent]).forEach(function (bindFunctionName) {
             $(document.body).on(bindFunctionEvent, '[data-bind-'+bindFunctionEvent+'*='+bindFunctionName+']', window.Handlers[bindFunctionEvent][bindFunctionName]);
         });
+        $('[data-table-source=subjects]').DataTable( {
+            paging:   true,
+            ordering: true,
+            info:     true,
+            destroy: true,
+            pageLength: 25
+        } );
     });
 });
 

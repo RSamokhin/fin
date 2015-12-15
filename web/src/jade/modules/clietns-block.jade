@@ -12,7 +12,11 @@ block vars
                 },{
                     id: 2,
                     name: 'Полный список',
-                    formName: 'no-form'
+                    formName: 'clients-table',
+                    clicks: ['loadTableFromUrl'],
+                    dataAttrs: {
+                        "data-table": "/subjects"
+                    }
                 },{
                     id: 3,
                     name: 'Добавить',
@@ -76,21 +80,24 @@ block forms
         ],
         fName = 'Добавление субъекта',
         bName = 'Сохранить';
-    div.main-block-form-cntainer.m-hidden
+    div.main-block-form-container
         include ./add-form-simple.jade
 
     -
         var fName = 'Избранные субъекты',
             bName = 'Скрыть',
-            favs = [
-                {"id":1,"order":0,"createdAt":"2015-12-12T12:35:26.051Z","updatedAt":"2015-12-12T12:35:30.537Z","SubjectId":1,"UserId":1,"Subject":{"id":1,"name":"Lucille","description":"Sit ut enim esse Lorem ea ex qui cillum eu dolor non laborum.","INN":"2177361034","KPP":"9098586338","type":"ИП","isSystem":true,"createdAt":"2015-12-08T19:59:36.572Z","updatedAt":"2015-12-08T19:59:36.572Z"}},{"id":2,"order":0,"createdAt":"2015-12-12T12:36:59.143Z","updatedAt":"2015-12-12T12:37:02.357Z","SubjectId":2,"UserId":1,"Subject":{"id":2,"name":"Mckee","description":"Ea veniam ut eu ad est sint occaecat consectetur ex consequat.","INN":"2361384589","KPP":"1881450886","type":"Компания","isSystem":false,"createdAt":"2015-12-08T19:59:36.586Z","updatedAt":"2015-12-08T19:59:36.586Z"}}
-            ];
-    div.main-block-form-cntainer.m-hidden
+            favs = [];
+    div.main-block-form-container
         include ./fav-form-cards
 
     -
         var bName = 'Скрыть',
         fName ='Данный раздел находится в разработке';
-    div.main-block-form-cntainer.m-hidden
+    div.main-block-form-container
         include ./no-form
 
+    -
+        var bName = 'Скрыть',
+        fName ='Список субъектов';
+    div.main-block-form-container
+        include ./clients-table

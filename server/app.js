@@ -25,8 +25,8 @@ auth.registerApp(app);
 subjects.registerApp(app);
 user.registerApp(app);
 pageNotFound.registerApp(app);
-fav.registerApp(app);
 currency.registerApp(app);
+fav.registerApp(app);
 
 app.use(serve('../web/build/'));
 
