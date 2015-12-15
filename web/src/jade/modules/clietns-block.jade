@@ -12,7 +12,11 @@ block vars
                 },{
                     id: 2,
                     name: 'Полный список',
-                    formName: 'clients-table'
+                    formName: 'clients-table',
+                    clicks: ['loadTableFromUrl'],
+                    dataAttrs: {
+                        "data-table": "/subjects"
+                    }
                 },{
                     id: 3,
                     name: 'Добавить',
