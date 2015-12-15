@@ -1,4 +1,4 @@
 div(class='add-form-simple m-hidden', data-form='clients-table')
     include ./block-form-divider
-    div(data-append-table='/subjects' style='width:100%')
+    div(data-append-table='/subjects' data-preload-handlers='renderTables' style='width:100%')
     div(class='sfs__button' data-bind-click='blockFormCollapse') #{bName}

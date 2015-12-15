@@ -32,7 +32,7 @@ app.use(serve('../web/build/'));
 
 co(function * (){
     yield models.sequelize.sync();
-    //
+
     //var clients = require('./clients.json');
     //
     //for(var i = 0; i < clients.length; i++)

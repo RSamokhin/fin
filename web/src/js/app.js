@@ -1,4 +1,28 @@
 window.Handlers = {
+    onPageLoad: {
+        renderTables: function (container) {
+            $(container ? container : document.body).find('[data-table-source]').each(function (index, table) {
+                var $table = $(table);
+                $table.DataTable({
+                    paging:     true,
+                    ordering:   true,
+                    info:       true,
+                    destroy:    true,
+                    pageLength: 25
+                });
+            });
+        },
+        bindWindowScroll: function () {
+            $(window).scroll(function() {
+                if ($(this).scrollTop() > 170){
+                    $('.main__header-splitter').addClass("m-sticky");
+                }
+                else{
+                    $('.main__header-splitter').removeClass("m-sticky");
+                }
+            });
+        }
+    },
     click: {
         showToggledForm: function() {
             var $button = $(this),
@@ -29,7 +53,11 @@ window.Handlers = {
             $.get(tableUrl, {
                 fromAjax: true
             }, function (data) {
+                var preloadFunctions = $container.attr('data-preload-handlers') ? $container.attr('data-preload-handlers').split(' ') : [];
                 $container.html(data);
+                preloadFunctions.forEach(function (func) {
+                    window.Handlers.onPageLoad[func]($container);
+                })
             }, 'html')
         },
         blockFormCollapse: function () {
@@ -97,21 +125,8 @@ $(function(){
         Object.keys(window.Handlers[bindFunctionEvent]).forEach(function (bindFunctionName) {
             $(document.body).on(bindFunctionEvent, '[data-bind-'+bindFunctionEvent+'*='+bindFunctionName+']', window.Handlers[bindFunctionEvent][bindFunctionName]);
         });
-        $('[data-table-source=subjects]').DataTable( {
-            paging:   true,
-            ordering: true,
-            info:     true,
-            destroy: true,
-            pageLength: 25
-        } );
     });
-});
-
-$(window).scroll(function() {
-    if ($(this).scrollTop() > 170){
-        $('.main__header-splitter').addClass("m-sticky");
-    }
-    else{
-        $('.main__header-splitter').removeClass("m-sticky");
-    }
+    Object.keys(window.Handlers.onPageLoad).forEach(function (handler) {
+        window.Handlers.onPageLoad[handler]();
+    })
 });
