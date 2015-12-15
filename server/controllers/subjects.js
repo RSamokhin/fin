@@ -11,14 +11,15 @@ var render = require('../views');
 
 router.get('/subjects', baseTable({
     columns: ['id', 'name', 'description', 'INN', 'KPP', 'INN', 'isSystem', 'type'],
-    defaultOrder: ['id', 'asc']
+    defaultOrder: ['id', 'asc'],
+    searchColumns: ['name', 'description', 'INN', 'KPP']
 }), function * (){
     var subjects = yield models.Subject.findAll({
         order: this.baseTable.order,
         limit: this.baseTable.limit,
-        offset: this.baseTable.offset
+        offset: this.baseTable.offset,
+        where: this.baseTable.where
     });
-
     if (this.accepts('html', 'json') === 'json')
     {
         this.body = subjects.map(subject => subject.toJSON());

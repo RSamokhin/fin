@@ -10,6 +10,7 @@ module.exports = function(opts)
         buildOrder(this, opts);
         buildOrderHeaderLinks(this, opts);
         buildLimits(this, opts);
+        buildSearch(this, opts);
 
         yield next;
     };
@@ -72,4 +73,22 @@ var buildLimits = function(request, opts)
     if (request.query && request.query.offset)
         offset = Math.max(0, request.query.offset | 0);
     request.baseTable.offset = offset;
+};
+
+var buildSearch = function(request, opts)
+{
+    if (!opts.searchColumns)
+        return;
+    if (!request.query || !request.query.search)
+        return;
+    var search = '%' + request.query.search.toString().replace(/[%_]/g, '') + '%';
+    request.baseTable.where = {
+        '$or': opts.searchColumns.map(function(columnName){
+            var query = {};
+            query[columnName] = {
+                '$iLike': search
+            };
+            return query;
+        })
+    };
 };

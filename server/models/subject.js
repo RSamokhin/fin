@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
         name: DataTypes.STRING(255),
         description: DataTypes.STRING(255),
         INN: DataTypes.STRING(12),
-        KPP: DataTypes.STRING(30),
+        KPP: DataTypes.STRING(9),
         type: {
             type: DataTypes.STRING(30),
             validate: {
