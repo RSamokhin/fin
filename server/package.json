@@ -35,10 +35,13 @@
     "koa-session": "^3.3.1",
     "koa-static": "^1.4.5",
     "koa-validate": "^0.2.11",
+    "moment": "^2.10.6",
     "nconf": "^0.8.2",
     "path": "^0.12.7",
     "pg": "^4.4.3",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.13.0"
+    "request": "^2.67.0",
+    "sequelize": "^3.13.0",
+    "xml2js": "^0.4.15"
   }
 }

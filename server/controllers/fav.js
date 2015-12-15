@@ -1,5 +1,4 @@
 
-var baseTable = require('./basetable');
 var router = require('koa-router')();
 var koaBody = require('koa-body')();
 var koaValidate = require('koa-validate')();
