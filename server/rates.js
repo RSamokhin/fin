@@ -7,22 +7,16 @@ var assert = require('assert');
 var config = require('./config');
 var models = require("./models");
 
-co(function * (){
-    try
-    {
-        yield models.sequelize.sync();
-        var currencies = yield loadCurrency();
+function * updateCurrenciesRates()
+{
+    yield models.sequelize.sync();
+    var currencies = yield loadCurrency();
 
-        for(var i = 0; i < currencies.length; i++)
-        {
-            yield updateCurrrencyRate(currencies[i]);
-        }
-    }
-    catch(e)
+    for(var i = 0; i < currencies.length; i++)
     {
-        console.log(e);
+        yield updateCurrrencyRate(currencies[i]);
     }
-});
+}
 
 function * loadCurrency ()
 {
@@ -119,4 +113,22 @@ function * insertNewRates(currency, rates)
             currencyId: currency.id
         });
     }
+}
+
+if (module.parent)
+{
+    module.exports = updateCurrenciesRates;
+}
+else
+{
+    co(function * (){
+        try
+        {
+            yield updateCurrenciesRates();
+        }
+        catch(e)
+        {
+            console.log(e);
+        }
+    });
 }

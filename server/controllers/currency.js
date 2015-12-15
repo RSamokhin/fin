@@ -1,12 +1,14 @@
 
+var assert = require('assert');
 
 var router = require('koa-router')();
 
 var models = require("../models");
-
-var render = require('../views');
+var ratesUpdater = require("../rates");
 
 router.get('/currency/rates', function * (){
+
+    yield ratesUpdater();
 
     var lastDates = yield models.Rates.findAll({
         attributes: [
