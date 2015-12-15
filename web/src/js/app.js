@@ -35,6 +35,9 @@ window.Handlers = {
                 $block.remove();
             });
             return false;
+        },
+        goHome: function () {
+            location.replace('/');
         }
     },
     submit: {
@@ -83,7 +86,8 @@ $(function(){
             paging:   true,
             ordering: true,
             info:     true,
-            destroy: true
+            destroy: true,
+            pageLength: 25
         } );
     });
 });
