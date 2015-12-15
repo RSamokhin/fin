@@ -9,6 +9,7 @@ module.exports = function(opts)
         this.baseTable = {};
         buildOrder(this, opts);
         buildOrderHeaderLinks(this, opts);
+        buildLimits(this, opts);
 
         yield next;
     };
@@ -58,3 +59,12 @@ var buildOrder = function(request, opts)
     ]];
 };
 
+var buildLimits = function(request, opts)
+{
+    var limit = opts.defLimit || 100;
+    var maxLimit = opts.maxLimit || Infinity;
+    if (request.query && request.query.limit)
+        limit = request.query.limit | 0;
+    limit = Math.min(Math.max(1, limit), maxLimit);
+    request.baseTable.limit = limit;
+};
