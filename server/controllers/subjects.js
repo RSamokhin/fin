@@ -15,7 +15,8 @@ router.get('/subjects', baseTable({
 }), function * (){
     var subjects = yield models.Subject.findAll({
         order: this.baseTable.order,
-        limit: this.baseTable.limit
+        limit: this.baseTable.limit,
+        offset: this.baseTable.offset
     });
 
     if (this.accepts('html', 'json') === 'json')

@@ -67,4 +67,9 @@ var buildLimits = function(request, opts)
         limit = request.query.limit | 0;
     limit = Math.min(Math.max(1, limit), maxLimit);
     request.baseTable.limit = limit;
+
+    var offset = undefined;
+    if (request.query && request.query.offset)
+        offset = Math.max(0, request.query.offset | 0);
+    request.baseTable.offset = offset;
 };
