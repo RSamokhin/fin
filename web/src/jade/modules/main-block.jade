@@ -7,7 +7,13 @@ div(class='main__block m-2x' data-main-block='true' id='#{hashLink}')
     div(class='main__block-logo #{blockIcon}')
     div(class='main__block-title') #{blockTitle}
     div(class='main__block-search__container')
-        input(class='main__block-search__input' placeholder='Введите запрос' autocomplete='off' data-search-clients='true')
+        input(
+            class='main__block-search__input'
+            placeholder='Введите запрос'
+            autocomplete='off'
+            data-search-clients='true'
+            data-bind-keypress='simpleSearchSubmit'
+        )
         div(
             class='main__block-search__button'
             data-search-button='/subjects?search={mySearch}'

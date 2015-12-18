@@ -23,6 +23,15 @@ window.Handlers = {
             });
         }
     },
+    keypress: {
+        simpleSearchSubmit: function (event) {
+            if (event.which == 13 || event.keyCode == 13) {
+                (window.Handlers.click.simpleSearch.bind($(this).closest('[data-main-block=true]').find('[data-search-button]')))();
+                return false;
+            }
+            return true;
+        }
+    },
     click: {
         showToggledForm: function() {
             var $button = $(this),
