@@ -41,8 +41,16 @@ router.get('/logout.html', function * (){
     this.response.redirect('/');
 });
 router.get('/login.html', function * (){
+
+    var errors = [];
+    if (this.session.errors)
+    {
+        errors = this.session.errors;
+        delete this.session.errors;
+    }
     this.body = yield render('login', {
-        csrf: this.csrf
+        csrf: this.csrf,
+        errors: errors
     });
 });
 router.post('/login.html', koaBody, koaValidate, csrf.middleware, function * (){
@@ -52,7 +60,7 @@ router.post('/login.html', koaBody, koaValidate, csrf.middleware, function * (){
     if (this.errors)
     {
         this.response.redirect('/login.html');
-        // TODO this.errors
+        this.session.errors = this.errors;
         return;
     }
 
@@ -63,6 +71,7 @@ router.post('/login.html', koaBody, koaValidate, csrf.middleware, function * (){
     });
     if (user === null || user.encryptPassword(this.request.body.password) !== user.password)
     {
+        this.session.errors = ['User or passwrod incorrect!'];
         this.response.redirect('/login.html');
         return;
     }
