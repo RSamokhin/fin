@@ -2,6 +2,10 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.4.5
+-- Dumped by pg_dump version 9.4.0
+-- Started on 2015-12-18 23:38:27
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -10,14 +14,17 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- TOC entry 185 (class 3079 OID 11855)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- TOC entry 2074 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -25,12 +32,182 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 SET search_path = public, pg_catalog;
 
-SET default_tablespace = '';
-
 SET default_with_oids = false;
 
 --
--- Name: Subjects; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 180 (class 1259 OID 22830)
+-- Name: Accounts; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE "Accounts" (
+    id integer NOT NULL,
+    name character varying(256),
+    description character varying(512),
+    ammount numeric(20,2),
+    currency character varying(20),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "SubjectId" integer
+);
+
+
+--
+-- TOC entry 179 (class 1259 OID 22828)
+-- Name: Accounts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE "Accounts_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2075 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: Accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE "Accounts_id_seq" OWNED BY "Accounts".id;
+
+
+--
+-- TOC entry 178 (class 1259 OID 22771)
+-- Name: Currencies; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE "Currencies" (
+    id character varying(6) NOT NULL,
+    name character varying(32),
+    nominal integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+--
+-- TOC entry 177 (class 1259 OID 22717)
+-- Name: Favorites; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE "Favorites" (
+    id integer NOT NULL,
+    "order" integer DEFAULT 0,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "SubjectId" integer,
+    "UserId" integer
+);
+
+
+--
+-- TOC entry 176 (class 1259 OID 22715)
+-- Name: Favorites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE "Favorites_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2076 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: Favorites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE "Favorites_id_seq" OWNED BY "Favorites".id;
+
+
+--
+-- TOC entry 182 (class 1259 OID 22846)
+-- Name: Operations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE "Operations" (
+    id integer NOT NULL,
+    date timestamp with time zone,
+    type character varying(20),
+    "orderNumber" character varying(64),
+    tax numeric(20,2),
+    paid numeric(20,2),
+    "mustPay" numeric(20,2),
+    given numeric(20,2),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "fromAccountId" integer,
+    "toAccountId" integer
+);
+
+
+--
+-- TOC entry 181 (class 1259 OID 22844)
+-- Name: Operations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE "Operations_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2077 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: Operations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE "Operations_id_seq" OWNED BY "Operations".id;
+
+
+--
+-- TOC entry 184 (class 1259 OID 22879)
+-- Name: Rates; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE "Rates" (
+    id integer NOT NULL,
+    date timestamp with time zone,
+    value numeric(10,4),
+    nominal numeric(10,4),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL,
+    "currencyId" character varying(6)
+);
+
+
+--
+-- TOC entry 183 (class 1259 OID 22877)
+-- Name: Rates_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE "Rates_id_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- TOC entry 2078 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: Rates_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE "Rates_id_seq" OWNED BY "Rates".id;
+
+
+--
+-- TOC entry 173 (class 1259 OID 22657)
+-- Name: Subjects; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE "Subjects" (
@@ -46,10 +223,9 @@ CREATE TABLE "Subjects" (
 );
 
 
-ALTER TABLE "Subjects" OWNER TO postgres;
-
 --
--- Name: Subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 172 (class 1259 OID 22655)
+-- Name: Subjects_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE "Subjects_id_seq"
@@ -60,17 +236,18 @@ CREATE SEQUENCE "Subjects_id_seq"
     CACHE 1;
 
 
-ALTER TABLE "Subjects_id_seq" OWNER TO postgres;
-
 --
--- Name: Subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2079 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: Subjects_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE "Subjects_id_seq" OWNED BY "Subjects".id;
 
 
 --
--- Name: Users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 175 (class 1259 OID 22668)
+-- Name: Users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE "Users" (
@@ -85,10 +262,9 @@ CREATE TABLE "Users" (
 );
 
 
-ALTER TABLE "Users" OWNER TO postgres;
-
 --
--- Name: Users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- TOC entry 174 (class 1259 OID 22666)
+-- Name: Users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE "Users_id_seq"
@@ -99,31 +275,184 @@ CREATE SEQUENCE "Users_id_seq"
     CACHE 1;
 
 
-ALTER TABLE "Users_id_seq" OWNER TO postgres;
-
 --
--- Name: Users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- TOC entry 2080 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: Users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE "Users_id_seq" OWNED BY "Users".id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 1922 (class 2604 OID 22833)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Accounts" ALTER COLUMN id SET DEFAULT nextval('"Accounts_id_seq"'::regclass);
+
+
+--
+-- TOC entry 1920 (class 2604 OID 22720)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Favorites" ALTER COLUMN id SET DEFAULT nextval('"Favorites_id_seq"'::regclass);
+
+
+--
+-- TOC entry 1923 (class 2604 OID 22849)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Operations" ALTER COLUMN id SET DEFAULT nextval('"Operations_id_seq"'::regclass);
+
+
+--
+-- TOC entry 1924 (class 2604 OID 22882)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Rates" ALTER COLUMN id SET DEFAULT nextval('"Rates_id_seq"'::regclass);
+
+
+--
+-- TOC entry 1918 (class 2604 OID 22660)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY "Subjects" ALTER COLUMN id SET DEFAULT nextval('"Subjects_id_seq"'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- TOC entry 1919 (class 2604 OID 22671)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY "Users" ALTER COLUMN id SET DEFAULT nextval('"Users_id_seq"'::regclass);
 
 
 --
--- Data for Name: Subjects; Type: TABLE DATA; Schema: public; Owner: postgres
+-- TOC entry 2063 (class 0 OID 22830)
+-- Dependencies: 180
+-- Data for Name: Accounts; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY "Accounts" (id, name, description, ammount, currency, "createdAt", "updatedAt", "SubjectId") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2081 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: Accounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('"Accounts_id_seq"', 1, false);
+
+
+--
+-- TOC entry 2061 (class 0 OID 22771)
+-- Dependencies: 178
+-- Data for Name: Currencies; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY "Currencies" (id, name, nominal, "createdAt", "updatedAt") FROM stdin;
+R01235	Доллар США	1	2015-12-13 15:38:07+03	2015-12-13 15:38:09+03
+R01239	Евро	1	2015-12-13 15:38:38+03	2015-12-13 15:38:39+03
+\.
+
+
+--
+-- TOC entry 2060 (class 0 OID 22717)
+-- Dependencies: 177
+-- Data for Name: Favorites; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY "Favorites" (id, "order", "createdAt", "updatedAt", "SubjectId", "UserId") FROM stdin;
+18	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+20	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+24	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+26	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+27	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+28	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+30	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+31	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+33	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+34	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+35	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+36	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+37	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+38	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	4	1
+15	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	1	1
+16	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	2	1
+17	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	3	1
+19	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	5	1
+22	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	6	1
+23	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	7	1
+25	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	8	1
+29	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	9	1
+32	0	2015-12-12 16:40:15+03	2015-12-12 16:40:20+03	10	1
+\.
+
+
+--
+-- TOC entry 2082 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: Favorites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('"Favorites_id_seq"', 38, true);
+
+
+--
+-- TOC entry 2065 (class 0 OID 22846)
+-- Dependencies: 182
+-- Data for Name: Operations; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY "Operations" (id, date, type, "orderNumber", tax, paid, "mustPay", given, "createdAt", "updatedAt", "fromAccountId", "toAccountId") FROM stdin;
+\.
+
+
+--
+-- TOC entry 2083 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: Operations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('"Operations_id_seq"', 1, false);
+
+
+--
+-- TOC entry 2067 (class 0 OID 22879)
+-- Dependencies: 184
+-- Data for Name: Rates; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY "Rates" (id, date, value, nominal, "createdAt", "updatedAt", "currencyId") FROM stdin;
+21	2015-12-11 00:00:00+03	69.2151	1.0000	2015-12-13 23:17:57.782+03	2015-12-13 23:17:57.782+03	R01235
+22	2015-12-12 00:00:00+03	69.1755	1.0000	2015-12-13 23:17:57.792+03	2015-12-13 23:17:57.792+03	R01235
+23	2015-12-11 00:00:00+03	76.0674	1.0000	2015-12-13 23:17:57.825+03	2015-12-13 23:17:57.825+03	R01239
+24	2015-12-12 00:00:00+03	75.7472	1.0000	2015-12-13 23:17:57.829+03	2015-12-13 23:17:57.829+03	R01239
+29	2015-12-15 00:00:00+03	70.2244	1.0000	2015-12-15 22:32:25.242+03	2015-12-15 22:32:25.242+03	R01235
+30	2015-12-15 00:00:00+03	76.9659	1.0000	2015-12-15 22:32:25.28+03	2015-12-15 22:32:25.28+03	R01239
+\.
+
+
+--
+-- TOC entry 2084 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: Rates_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('"Rates_id_seq"', 30, true);
+
+
+--
+-- TOC entry 2056 (class 0 OID 22657)
+-- Dependencies: 173
+-- Data for Name: Subjects; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY "Subjects" (id, name, description, "INN", "KPP", type, "isSystem", "createdAt", "updatedAt") FROM stdin;
@@ -227,33 +556,90 @@ COPY "Subjects" (id, name, description, "INN", "KPP", type, "isSystem", "created
 98	Maryann	Veniam veniam do cillum commodo fugiat cillum nisi anim ex eu.	4558765035	5869406517	ИП	t	2015-12-08 22:59:36.929+03	2015-12-08 22:59:36.929+03
 99	Gabrielle	Aliqua ex nulla aute amet pariatur.	8132832130	3083565864	ИП	f	2015-12-08 22:59:36.932+03	2015-12-08 22:59:36.932+03
 100	Freeman	Anim in nulla aute esse in do.	8140290899	2851691544	Компания	f	2015-12-08 22:59:36.936+03	2015-12-08 22:59:36.936+03
+102	фывфыв	фы	фыв	фыв	Компания	f	2015-12-12 00:24:14.492+03	2015-12-12 00:24:14.492+03
+103	фывфыв	фы	фыв	фыв	Компания	t	2015-12-12 00:24:22.808+03	2015-12-12 00:24:22.808+03
+104	фывфыв	фы	фыв	фыв	Компания	t	2015-12-12 00:24:56+03	2015-12-12 00:24:56+03
+105	asdf	adsfasdf	asdf	asdf	Компания	f	2015-12-15 22:53:46.729+03	2015-12-15 22:53:46.729+03
 \.
 
 
 --
--- Name: Subjects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- TOC entry 2085 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: Subjects_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"Subjects_id_seq"', 101, true);
+SELECT pg_catalog.setval('"Subjects_id_seq"', 105, true);
 
 
 --
--- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: postgres
+-- TOC entry 2058 (class 0 OID 22668)
+-- Dependencies: 175
+-- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY "Users" (id, login, password, "firstName", "lastName", phone, "createdAt", "updatedAt") FROM stdin;
+1	user	00700b7885f95361590e8dd4a6bd53b567a37f98	User	User	asdasd	2015-12-10 23:47:26.715+03	2015-12-10 23:47:21.86+03
 \.
 
 
 --
--- Name: Users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- TOC entry 2086 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: Users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('"Users_id_seq"', 1, false);
+SELECT pg_catalog.setval('"Users_id_seq"', 1, true);
 
 
 --
--- Name: Subjects_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 1934 (class 2606 OID 22838)
+-- Name: Accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Accounts"
+    ADD CONSTRAINT "Accounts_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1932 (class 2606 OID 22775)
+-- Name: Currencies_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Currencies"
+    ADD CONSTRAINT "Currencies_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1930 (class 2606 OID 22723)
+-- Name: Favorites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Favorites"
+    ADD CONSTRAINT "Favorites_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1936 (class 2606 OID 22851)
+-- Name: Operations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Operations"
+    ADD CONSTRAINT "Operations_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1938 (class 2606 OID 22884)
+-- Name: Rates_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Rates"
+    ADD CONSTRAINT "Rates_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1926 (class 2606 OID 22665)
+-- Name: Subjects_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY "Subjects"
@@ -261,7 +647,8 @@ ALTER TABLE ONLY "Subjects"
 
 
 --
--- Name: Users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- TOC entry 1928 (class 2606 OID 22676)
+-- Name: Users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY "Users"
@@ -269,14 +656,68 @@ ALTER TABLE ONLY "Users"
 
 
 --
--- Name: public; Type: ACL; Schema: -; Owner: postgres
+-- TOC entry 1939 (class 1259 OID 22890)
+-- Name: rates_date_currency_id; Type: INDEX; Schema: public; Owner: -
 --
 
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
+CREATE UNIQUE INDEX rates_date_currency_id ON "Rates" USING btree (date, "currencyId");
 
+
+--
+-- TOC entry 1942 (class 2606 OID 22839)
+-- Name: Accounts_SubjectId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Accounts"
+    ADD CONSTRAINT "Accounts_SubjectId_fkey" FOREIGN KEY ("SubjectId") REFERENCES "Subjects"(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- TOC entry 1940 (class 2606 OID 22724)
+-- Name: Favorites_SubjectId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Favorites"
+    ADD CONSTRAINT "Favorites_SubjectId_fkey" FOREIGN KEY ("SubjectId") REFERENCES "Subjects"(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- TOC entry 1941 (class 2606 OID 22729)
+-- Name: Favorites_UserId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Favorites"
+    ADD CONSTRAINT "Favorites_UserId_fkey" FOREIGN KEY ("UserId") REFERENCES "Users"(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- TOC entry 1943 (class 2606 OID 22852)
+-- Name: Operations_fromAccountId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Operations"
+    ADD CONSTRAINT "Operations_fromAccountId_fkey" FOREIGN KEY ("fromAccountId") REFERENCES "Accounts"(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- TOC entry 1944 (class 2606 OID 22857)
+-- Name: Operations_toAccountId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Operations"
+    ADD CONSTRAINT "Operations_toAccountId_fkey" FOREIGN KEY ("toAccountId") REFERENCES "Accounts"(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
+-- TOC entry 1945 (class 2606 OID 22885)
+-- Name: Rates_currencyId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY "Rates"
+    ADD CONSTRAINT "Rates_currencyId_fkey" FOREIGN KEY ("currencyId") REFERENCES "Currencies"(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+-- Completed on 2015-12-18 23:38:28
 
 --
 -- PostgreSQL database dump complete
