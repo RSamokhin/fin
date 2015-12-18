@@ -34,7 +34,14 @@ app.use(serve('../web/build/'));
 co(function * (){
     yield models.sequelize.sync();
 
-    // yield restoreDatabase();
+    //try
+    //{
+    //    yield restoreDatabase();
+    //}
+    //catch(e)
+    //{
+    //    console.log(e);
+    //}
 
     app.listen(config.get('port'));
     console.log('server listening on port ' + config.get('port'));
@@ -45,15 +52,8 @@ function * restoreDatabase()
 {
     return new Promise(function(resolve, reject){
         var cfg = config.get('database');
-        var cmdLine = [
-            'psql',
-            '-d' + cfg.database,
-            '-f' + path.join(__dirname, '../db/data.sql'),
-            '-h' + cfg.server,
-            '-U' + cfg.user
-        ].join(' ');
         var exec = require('child_process').exec;
-        exec(cmdLine, {
+        exec(path.join(__dirname, '../tools/restoreData.sh'), {
             env: {
                 PGPASSWORD: cfg.password
             }
