@@ -7,14 +7,27 @@ div(class='main__block m-2x' data-main-block='true' id='#{hashLink}')
     div(class='main__block-logo #{blockIcon}')
     div(class='main__block-title') #{blockTitle}
     div(class='main__block-search__container')
-        input(class='main__block-search__input' placeholder='Введите запрос' autocomplete='off')
-        div(class='main__block-search__button') Найти
+        input(class='main__block-search__input' placeholder='Введите запрос' autocomplete='off' data-search-clients='true')
+        div(
+            class='main__block-search__button'
+            data-search-button='/subjects?search={mySearch}'
+            data-bind-click='simpleSearch'
+            data-target-selector='[data-search-clients=true]'
+            data-table='/subjects'
+            data-from-simple-search='true'
+        ) Найти
         if searchResults !== undefined
             div(class='main__block-search__results')
             - var i = 1
             for searchResult in searchResults
                 if i < 5
-                    div(class='main__block-search__result' title='#{searchResult}') #{searchResult}
+                    div(
+                        class='main__block-search__result'
+                        title='#{searchResult}'
+                        data-search-value='#{searchResult}'
+                        data-bind-click='toggleSearchFromExample'
+                        data-target-selector='[data-search-clients=true]'
+                    ) #{searchResult}
                     - i = i + 1;
 
     hr(class='main__block-hr')

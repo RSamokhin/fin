@@ -46,25 +46,53 @@ window.Handlers = {
                 handler.call($needForm);
             }
         },
+        toggleSearchFromExample: function () {
+            var $example = $(this),
+                $searchField = $($example.attr('data-target-selector')),
+                searchValue = $example.attr('data-search-value');
+            $searchField.val(searchValue);
+            $example.closest('[data-main-block=true]').find('[data-search-button]').trigger('click');
+        },
         switchMainMenu: function () {
             $('[data-menu-button=true]').removeClass('m-active');
             if ($(this).attr('data-menu-button')) {
                 $(this).addClass('m-active');
             }
         },
-        loadTableFromUrl: function () {
+        loadTableFromUrl: function (url) {
             var $button = $(this),
-                tableUrl = $button.attr('data-table'),
-                $container = $button.closest('[data-main-block=true]').find('[data-append-table="' + tableUrl + '"]');
-            $.get(tableUrl, {
-                fromAjax: true
-            }, function (data) {
-                var preloadFunctions = $container.attr('data-preload-handlers') ? $container.attr('data-preload-handlers').split(' ') : [];
-                $container.html(data);
-                preloadFunctions.forEach(function (func) {
-                    window.Handlers.onPageLoad[func]($container);
-                })
-            }, 'html')
+                tableUrl = (url && typeof url === 'string') ? url : $button.attr('data-table'),
+                $container = $button.closest('[data-main-block=true]').find('[data-append-table="' + $button.attr('data-table') + '"]'),
+                fromSimpleSearch = $button.attr('data-from-simple-search') ? true : false;
+
+            if (!$container.closest('[data-form]').hasClass('m-hidden') || fromSimpleSearch || $container.attr('data-from-simple-search') === 'true') {
+                $.get(tableUrl, {
+                    fromAjax: true
+                }, function (data) {
+                    var preloadFunctions = $container.attr('data-preload-handlers') ? $container.attr('data-preload-handlers').split(' ') : [];
+                    $container.html(data);
+                    $container
+                        .closest('[data-form]')
+                        .removeClass('m-hidden');
+                    if (fromSimpleSearch) {
+                        $container.attr('data-from-simple-search', 'true');
+                    } else {
+                        $container.attr('data-from-simple-search', 'false');
+                    }
+                    preloadFunctions.forEach(function (func) {
+                        window.Handlers.onPageLoad[func]($container);
+                    })
+                }, 'html');
+            }
+        },
+        simpleSearch: function () {
+            var $button = $(this),
+                searchString = $($button.attr('data-target-selector')).val(),
+                url = $button.attr('data-search-button').replace('{mySearch}', searchString),
+                $container = $button.closest('[data-main-block=true]').find('[data-append-table="' + $button.attr('data-table') + '"]');
+            $container.attr('data-from-simple-search', true);
+            (window.Handlers.click.loadTableFromUrl.bind($button))(url);
+
         },
         blockFormCollapse: function () {
             $(this).closest('[data-form]').addClass('m-hidden');
