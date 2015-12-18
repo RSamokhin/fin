@@ -1,2 +1,2 @@
 #!/bin/sh
-psql -dfin -hlocalhost -Ufin < ../db/data.sql
+psql -dfin -hlocalhost -Upostgres < ../db/data.sql
