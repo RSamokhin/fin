@@ -78,7 +78,9 @@ router.post('/login.html', koaBody, koaValidate, csrf.middleware, function * (){
 
     this.cookies.set(config.cookie, jwt.sign({
         userId: user.id
-    }, config.secret));
+    }, config.secret, {
+        expiresInSeconds: config.tokenExpires
+    }));
 
     this.response.redirect('/');
 });
