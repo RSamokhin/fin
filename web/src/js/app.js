@@ -62,12 +62,6 @@ window.Handlers = {
             $searchField.val(searchValue);
             $example.closest('[data-main-block=true]').find('[data-search-button]').trigger('click');
         },
-        switchMainMenu: function () {
-            $('[data-menu-button=true]').removeClass('m-active');
-            if ($(this).attr('data-menu-button')) {
-                $(this).addClass('m-active');
-            }
-        },
         loadTableFromUrl: function (url) {
             var $button = $(this),
                 tableUrl = (url && typeof url === 'string') ? url : $button.attr('data-table'),

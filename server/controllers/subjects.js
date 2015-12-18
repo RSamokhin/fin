@@ -29,7 +29,9 @@ router.get('/subjects', baseTable({
     this.body = yield render('modules/subjects', {
         subjects: subjects.map(subject => subject.toJSON()),
         order: this.baseTable.order,
-        fromAjax: JSON.stringify(this.query.fromAjax) ? 1 : 0
+        fromAjax: JSON.stringify(this.query.fromAjax) ? 1 : 0,
+        splitterTitle: 'Субъекты',
+        menuSubjectsCSSModifier: 'm-active'
     });
 });
 
