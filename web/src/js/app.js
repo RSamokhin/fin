@@ -46,6 +46,12 @@ window.Handlers = {
                 handler.call($needForm);
             }
         },
+        switchMainMenu: function () {
+            $('[data-menu-button=true]').removeClass('m-active');
+            if ($(this).attr('data-menu-button')) {
+                $(this).addClass('m-active');
+            }
+        },
         loadTableFromUrl: function () {
             var $button = $(this),
                 tableUrl = $button.attr('data-table'),
@@ -79,8 +85,9 @@ window.Handlers = {
             });
             return false;
         },
-        goHome: function () {
-            location.replace('/');
+        goTo: function () {
+            var newUrl = $(this).attr('data-go-to');
+            location.replace(newUrl);
         }
     },
     submit: {
