@@ -9,6 +9,17 @@
 .add-form-simple {
 	background-color: #404040;
 }
+.table {
+	&__new-window {
+		float: right;
+		margin-right: 30px;
+		color: white;
+		cursor: pointer;
+		&:hover {
+			opacity: 0.7;
+		}
+	}
+}
 .sfs {
 	&__no-form {
 		width: 100%;

@@ -34,14 +34,14 @@ app.use(serve('../web/build/'));
 co(function * (){
     yield models.sequelize.sync();
 
-    //try
-    //{
-    //    yield restoreDatabase();
-    //}
-    //catch(e)
-    //{
-    //    console.log(e);
-    //}
+    try
+    {
+        yield restoreDatabase();
+    }
+    catch(e)
+    {
+        console.log(e);
+    }
 
     app.listen(config.get('port'));
     console.log('server listening on port ' + config.get('port'));
@@ -63,4 +63,4 @@ function * restoreDatabase()
             resolve(stdout)
         });
     });
-};
+}

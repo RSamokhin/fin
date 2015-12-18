@@ -74,6 +74,7 @@ window.Handlers = {
                     $container
                         .closest('[data-form]')
                         .removeClass('m-hidden');
+                    $button.closest('[data-main-block=true]').find('[data-bind-click=openTableInNewWindow]').attr('data-new-url', tableUrl);
                     if (fromSimpleSearch) {
                         $container.attr('data-from-simple-search', 'true');
                     } else {
@@ -93,6 +94,11 @@ window.Handlers = {
             $container.attr('data-from-simple-search', true);
             (window.Handlers.click.loadTableFromUrl.bind($button))(url);
 
+        },
+        openTableInNewWindow: function () {
+            var $button = $(this),
+                url = $button.attr('data-new-url');
+            window.location.replace(url);
         },
         blockFormCollapse: function () {
             $(this).closest('[data-form]').addClass('m-hidden');
