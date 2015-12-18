@@ -36,7 +36,7 @@ co(function * (){
 
     try
     {
-        //yield restoreDatabase();
+        yield restoreDatabase();
     }
     catch(e)
     {
