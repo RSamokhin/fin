@@ -40,11 +40,20 @@ window.Handlers = {
                 return;
             }
             $needForm.removeClass('m-hidden');
-            var onOpen = $needForm.data('onOpen');
-            var handler = onOpen && window.Handlers.onToggledFormOpen && window.Handlers.onToggledFormOpen[onOpen];
-            if (handler) {
-                handler.call($needForm);
-            }
+        },
+        loadFormFromUrl: function () {
+            var $button = $(this),
+                fName = $button.attr('data-form-name'),
+                $needForm = $button
+                                .closest('[data-main-block=true]')
+                                .find('[data-append-form=' + fName + ']'),
+                url = $button.attr('data-form-url');
+            $.get(url, {
+                fromAjax: true
+            }, function(data){
+                $needForm.html(data);
+                $needForm.closest('.main-block-form-container').find('[data-bind-click=openTableInNewWindow]').attr('data-new-url', url);
+            }, 'html');
         },
         toggleSearchFromExample: function () {
             var $example = $(this),
@@ -74,7 +83,7 @@ window.Handlers = {
                     $container
                         .closest('[data-form]')
                         .removeClass('m-hidden');
-                    $button.closest('[data-main-block=true]').find('[data-bind-click=openTableInNewWindow]').attr('data-new-url', tableUrl);
+                    $container.closest('.main-block-form-container').find('[data-bind-click=openTableInNewWindow]').attr('data-new-url', tableUrl);
                     if (fromSimpleSearch) {
                         $container.attr('data-from-simple-search', 'true');
                     } else {
@@ -98,7 +107,7 @@ window.Handlers = {
         openTableInNewWindow: function () {
             var $button = $(this),
                 url = $button.attr('data-new-url');
-            window.location.replace(url);
+            window.location = url;
         },
         blockFormCollapse: function () {
             $(this).closest('[data-form]').addClass('m-hidden');
@@ -121,7 +130,7 @@ window.Handlers = {
         },
         goTo: function () {
             var newUrl = $(this).attr('data-go-to');
-            location.replace(newUrl);
+            window.location = newUrl;
         }
     },
     submit: {
@@ -150,15 +159,6 @@ window.Handlers = {
             return false;
         }
     },
-    onToggledFormOpen: {
-        loadFavs: function() {
-            this.addClass('m-hidden');
-            var form = this;
-            $.get('/fav', function(favs){
-                form.replaceWith(favs);
-            }, 'html');
-        }
-    }
 };
 
 $(function(){

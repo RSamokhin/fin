@@ -25,10 +25,11 @@ router.get('/fav', function * (){
         this.body = data;
         return;
     }
-    this.body = yield render('modules/fav-form-cards', {
+    this.body = yield render('modules/fav-cards', {
         favs: data,
         fName: 'Избранные субъекты',
-        bName: 'Скрыть'
+        bName: 'Скрыть',
+        fromAjax: JSON.stringify(this.query.fromAjax) ? 1 : 0
     });
 });
 
