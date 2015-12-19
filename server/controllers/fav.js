@@ -169,6 +169,24 @@ router.post('/fav/search', koaBody, koaValidate, csrf.middleware, function * ()
     };
 });
 
+router.get('/fav/search', koaValidate, function * ()
+{
+    this.checkQuery('type').notEmpty().isIn(['Subject', 'Account']);
+    if (this.errors)
+    {
+        this.body = this.errors;
+        return;
+    }
+    var searches = yield models.Searches.findAll({
+        where: {
+            type: this.query.type
+        },
+        order: [['updatedAt', 'DESC']]
+    });
+
+    this.body = searches.map(search => search.toJSON());
+});
+
 module.exports.registerApp = function(app)
 {
     app
