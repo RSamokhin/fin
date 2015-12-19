@@ -18,5 +18,6 @@
     "cookie": "token",
     "tokenExpires": 36000
   },
+  "maxSearchHistory": 10,
   "sessionKey": "Asd132@asdf"
 }

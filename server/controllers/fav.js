@@ -1,9 +1,11 @@
 
+var assert = require('assert');
 var router = require('koa-router')();
 var koaBody = require('koa-body')();
 var koaValidate = require('koa-validate')();
 var csrf = require('koa-csrf');
 
+var config = require('../config');
 var models = require("../models");
 var user = require("./user");
 
@@ -118,6 +120,54 @@ router.post('/fav/delete/:id', koaBody, koaValidate, csrf.middleware, function *
     }
 });
 
+function * saveSearchToHistory (userId, text, type)
+{
+    var searches = yield models.Searches.findAll({
+        where: {
+            type: type
+        },
+        order: [['updatedAt', 'ASC']]
+    });
+    var maxItems = config.get('maxSearchHistory');
+
+    var existsSearch = searches.find(function(search){
+        return search.text === text;
+    });
+
+    if (searches.length < maxItems && !existsSearch)
+    {
+        yield models.Searches.create({
+            type: type,
+            text: text,
+            UserId: userId
+        });
+        return;
+    }
+
+    assert(searches.length > 0);
+    existsSearch = existsSearch || searches[0];
+    existsSearch.text = text;
+    existsSearch.changed('text', true);
+    yield existsSearch.save();
+}
+module.exports.saveSearchToHistory = saveSearchToHistory;
+
+router.post('/fav/search', koaBody, koaValidate, csrf.middleware, function * ()
+{
+    this.checkBody('type').notEmpty().isIn(['Subject', 'Account']);
+    this.checkBody('text').notEmpty();
+    if (this.errors)
+    {
+        this.body = this.errors;
+        return;
+    }
+    var body = this.request.body;
+    yield saveSearchToHistory(this.userId, body.text, body.type);
+
+    this.body = {
+        "message": "OK"
+    };
+});
 
 module.exports.registerApp = function(app)
 {

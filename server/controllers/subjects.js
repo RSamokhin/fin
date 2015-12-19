@@ -12,7 +12,8 @@ var render = require('../views');
 router.get('/subjects', baseTable({
     columns: ['id', 'name', 'description', 'INN', 'KPP', 'INN', 'isSystem', 'type'],
     defaultOrder: ['id', 'asc'],
-    searchColumns: ['name', 'description', 'INN', 'KPP']
+    searchColumns: ['name', 'description', 'INN', 'KPP'],
+    saveSearchType: 'Subject'
 }), function * (){
     var subjects = yield models.Subject.findAll({
         order: this.baseTable.order,
