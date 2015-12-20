@@ -47,29 +47,12 @@ header {
                 height: 50px;
                 margin-top: 5px;
                 position: relative;
-                &-switch {
-                    color: #9A9A9A;
-                    width: 100%;
-                    text-align: center;
-                    font-size: 10px;
-                    margin-bottom: 3px;
-                    & > span {
-                        cursor: pointer;
-                        &:hover {
-                            opacity: 0.8;
-                        }
-                        &.m-active {
-                            font-weight: bold;
-                            color: #777676;
-                            text-decoration: underline;
-                        }
-                    }
-                }
                 & > i {
                     font-size: 20px;
                     line-height: 48px;
                     cursor: pointer;
                     margin-left: 10px;
+                    margin-top: 10px;
                     &:hover {
                         opacity: 0.8;
                     }

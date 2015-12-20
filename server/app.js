@@ -32,7 +32,7 @@ fav.registerApp(app);
 app.use(serve('../web/build/'));
 
 co(function * (){
-    yield models.sequelize.sync();
+        yield models.sequelize.sync();
 
     //try
     //{
