@@ -2,69 +2,61 @@ extends ./main-block
 
 block vars
     -
-        var hashLink = 'accounts',
-            blockIcon = 'm-accounts__block-logo',
-            blockTitle = 'Картотека счетов',
-            blockControls = [
-                {
-                    id: 1,
-                    name: 'Расширенный поиск',
-                    formName: 'no-form'
-                },{
-                    id: 2,
-                    name: 'Полный список',
-                    formName: 'clients-table',
-                    clicks: ['loadTableFromUrl'],
-                    dataAttrs: {
-                        "data-table": "/subjects"
-                    }
-                },{
-                    id: 3,
-                    name: 'Добавить',
-                    formName: 'add-form'
-                },{
-                    id: 4,
-                    name: 'Избранное',
-                    formName: 'fav',
-                    clicks: ['loadFormFromUrl'],
-                    dataAttrs: {
-                        "data-form-url": "/fav"
-                    }
-                }
-            ],
-            searchResults = ['USD', '450999.01', 'ООО Игарка', '77290159938'];
+        var hashLink = 'accounts'
+        var blockIcon = 'm-accounts__block-logo'
+        var blockTitle = 'Картотека счетов'
+        var blockControls = [
+            {
+                id: 1,
+                name: 'Расширенный поиск',
+                formName: 'no-form'
+            }, {
+                id: 2,
+                name: 'Полный список',
+                formName: 'no-form'
+            }, {
+                id: 3,
+                name: 'Добавить',
+                formName: 'add-form'
+            }, {
+                id: 4,
+                name: 'Избранное',
+                formName: 'no-form'
+            }
+        ]
+        var searchResults = ['USD', '450999.01', 'ООО Игарка', '77290159938'];
 
 
 block forms
     -
         var addFormFields = [
             {
-                name: 'Тип субъекта',
-                dataType: 'selector',
-                defaultValue: 'Компания',
-                data: ['Компания', 'ИП', 'Физ-лицо'],
-                fName: 'type',
+                name: 'Номер счета',
+                dataType: 'text',
+                placeholder: 'Номер счета',
+                fName: 'id',
                 width: 1,
                 height: 1
             },{
-                name: 'Название/Фио',
+                name: 'Валюта',
+                dataType: 'selector',
+                defaultValue: 'RUR',
+                data: ['RUR', 'USD', 'EUR'],
+                fName: 'currency',
+                width: 1,
+                height: 1
+            },{
+                name: 'Название счета',
                 dataType: 'text',
-                placeholder: 'Полное наименование субъекта',
+                placeholder: 'Название счета',
                 fName: 'name',
                 width: 1,
                 height: 1
             },{
-                name: 'ИНН',
+                name: 'Владелец Счета',
                 dataType: 'text',
-                placeholder: 'ИНН субъекта',
-                fName: 'INN',
-                width: 1,
-                height: 1
-            },{
-                name: 'КПП',
-                dataType: 'text',
-                placeholder: 'КПП субъекта',
-                fName: 'KPP',
+                placeholder: 'Владелец Счета',
+                fName: 'owner',
                 width: 1,
                 height: 1
             },{
@@ -74,22 +66,15 @@ block forms
                 fName: 'description',
                 width: 2,
                 height: 4
-            },{
-                name: 'Системная организация',
-                dataType: 'bool',
-                default: false,
-                fName: 'isSystem',
-                width: 1,
-                height: 1
             }
         ]
-        fName = 'Добавление субъекта'
+        fName = 'Добавление счета'
         bName = 'Сохранить'
     div.main-block-form-container
         include ./add-form-simple.jade
 
     -
-        var fName = 'Избранные субъекты'
+        var fName = 'Избранные счета'
             bName = 'Скрыть'
     div.main-block-form-container
         include ./fav-form-cards
@@ -102,6 +87,6 @@ block forms
 
     -
         var bName = 'Скрыть',
-        fName ='Список субъектов';
+        fName ='Список счетов';
     div.main-block-form-container
         include ./clients-table
