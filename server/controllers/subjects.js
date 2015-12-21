@@ -32,7 +32,8 @@ router.get('/subjects', baseTable({
         order: this.baseTable.order,
         fromAjax: JSON.stringify(this.query.fromAjax) ? 1 : 0,
         splitterTitle: 'Субъекты',
-        menuSubjectsCSSModifier: 'm-active'
+        menuSubjectsCSSModifier: 'm-active',
+        JSONOnly: JSON.stringify(this.query.JSONOnly) ? 1 : 0
     });
 });
 
