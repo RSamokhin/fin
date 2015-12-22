@@ -34,7 +34,9 @@ block forms
                 name: 'Номер счета',
                 dataType: 'text',
                 placeholder: 'Номер счета',
-                fName: 'id',
+                dataAttrs: {
+                    name: 'id'
+                },
                 width: 1,
                 height: 1
             },{
@@ -42,37 +44,55 @@ block forms
                 dataType: 'selector',
                 defaultValue: 'RUR',
                 data: ['RUR', 'USD', 'EUR'],
-                fName: 'currency',
+                dataAttrs: {
+                    name:  'currency'
+                },
                 width: 1,
                 height: 1
             },{
                 name: 'Название счета',
                 dataType: 'text',
                 placeholder: 'Название счета',
-                fName: 'name',
+                dataAttrs: {
+                    name:  'name'
+                },
                 width: 1,
                 height: 1
             },{
                 name: 'Владелец Счета',
                 dataType: 'text',
-                icon: 'search',
+                icon: {
+                    pic: 'search',
+                    dataAttrs: {
+                        "data-bind-click": "traverseEvent",
+                        "data-event-target-selector": "[data-event-trigger-selector='addAccountOwner']",
+                        "data-event-name": "keydown"
+                    }
+                },
                 placeholder: 'Владелец Счета',
-                fName: 'owner',
                 width: 1,
                 height: 1,
+                traverseValue: true,
                 dataAttrs: {
                     "data-autocomplete-field": "true",
                     "data-autocomplete-source": "/subjects?fromAjax=true&JSONOnly=true",
                     "data-autocomplete-param": "search",
                     "data-autocomplete-response-priority": "id,name,INN,KPP,description",
                     "data-autocomplete-display-value": "name,INN",
-                    "data-autocomplete-value": "id"
+                    "data-autocomplete-value": "id",
+                    "data-bind-click": "traverseEvent",
+                    "data-event-target-selector": "[data-event-trigger-selector='addAccountOwner']",
+                    "data-event-trigger-selector": "addAccountOwner",
+                    "data-event-name": "keydown",
+                    "data-traverse-value": 'owner'
                 }
             },{
                 name: 'Описание',
                 dataType: 'textarea',
                 placeholder: 'Комментарии',
-                fName: 'description',
+                dataAttrs: {
+                    name:  'description'
+                },
                 width: 2,
                 height: 4
             }

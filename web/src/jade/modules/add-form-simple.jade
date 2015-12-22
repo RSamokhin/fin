@@ -10,19 +10,24 @@ div(class='add-form-simple m-hidden', data-form='add-form')
 				case field.dataType
 					when 'text'
 						input(
-							name='#{field.fName}'
 							class='sfs__field-input'
 							placeholder='   #{field.placeholder}'
 						)&attributes(attributes)
 						if field.icon
-							i(class='fa fa-#{field.icon} sfs__field-icon')
+							if field.icon.dataAttrs
+								- attributes = {}
+								- Object.keys(field.icon.dataAttrs).forEach(function (attr) {attributes[attr] = field.icon.dataAttrs[attr]})
+							i(class='fa fa-#{field.icon.pic} sfs__field-icon')&attributes(attributes)
 					when 'selector'
-						select(name='#{field.fName}' class='sfs__field-select')&attributes(attributes)
+						select(class='sfs__field-select')&attributes(attributes)
 							each d in field.data
 								option(value='#{d}') #{d}
 					when 'textarea'
-						textarea(name='#{field.fName}' class='sfs__field-textarea' placeholder='   #{field.placeholder}' rows='#{field.height}')&attributes(attributes)
+						textarea(class='sfs__field-textarea' placeholder='   #{field.placeholder}' rows='#{field.height}')&attributes(attributes)
 					when 'bool'
-						input(name='#{field.fName}' class='sfs__field-checkbox' type='checkbox' )&attributes(attributes)
+						input(class='sfs__field-checkbox' type='checkbox' )&attributes(attributes)
 				span(class='sfs__field-title') #{field.name}
+				if field.traverseValue
+					input(name='#{field.dataAttrs["data-traverse-value"]}' class='m-hidden')
+					div(data-name='#{field.dataAttrs["data-traverse-value"]}' class='sfs__field-additional-info')
 		input(type='submit', class='sfs__button', value=bName)

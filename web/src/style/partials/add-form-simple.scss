@@ -45,6 +45,15 @@
 		@include no-select;
 	}
 	&__field {
+		&-additional-info {
+			position: absolute;
+			margin-top: 5px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			max-width: 250px;
+			color: green;
+		}
 		&-icon {
 			position: absolute;
 			top: 19px;

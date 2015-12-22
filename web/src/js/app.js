@@ -41,22 +41,22 @@ window.Handlers = {
                     items.forEach(function (item) {
                         sortOrder.some(function (category) {
                             if (item[category].toString().indexOf(that.term) >= 0) {
+                                var label = displayValue.reduce(function (a, b, index) {
+                                        return a + (item[b] ? ((index > 0 ? ' | ' + b + '=' : '') + item[b]) : '');
+                                    }, '');
                                 arrayObject[category].push({
-                                    label: displayValue.reduce(function (a, b, index) {
-                                        return a + (index > 0 ? ' | ' + b + '=' : '') + item[b];
-                                    }, ''),
-                                    value: item[realValue],
+                                    label: label,
+                                    value: label,
+                                    realValue: item[realValue],
                                     category: category
                                 });
                                 return true;
                             }
                         });
                     });
-                    console.log(items);
                     items = sortOrder.reduce(function (a, b) {
                         return a.concat(arrayObject[b]);
                     }, []);
-                    console.log(items);
                     $.each(items, function( index, item ) {
                         var li;
                         if ( item.category != currentCategory ) {
@@ -90,13 +90,28 @@ window.Handlers = {
                             }
                         });
                     },
+                    select: function(event, ui) {
+                        $el = $(this);
+                        if (ui && ui.item && $el.attr('data-traverse-value')) {
+                            $el
+                                .parent()
+                                .find('[name="' + $el.attr('data-traverse-value') + '"]')
+                                .val(ui.item.realValue);
+                            $el
+                                .parent()
+                                .find('[data-name="' + $el.attr('data-traverse-value') + '"]')
+                                .text('Выбран: ' + ui.item.value)
+                                .attr({
+                                    'title': ui.item.value
+                                });
+                        }
+                    },
                     realValue: realValue,
                     displayValue: displayValue,
                     sortOrder: sortOrder,
                     minLength: 2,
-                    select: function (event, ui) {
-                            console.log(this);
-                    }
+                    autoFocus: true,
+                    delay: 800
                 })
 
             })
@@ -112,6 +127,12 @@ window.Handlers = {
         }
     },
     click: {
+        traverseEvent: function () {
+            var $el = $(this),
+                eventTargetSelector = $el.attr('data-event-target-selector'),
+                eventName = $el.attr('data-event-name');
+            $(eventTargetSelector).trigger(eventName);
+        },
         showToggledForm: function() {
             var $button = $(this),
                 fName = $button.attr('data-form-name'),
