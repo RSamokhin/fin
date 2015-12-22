@@ -9,6 +9,8 @@ div(class='main__block m-2x' data-main-block='true' id='#{hashLink}')
     div(class='main__block-search__container')
         - var dataSelector = 'data-search-' + searchSelector
         - var attributes = {}
+        if Object.keys(searchFieldAttrs).length
+            - attributes = searchFieldAttrs
         - attributes[dataSelector] = 'true'
 
         input(
@@ -56,3 +58,4 @@ div(class='main__block m-2x' data-main-block='true' id='#{hashLink}')
 
 - simpleSearchUrl = '';
 - searchSelector = '';
+- searchFieldAttrs = {};
