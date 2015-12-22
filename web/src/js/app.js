@@ -34,6 +34,7 @@ window.Handlers = {
                         sortOrder = that.options.sortOrder,
                         realValue = that.options.realValue,
                         displayValue = that.options.displayValue,
+                        displayLabel = that.options.displayLabel,
                         arrayObject = {};
                     sortOrder.forEach(function (category) {
                         arrayObject[category] = [];
@@ -41,12 +42,13 @@ window.Handlers = {
                     items.forEach(function (item) {
                         sortOrder.some(function (category) {
                             if (item[category].toString().indexOf(that.term) >= 0) {
-                                var label = displayValue.reduce(function (a, b, index) {
-                                        return a + (item[b] ? ((index > 0 ? ' | ' + b + '=' : '') + item[b]) : '');
-                                    }, '');
                                 arrayObject[category].push({
-                                    label: label,
-                                    value: label,
+                                    label: displayLabel.reduce(function (a, b, index) {
+                                        return a + (item[b] ? ((index > 0 ? ' | ' + b + '=' : '') + item[b]) : '');
+                                    }, ''),
+                                    value: displayValue.reduce(function (a, b, index) {
+                                        return a + (item[b] ? ((index > 0 ? ' | ' + b + '=' : '') + item[b]) : '');
+                                    }, ''),
                                     realValue: item[realValue],
                                     category: category
                                 });
@@ -75,6 +77,7 @@ window.Handlers = {
                     source = $input.attr('data-autocomplete-source'),
                     realValue = $input.attr('data-autocomplete-value'),
                     displayValue = $input.attr('data-autocomplete-display-value').split(','),
+                    displayLabel = $input.attr('data-autocomplete-display-label').split(','),
                     searchParam = $input.attr('data-autocomplete-param'),
                     sortOrder = $input.attr('data-autocomplete-response-priority').split(',');
                 $input.catcomplete({
@@ -108,6 +111,7 @@ window.Handlers = {
                     },
                     realValue: realValue,
                     displayValue: displayValue,
+                    displayLabel: displayLabel,
                     sortOrder: sortOrder,
                     minLength: 2,
                     autoFocus: true,
