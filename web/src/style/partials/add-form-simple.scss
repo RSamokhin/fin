@@ -8,6 +8,7 @@
 }
 .add-form-simple {
 	background-color: #404040;
+	padding-bottom: 5px;
 }
 .table {
 	&__new-window {
@@ -119,6 +120,7 @@
 		line-height: 50px;
 		margin-bottom: 20px;
         background-color: transparent;
+		display: block;
 		&:hover {
 			opacity: 0.8;
 		}
