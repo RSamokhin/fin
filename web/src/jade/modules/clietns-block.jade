@@ -116,10 +116,11 @@ block forms
     div.main-block-form-container
         include ./no-form
 
-    -
-        var bName = 'Скрыть',
-        fName ='Список субъектов';
+    - var bName = 'Скрыть'
+    - var fName ='Список счетов'
+    - var dataForm = 'clients-table'
+    - var tableSource = '/subjects'
     div.main-block-form-container
-        include ./clients-table
+        include ./simple-table
 
 
