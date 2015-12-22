@@ -7,19 +7,23 @@ div(class='main__block m-2x' data-main-block='true' id='#{hashLink}')
     div(class='main__block-logo #{blockIcon}')
     div(class='main__block-title') #{blockTitle}
     div(class='main__block-search__container')
+        - var dataSelector = 'data-search-' + searchSelector
+        - var attributes = {}
+        - attributes[dataSelector] = 'true'
+
         input(
             class='main__block-search__input'
             placeholder='Введите запрос'
             autocomplete='off'
             data-search-clients='true'
             data-bind-keypress='simpleSearchSubmit'
-        )
+        )&attributes(attributes)
         div(
             class='main__block-search__button'
-            data-search-button='/subjects?search={mySearch}'
+            data-search-button='#{simpleSearchUrl}?search={mySearch}'
             data-bind-click='simpleSearch'
-            data-target-selector='[data-search-clients=true]'
-            data-table='/subjects'
+            data-target-selector='[data-search-#{searchSelector}=true]'
+            data-table='#{simpleSearchUrl}'
             data-from-simple-search='true'
         ) Найти
         if searchResults !== undefined
@@ -32,7 +36,7 @@ div(class='main__block m-2x' data-main-block='true' id='#{hashLink}')
                         title='#{searchResult}'
                         data-search-value='#{searchResult}'
                         data-bind-click='toggleSearchFromExample'
-                        data-target-selector='[data-search-clients=true]'
+                        data-target-selector='[data-search-#{searchSelector}=true]'
                     ) #{searchResult}
                     - i = i + 1;
 

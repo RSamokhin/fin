@@ -12,7 +12,8 @@ var render = require('../views');
 router.get('/subjects', baseTable({
     columns: ['id', 'name', 'description', 'INN', 'KPP', 'INN', 'isSystem', 'type'],
     defaultOrder: ['id', 'asc'],
-    searchColumns: ['name', 'description', 'INN', 'KPP']
+    searchColumns: ['name', 'description', 'INN', 'KPP'],
+    saveSearchType: 'Subject'
 }), function * (){
     var subjects = yield models.Subject.findAll({
         order: this.baseTable.order,
@@ -29,7 +30,10 @@ router.get('/subjects', baseTable({
     this.body = yield render('modules/subjects', {
         subjects: subjects.map(subject => subject.toJSON()),
         order: this.baseTable.order,
-        fromAjax: JSON.stringify(this.query.fromAjax) ? 1 : 0
+        fromAjax: JSON.stringify(this.query.fromAjax) ? 1 : 0,
+        splitterTitle: 'Субъекты',
+        menuSubjectsCSSModifier: 'm-active',
+        JSONOnly: JSON.stringify(this.query.JSONOnly) ? 1 : 0
     });
 });
 

@@ -1,9 +1,6 @@
-div(class='fav-form-cards-div m-hidden', data-form='fav' data-on-open='loadFavs')
+div(class='add-form-simple m-hidden', data-form='fav')
 	include ./block-form-divider
-	div(class='sfs__container')
-		each fav, index in favs
-			div(class='favs__block' title='#{fav.Subject.name}')
-				i(class='fa fa-star favs__icon-star')
-				span(class='favs__text') #{fav.Subject.name}
-				i(class='fa fa-times-circle favs__icon-remove', data-bind-click='deleteFav', data-fav-id=fav.id)
-		div(class='sfs__button' data-bind-click='blockFormCollapse') #{bName}
+	i(class='fa fa-external-link table__new-window' title='Открыть в новой вкладке' data-bind-click='openTableInNewWindow')
+	div(data-append-form='fav' style='width:100%')
+	div(class='sfs__button' data-bind-click='blockFormCollapse') #{bName}
+

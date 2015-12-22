@@ -1,31 +1,34 @@
 extends ./../main
 block content
-    div(class='add-form-simple')
-        table(class="display" cellspacing="0" width="100%" data-table-source='subjects')
-            thead
-                tr
-                    th ID
-                    th Название
-                    th Тип
-                    th Описание
-                    th INN
-                    th KPP
-                    th SYS
-            tfoot
-                tr
-                    th ID
-                    th Название
-                    th Тип
-                    th Описание
-                    th INN
-                    th KPP
-                    th SYS
-            for subject in subjects
-                tr
-                    td= subject.id
-                    td= subject.name
-                    td= subject.type
-                    td= subject.description
-                    td= subject.INN
-                    td= subject.KPP
-                    td= subject.isSystem
+    if !JSONOnly
+        div(class='add-form-simple')
+            table(class="display" cellspacing="0" width="100%" data-table-source='subjects')
+                thead
+                    tr
+                        th ID
+                        th Название
+                        th Тип
+                        th Описание
+                        th INN
+                        th KPP
+                        th SYS
+                tfoot
+                    tr
+                        th ID
+                        th Название
+                        th Тип
+                        th Описание
+                        th INN
+                        th KPP
+                        th SYS
+                for subject in subjects
+                    tr
+                        td= subject.id
+                        td= subject.name
+                        td= subject.type
+                        td= subject.description
+                        td= subject.INN
+                        td= subject.KPP
+                        td= subject.isSystem
+    else
+        !=JSON.stringify(subjects)

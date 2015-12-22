@@ -1,9 +1,10 @@
 header
-    div(class='main__header')
-        div(class='main__header-logo' data-bind-click='goTo switchMainMenu' data-go-to='/')
+    div(class='main__header' id='topHeader')
+        div(class='main__header-logo' data-bind-click='goTo' data-go-to='/')
             span(class='main__header-logo__caption') finSystem
         div(class='main__header-menu')
-            div(class='main__header-menu__point' data-menu-button='true' data-bind-click='goTo switchMainMenu' data-go-to='/#clients') Клиенты
+            div(class='main__header-menu__point #{menuSubjectsCSSModifier}' data-menu-button='true'  data-bind-click='goTo' data-go-to='/#clients') Субъекты
+            div(class='main__header-menu__point #{menuAccountsCSSModifier}' data-menu-button='true'  data-bind-click='goTo' data-go-to='/#accounts') Счета
             div(class='main__header-menu__point' data-menu-button='true') Операции
             div(class='main__header-menu__point' data-menu-button='true') Касса
         div(class='main__header-buttons')
@@ -13,13 +14,9 @@ header
                 i(class='fa fa-cog main__header-button__picture')
             div(class='main__header-button' title='Выход')
                 i(class='fa fa-external-link main__header-button__picture')
-    div(class='main__header-splitter' title='Наверх') Главное меню
+    div(class='main__header-splitter' title='Наверх' data-bind-click='goTo' data-go-to='#topHeader') #{splitterTitle ? splitterTitle : 'Главная страница'}
     div(class='main__header-info__container')
         div(class='main__header-info__courses')
-            div(class='main__header-info__courses-switch')
-                span(class='m-active' data-currency-type='buy') ПОКУПКА
-                span() &nbsp/&nbsp
-                span(data-currency-type='sell') ПРОДАЖА
             i(class='fa fa-archive main__header-info__courses-archieve' title='История курсов')
             div(class='main__header-info__course')
                 i(class='fa fa-arrow-down main__header-info__course-down')

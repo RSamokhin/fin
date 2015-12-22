@@ -14,7 +14,9 @@
   "passwordSalt": "12asddfsv#$%@#$",
   "jwt": {
     "secret": "asdasdasd12313",
-    "cookie": "token"
+    "cookie": "token",
+    "tokenExpires": 36000
   },
+  "maxSearchHistory": 10,
   "sessionKey": "Asd132@asdf"
 }

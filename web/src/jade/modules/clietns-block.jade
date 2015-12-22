@@ -25,10 +25,17 @@ block vars
                 },{
                     id: 4,
                     name: 'Избранное',
-                    formName: 'fav'
+                    formName: 'fav',
+                    clicks: ['loadFormFromUrl'],
+                    dataAttrs: {
+                        "data-form-url": "/fav"
+                    }
                 }
             ],
-            searchResults = ['Карасева', '444555687456765', 'ООО Игарка', 'ИП Казаков Иван Васильевич'];
+            searchResults = ['Карасева', '444555687456765', 'ООО Игарка', 'ИП Казаков Иван Васильевич']
+            searchSelector = 'clients'
+            simpleSearchUrl = '/subjects'
+
 
 
 block forms
@@ -78,16 +85,15 @@ block forms
                 width: 1,
                 height: 1
             }
-        ],
-        fName = 'Добавление субъекта',
-        bName = 'Сохранить';
+        ]
+        fName = 'Добавление субъекта'
+        bName = 'Сохранить'
     div.main-block-form-container
         include ./add-form-simple.jade
 
     -
-        var fName = 'Избранные субъекты',
-            bName = 'Скрыть',
-            favs = [];
+        var fName = 'Избранные субъекты'
+            bName = 'Скрыть'
     div.main-block-form-container
         include ./fav-form-cards
 

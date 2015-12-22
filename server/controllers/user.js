@@ -8,11 +8,7 @@ var render = require('../views');
 
 function * loadUser(next)
 {
-    var user = yield models.Subject.findOne({
-        where: {
-            id: this.userId
-        }
-    });
+    var user = yield models.User.findById(this.userId);
     if (!user)
     {
         this.response.redirect('/404');
@@ -21,20 +17,31 @@ function * loadUser(next)
     this.user = user;
     yield next;
 }
+module.exports.loadUser = loadUser;
 
 router.get('/user', loadUser, function * (){
     this.body = yield render('user', {
-        name: this.user.name,
-        description: this.user.description
+        firstName: this.user.firstName,
+        lastName: this.user.lastName,
+        phone: this.user.firstName
     });
 });
 router.post('/user', koaBody, koaValidate, loadUser, function * (){
-    this.checkBody('name').notEmpty();
-    this.checkBody('description').notEmpty();
+    this.checkBody('firstName').notEmpty();
+    this.checkBody('lastName').notEmpty();
+    this.checkBody('phone').notEmpty();
     this.checkBody('password').optional();
 
-    this.user.name = this.request.body.name;
-    this.user.description = this.request.body.description;
+    if (this.errors)
+    {
+        this.session.errors = this.errors;
+        this.response.redirect('/user');
+        return;
+    }
+
+    this.user.firstName = this.request.body.firstName;
+    this.user.lastName = this.request.body.lastName;
+    this.user.phone = this.request.body.phone;
 
     if (this.request.body.password)
     {

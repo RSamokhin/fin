@@ -1,0 +1,99 @@
+extends ./main-block
+
+block vars
+    -
+        var hashLink = 'accounts'
+        var blockIcon = 'm-accounts__block-logo'
+        var blockTitle = 'Картотека счетов'
+        var blockControls = [
+            {
+                id: 1,
+                name: 'Расширенный поиск',
+                formName: 'no-form'
+            }, {
+                id: 2,
+                name: 'Полный список',
+                formName: 'no-form'
+            }, {
+                id: 3,
+                name: 'Добавить',
+                formName: 'add-form'
+            }, {
+                id: 4,
+                name: 'Избранное',
+                formName: 'no-form'
+            }
+        ]
+        var searchResults = ['USD', '450999.01', 'ООО Игарка', '77290159938'];
+
+
+block forms
+    -
+        var addFormFields = [
+            {
+                name: 'Номер счета',
+                dataType: 'text',
+                placeholder: 'Номер счета',
+                fName: 'id',
+                width: 1,
+                height: 1
+            },{
+                name: 'Валюта',
+                dataType: 'selector',
+                defaultValue: 'RUR',
+                data: ['RUR', 'USD', 'EUR'],
+                fName: 'currency',
+                width: 1,
+                height: 1
+            },{
+                name: 'Название счета',
+                dataType: 'text',
+                placeholder: 'Название счета',
+                fName: 'name',
+                width: 1,
+                height: 1
+            },{
+                name: 'Владелец Счета',
+                dataType: 'text',
+                icon: 'search',
+                placeholder: 'Владелец Счета',
+                fName: 'owner',
+                width: 1,
+                height: 1,
+                dataAttrs: {
+                    "data-autocomplete-field": "true",
+                    "data-autocomplete-source": "/subjects?fromAjax=true&JSONOnly=true",
+                    "data-autocomplete-param": "search",
+                    "data-autocomplete-response-riority": "['id', 'name', 'INN', 'KPP', 'description']"
+                }
+            },{
+                name: 'Описание',
+                dataType: 'textarea',
+                placeholder: 'Комментарии',
+                fName: 'description',
+                width: 2,
+                height: 4
+            }
+        ]
+        fName = 'Добавление счета'
+        bName = 'Сохранить'
+    div.main-block-form-container
+        include ./add-form-simple.jade
+
+    -
+        var fName = 'Избранные счета'
+            bName = 'Скрыть'
+    div.main-block-form-container
+        include ./fav-form-cards
+
+    -
+        var bName = 'Скрыть',
+        fName ='Данный раздел находится в разработке';
+    div.main-block-form-container
+        include ./no-form
+
+    -
+        var bName = 'Скрыть',
+        fName ='Список счетов';
+    div.main-block-form-container
+        include ./clients-table

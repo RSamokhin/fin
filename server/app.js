@@ -1,5 +1,6 @@
 var config = require('./config'),
     koa = require('koa'),
+    path = require('path'),
     co = require('co'),
     route = require('koa-route'),
     session = require('koa-session'),
@@ -31,22 +32,35 @@ fav.registerApp(app);
 app.use(serve('../web/build/'));
 
 co(function * (){
-    yield models.sequelize.sync();
+        yield models.sequelize.sync();
 
-    //var clients = require('./clients.json');
-    //
-    //for(var i = 0; i < clients.length; i++)
+    //try
     //{
-    //    try
-    //    {
-    //        var client = yield models.Subject.create(clients[i]);
-    //    }
-    //    catch(e)
-    //    {
-    //        console.log(e);
-    //    }
+    //    yield restoreDatabase();
+    //}
+    //catch(e)
+    //{
+    //    console.log(e);
     //}
 
     app.listen(config.get('port'));
     console.log('server listening on port ' + config.get('port'));
 });
+
+
+function * restoreDatabase()
+{
+    return new Promise(function(resolve, reject){
+        var cfg = config.get('database');
+        var exec = require('child_process').exec;
+        exec(path.join(__dirname, '../tools/restoreData.sh'), {
+            env: {
+                PGPASSWORD: cfg.password
+            }
+        }, (error, stdout) => {
+            if (error)
+                return reject(error);
+            resolve(stdout)
+        });
+    });
+}

@@ -10,11 +10,13 @@ module.exports = function(opts)
         buildOrder(this, opts);
         buildOrderHeaderLinks(this, opts);
         buildLimits(this, opts);
-        buildSearch(this, opts);
+        yield buildSearch(this, opts);
 
         yield next;
     };
 };
+
+var fav = require("./fav");
 
 var buildOrderHeaderLinks = function(request, opts)
 {
@@ -75,12 +77,18 @@ var buildLimits = function(request, opts)
     request.baseTable.offset = offset;
 };
 
-var buildSearch = function(request, opts)
+var buildSearch = function * (request, opts)
 {
     if (!opts.searchColumns)
         return;
     if (!request.query || !request.query.search)
         return;
+
+    if (opts.saveSearchType)
+    {
+        yield fav.saveSearchToHistory(request.userId, request.query.search, opts.saveSearchType);
+    }
+
     var search = '%' + request.query.search.toString().replace(/[%_]/g, '') + '%';
     request.baseTable.where = {
         '$or': opts.searchColumns.map(function(columnName){

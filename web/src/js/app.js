@@ -21,6 +21,54 @@ window.Handlers = {
                     $('.main__header-splitter').removeClass("m-sticky");
                 }
             });
+        },
+        activateAutocompletes: function () {
+            $.widget( "custom.catcomplete", $.ui.autocomplete, {
+                _create: function() {
+                    this._super();
+                    this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+                },
+                _renderMenu: function( ul, items ) {
+                    var that = this,
+                        currentCategory = "";
+                    $.each( items, function( index, item ) {
+                        console.log(item);
+                        var li;
+                        //if ( item.category != currentCategory ) {
+                        //    ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+                        //    currentCategory = item.category;
+                        //}
+                        //li = that._renderItemData( ul, item );
+                        //if ( item.category ) {
+                        //    li.attr( "aria-label", item.category + " : " + item.label );
+                        //}
+                    });
+                }
+            });
+            $('[data-autocomplete-field="true"]').each(function (index, el) {
+                var $input = $(el),
+                    source = $input.attr('data-autocomplete-source'),
+                    searchParam = $input.attr('data-autocomplete-param');
+                $input.catcomplete({
+                    source: function (request, response) {
+                        var sendData = {};
+                        sendData[searchParam] = request.term;
+                        $.ajax({
+                            url: source,
+                            dataType: "json",
+                            data: sendData,
+                            success: function (data) {
+                                response(data);
+                            }
+                        });
+                    },
+                    minLength: 3,
+                    select: function (event, ui) {
+                            console.log(this);
+                    }
+                })
+
+            })
         }
     },
     keypress: {
@@ -49,11 +97,20 @@ window.Handlers = {
                 return;
             }
             $needForm.removeClass('m-hidden');
-            var onOpen = $needForm.data('onOpen');
-            var handler = onOpen && window.Handlers.onToggledFormOpen && window.Handlers.onToggledFormOpen[onOpen];
-            if (handler) {
-                handler.call($needForm);
-            }
+        },
+        loadFormFromUrl: function () {
+            var $button = $(this),
+                fName = $button.attr('data-form-name'),
+                $needForm = $button
+                                .closest('[data-main-block=true]')
+                                .find('[data-append-form=' + fName + ']'),
+                url = $button.attr('data-form-url');
+            $.get(url, {
+                fromAjax: true
+            }, function(data){
+                $needForm.html(data);
+                $needForm.closest('.main-block-form-container').find('[data-bind-click=openTableInNewWindow]').attr('data-new-url', url);
+            }, 'html');
         },
         toggleSearchFromExample: function () {
             var $example = $(this),
@@ -61,12 +118,6 @@ window.Handlers = {
                 searchValue = $example.attr('data-search-value');
             $searchField.val(searchValue);
             $example.closest('[data-main-block=true]').find('[data-search-button]').trigger('click');
-        },
-        switchMainMenu: function () {
-            $('[data-menu-button=true]').removeClass('m-active');
-            if ($(this).attr('data-menu-button')) {
-                $(this).addClass('m-active');
-            }
         },
         loadTableFromUrl: function (url) {
             var $button = $(this),
@@ -83,6 +134,7 @@ window.Handlers = {
                     $container
                         .closest('[data-form]')
                         .removeClass('m-hidden');
+                    $container.closest('.main-block-form-container').find('[data-bind-click=openTableInNewWindow]').attr('data-new-url', tableUrl);
                     if (fromSimpleSearch) {
                         $container.attr('data-from-simple-search', 'true');
                     } else {
@@ -102,6 +154,11 @@ window.Handlers = {
             $container.attr('data-from-simple-search', true);
             (window.Handlers.click.loadTableFromUrl.bind($button))(url);
 
+        },
+        openTableInNewWindow: function () {
+            var $button = $(this),
+                url = $button.attr('data-new-url');
+            window.location = url;
         },
         blockFormCollapse: function () {
             $(this).closest('[data-form]').addClass('m-hidden');
@@ -124,7 +181,7 @@ window.Handlers = {
         },
         goTo: function () {
             var newUrl = $(this).attr('data-go-to');
-            location.replace(newUrl);
+            window.location = newUrl;
         }
     },
     submit: {
@@ -153,15 +210,6 @@ window.Handlers = {
             return false;
         }
     },
-    onToggledFormOpen: {
-        loadFavs: function() {
-            this.addClass('m-hidden');
-            var form = this;
-            $.get('/fav', function(favs){
-                form.replaceWith(favs);
-            }, 'html');
-        }
-    }
 };
 
 $(function(){

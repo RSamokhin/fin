@@ -9,6 +9,17 @@
 .add-form-simple {
 	background-color: #404040;
 }
+.table {
+	&__new-window {
+		float: right;
+		margin-right: 30px;
+		color: white;
+		cursor: pointer;
+		&:hover {
+			opacity: 0.7;
+		}
+	}
+}
 .sfs {
 	&__no-form {
 		width: 100%;
@@ -21,6 +32,7 @@
 		width: 100%;
 		border: 10px solid #404040;
 		box-sizing: border-box;
+		background-color: #404040;
 	}
 	&__title {
 		width: 100%;
@@ -33,6 +45,13 @@
 		@include no-select;
 	}
 	&__field {
+		&-icon {
+			position: absolute;
+			top: 19px;
+			right: 40px;
+			cursor: pointer;
+			color: yellowgreen;
+		}
 		&-container {
 			display: inline-block;
 			min-height: 80px;
