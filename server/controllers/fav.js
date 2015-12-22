@@ -120,6 +120,36 @@ router.post('/fav/delete/:id', koaBody, koaValidate, csrf.middleware, function *
     }
 });
 
+router.post('/fav/add', koaBody, koaValidate, csrf.middleware, function * (){
+    this.checkBody('type').notEmpty().isIn(['Subject', 'Account']);
+    this.checkBody('id').notEmpty().toInt();
+    if (this.errors)
+    {
+        this.body = {
+            errors: this.errors
+        };
+        return;
+    }
+    var data = this.request.body;
+    var subject = yield models.Subject.findById(data.id);
+    if (!subject)
+    {
+        this.body = {
+            errors: [
+                {
+                    id: "Invalid subject."
+                }
+            ]
+        };
+        return;
+    }
+
+    var fav = yield models.Favorites.create();
+    fav.setUser(this.userId);
+    fav.setSubject(subject.id);
+    this.body = fav.toJSON();
+});
+
 function * saveSearchToHistory (userId, text, type)
 {
     var searches = yield models.Searches.findAll({

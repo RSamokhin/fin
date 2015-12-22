@@ -15,6 +15,7 @@ csrf(app);
 
 var models = require("./models");
 var subjects = require("./controllers/subjects");
+var accounts = require("./controllers/accounts");
 var user = require("./controllers/user");
 var auth = require("./controllers/auth");
 var pageNotFound = require("./controllers/404");
@@ -24,6 +25,7 @@ var currency = require("./controllers/currency");
 auth.registerApp(app);
 
 subjects.registerApp(app);
+accounts.registerApp(app);
 user.registerApp(app);
 pageNotFound.registerApp(app);
 currency.registerApp(app);
