@@ -66,28 +66,40 @@ block forms
                 name: 'Название/Фио',
                 dataType: 'text',
                 placeholder: 'Полное наименование субъекта',
-                dataAttrs: {name: 'name'},
+                dataAttrs: {
+                    name: 'name',
+                    'data-tooltip-for': 'name'
+                },
                 width: 1,
                 height: 1
             },{
                 name: 'ИНН',
                 dataType: 'text',
                 placeholder: 'ИНН субъекта',
-                dataAttrs: {name: 'INN'},
+                dataAttrs: {
+                    name: 'INN',
+                    'data-tooltip-for': 'INN'
+                },
                 width: 1,
                 height: 1
             },{
                 name: 'КПП',
                 dataType: 'text',
                 placeholder: 'КПП субъекта',
-                dataAttrs: {name: 'KPP'},
+                dataAttrs: {
+                    name: 'KPP',
+                    'data-tooltip-for': 'KPP'
+                },
                 width: 1,
                 height: 1
             },{
                 name: 'Описание',
                 dataType: 'textarea',
                 placeholder: 'Комментарии',
-                dataAttrs: {name: 'description'},
+                dataAttrs: {
+                    name: 'description',
+                    'data-tooltip-for': 'description'
+                },
                 width: 2,
                 height: 4
             },{
@@ -99,8 +111,9 @@ block forms
                 height: 1
             }
         ]
-        fName = 'Добавление субъекта'
-        bName = 'Сохранить'
+    - var fName = 'Добавление субъекта'
+    - var bName = 'Сохранить'
+    - var action = '/subjects'
     div.main-block-form-container
         include ./add-form-simple.jade
 

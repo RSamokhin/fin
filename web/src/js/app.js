@@ -241,9 +241,9 @@ window.Handlers = {
         }
     },
     submit: {
-        addSubject: function(){
-
-            var submit = $(this).find('input[type=submit]');
+        addFormSimple: function(){
+            var submit = $(this).find('input[type=submit]'),
+                $form = $(this);
             submit.attr('disabled', 'disabled');
             var data = $(this).serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -252,13 +252,39 @@ window.Handlers = {
             data['_csrf'] = $.cookie('csrfToken');
             $.post($(this).attr('action'), data, function(data){
                 submit.removeAttr('disabled');
-                if (data.errors)
-                {
-                    alert(data.errors.map(function(error){
-                        return Object.keys(error).map(function(field){
-                            return error[field];
-                        }).join(',');
-                    }).join('\n'));
+                if (data.errors) {
+                    data.errors.forEach(function (error) {
+                       Object.keys(error).forEach(function (errorField) {
+                            var errorText = error[errorField],
+                                $inputs = $form.find('[data-tooltip-for="' + errorField + '"]'),
+                                tooltips;
+                            if ($inputs.length) {
+                                $inputs.attr('title', errorText);
+                                tooltips = $inputs.tooltip({
+                                    position: {
+                                        my: "center bottom-20",
+                                        at: "center top",
+                                        using: function( position, feedback ) {
+                                            $( this ).css( position );
+                                            $( "<div>" )
+                                                .addClass( "arrow" )
+                                                .addClass( feedback.vertical )
+                                                .addClass( feedback.horizontal )
+                                                .appendTo( this );
+                                        }
+                                    }
+                                });
+                                tooltips.tooltip( "open" );
+                            } else {
+                                $('<div/>').attr({
+                                    id: 'errorDialog',
+                                    title: 'Ошибка'
+                                }).text(errorText).dialog({
+                                    modal: true
+                                });
+                            }
+                       });
+                    });
                     return;
                 }
                 alert('OK');

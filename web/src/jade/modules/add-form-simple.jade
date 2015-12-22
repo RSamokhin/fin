@@ -1,7 +1,7 @@
 div(class='add-form-simple m-hidden', data-form='add-form')
 	include ./block-form-divider
 
-	form(class='sfs__container', data-bind-submit='addSubject', action='/subjects')
+	form(class='sfs__container', data-bind-submit='addFormSimple', action='#{action}')
 		each field in addFormFields
 			div(class='sfs__field-container m-#{field.width}')
 				- var attributes={};
@@ -31,3 +31,7 @@ div(class='add-form-simple m-hidden', data-form='add-form')
 					input(name='#{field.dataAttrs["data-traverse-value"]}' class='m-hidden')
 					div(data-name='#{field.dataAttrs["data-traverse-value"]}' class='sfs__field-additional-info')
 		input(type='submit', class='sfs__button', value=bName)
+
+- var fName = ''
+- var bName = ''
+- var action = ''
