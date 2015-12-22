@@ -21,6 +21,54 @@ window.Handlers = {
                     $('.main__header-splitter').removeClass("m-sticky");
                 }
             });
+        },
+        activateAutocompletes: function () {
+            $.widget( "custom.catcomplete", $.ui.autocomplete, {
+                _create: function() {
+                    this._super();
+                    this.widget().menu( "option", "items", "> :not(.ui-autocomplete-category)" );
+                },
+                _renderMenu: function( ul, items ) {
+                    var that = this,
+                        currentCategory = "";
+                    $.each( items, function( index, item ) {
+                        console.log(item);
+                        var li;
+                        //if ( item.category != currentCategory ) {
+                        //    ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+                        //    currentCategory = item.category;
+                        //}
+                        //li = that._renderItemData( ul, item );
+                        //if ( item.category ) {
+                        //    li.attr( "aria-label", item.category + " : " + item.label );
+                        //}
+                    });
+                }
+            });
+            $('[data-autocomplete-field="true"]').each(function (index, el) {
+                var $input = $(el),
+                    source = $input.attr('data-autocomplete-source'),
+                    searchParam = $input.attr('data-autocomplete-param');
+                $input.catcomplete({
+                    source: function (request, response) {
+                        var sendData = {};
+                        sendData[searchParam] = request.term;
+                        $.ajax({
+                            url: source,
+                            dataType: "json",
+                            data: sendData,
+                            success: function (data) {
+                                response(data);
+                            }
+                        });
+                    },
+                    minLength: 3,
+                    select: function (event, ui) {
+                            console.log(this);
+                    }
+                })
+
+            })
         }
     },
     click: {

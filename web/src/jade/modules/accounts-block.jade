@@ -55,10 +55,17 @@ block forms
             },{
                 name: 'Владелец Счета',
                 dataType: 'text',
+                icon: 'search',
                 placeholder: 'Владелец Счета',
                 fName: 'owner',
                 width: 1,
-                height: 1
+                height: 1,
+                dataAttrs: {
+                    "data-autocomplete-field": "true",
+                    "data-autocomplete-source": "/subjects?fromAjax=true&JSONOnly=true",
+                    "data-autocomplete-param": "search",
+                    "data-autocomplete-response-riority": "['id', 'name', 'INN', 'KPP', 'description']"
+                }
             },{
                 name: 'Описание',
                 dataType: 'textarea',

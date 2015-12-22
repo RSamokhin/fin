@@ -4,16 +4,25 @@ div(class='add-form-simple m-hidden', data-form='add-form')
 	form(class='sfs__container', data-bind-submit='addSubject', action='/subjects')
 		each field in addFormFields
 			div(class='sfs__field-container m-#{field.width}')
+				- var attributes={};
+				if field.dataAttrs
+					-	Object.keys(field.dataAttrs).forEach(function (attribute) {attributes[attribute] = field.dataAttrs[attribute];});
 				case field.dataType
 					when 'text'
-						input(name='#{field.fName}' class='sfs__field-input' placeholder='   #{field.placeholder}' autocomplete='off')
+						input(
+							name='#{field.fName}'
+							class='sfs__field-input'
+							placeholder='   #{field.placeholder}'
+						)&attributes(attributes)
+						if field.icon
+							i(class='fa fa-#{field.icon} sfs__field-icon')
 					when 'selector'
-						select(name='#{field.fName}' class='sfs__field-select')
+						select(name='#{field.fName}' class='sfs__field-select')&attributes(attributes)
 							each d in field.data
 								option(value='#{d}') #{d}
 					when 'textarea'
-						textarea(name='#{field.fName}' class='sfs__field-textarea' placeholder='   #{field.placeholder}' rows='#{field.height}')
+						textarea(name='#{field.fName}' class='sfs__field-textarea' placeholder='   #{field.placeholder}' rows='#{field.height}')&attributes(attributes)
 					when 'bool'
-						input(name='#{field.fName}' class='sfs__field-checkbox' type='checkbox' )
+						input(name='#{field.fName}' class='sfs__field-checkbox' type='checkbox' )&attributes(attributes)
 				span(class='sfs__field-title') #{field.name}
 		input(type='submit', class='sfs__button', value=bName)

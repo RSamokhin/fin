@@ -45,6 +45,13 @@
 		@include no-select;
 	}
 	&__field {
+		&-icon {
+			position: absolute;
+			top: 19px;
+			right: 40px;
+			cursor: pointer;
+			color: yellowgreen;
+		}
 		&-container {
 			display: inline-block;
 			min-height: 80px;
