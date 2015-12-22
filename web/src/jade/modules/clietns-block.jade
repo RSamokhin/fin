@@ -2,10 +2,10 @@ extends ./main-block
 
 block vars
     -
-        var hashLink = 'clients',
-            blockIcon = 'm-clients__block-logo',
-            blockTitle = 'Картотека субъектов',
-            blockControls = [
+        var hashLink = 'clients'
+        var blockIcon = 'm-clients__block-logo'
+        var blockTitle = 'Картотека субъектов'
+        var blockControls = [
                 {
                     id: 1,
                     name: 'Расширенный поиск',
@@ -31,10 +31,10 @@ block vars
                         "data-form-url": "/fav"
                     }
                 }
-            ],
-            searchResults = ['Карасева', '444555687456765', 'ООО Игарка', 'ИП Казаков Иван Васильевич']
-            searchSelector = 'clients'
-            simpleSearchUrl = '/subjects'
+            ]
+        var searchResults = ['Карасева', '444555687456765', 'ООО Игарка', 'ИП Казаков Иван Васильевич']
+        var searchSelector = 'clients'
+        var simpleSearchUrl = '/subjects'
 
 
 
@@ -108,3 +108,5 @@ block forms
         fName ='Список субъектов';
     div.main-block-form-container
         include ./clients-table
+
+

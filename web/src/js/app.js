@@ -30,25 +30,53 @@ window.Handlers = {
                 },
                 _renderMenu: function( ul, items ) {
                     var that = this,
-                        currentCategory = "";
-                    $.each( items, function( index, item ) {
-                        console.log(item);
+                        currentCategory = "",
+                        sortOrder = that.options.sortOrder,
+                        realValue = that.options.realValue,
+                        displayValue = that.options.displayValue,
+                        arrayObject = {};
+                    sortOrder.forEach(function (category) {
+                        arrayObject[category] = [];
+                    });
+                    items.forEach(function (item) {
+                        sortOrder.some(function (category) {
+                            if (item[category].toString().indexOf(that.term) >= 0) {
+                                arrayObject[category].push({
+                                    label: displayValue.reduce(function (a, b, index) {
+                                        return a + (index > 0 ? ' | ' + b + '=' : '') + item[b];
+                                    }, ''),
+                                    value: item[realValue],
+                                    category: category
+                                });
+                                return true;
+                            }
+                        });
+                    });
+                    console.log(items);
+                    items = sortOrder.reduce(function (a, b) {
+                        return a.concat(arrayObject[b]);
+                    }, []);
+                    console.log(items);
+                    $.each(items, function( index, item ) {
                         var li;
-                        //if ( item.category != currentCategory ) {
-                        //    ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
-                        //    currentCategory = item.category;
-                        //}
-                        //li = that._renderItemData( ul, item );
-                        //if ( item.category ) {
-                        //    li.attr( "aria-label", item.category + " : " + item.label );
-                        //}
+                        if ( item.category != currentCategory ) {
+                            ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+                            currentCategory = item.category;
+                        }
+                        li = that._renderItemData( ul, item );
+                        if ( item.category ) {
+                            li.attr( "aria-label", item.category + " : " + item.label );
+                        }
                     });
                 }
             });
             $('[data-autocomplete-field="true"]').each(function (index, el) {
                 var $input = $(el),
                     source = $input.attr('data-autocomplete-source'),
-                    searchParam = $input.attr('data-autocomplete-param');
+                    realValue = $input.attr('data-autocomplete-value'),
+                    displayValue = $input.attr('data-autocomplete-display-value').split(','),
+                    searchParam = $input.attr('data-autocomplete-param'),
+                    sortOrder = $input.attr('data-autocomplete-response-priority').split(',');
                 $input.catcomplete({
                     source: function (request, response) {
                         var sendData = {};
@@ -62,7 +90,10 @@ window.Handlers = {
                             }
                         });
                     },
-                    minLength: 3,
+                    realValue: realValue,
+                    displayValue: displayValue,
+                    sortOrder: sortOrder,
+                    minLength: 2,
                     select: function (event, ui) {
                             console.log(this);
                     }
