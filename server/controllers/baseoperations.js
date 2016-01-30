@@ -24,11 +24,11 @@ module.exports = {
         assert(this.model);
         assert(this.path);
         router.get(this.path, makeQueryFunc(this.getList, this));
+        router.get(this.path + '/datatable', makeQueryFunc(this.dataTable, this));
         router.get(this.path + '/:id', makeQueryFunc(this.getOne, this));
         router.del(this.path + '/:id', makeQueryFunc(this.deleteOne, this));
         router.post(this.path, koaBody, koaValidate, csrf.middleware, makeQueryFunc(this.add, this));
         router.post(this.path + '/:id', koaBody, koaValidate, csrf.middleware, makeQueryFunc(this.update, this));
-        router.get(this.path + '/datatable', makeQueryFunc(this.dataTable, this));
     },
     getList: function * (req)
     {
