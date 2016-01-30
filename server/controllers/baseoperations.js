@@ -132,7 +132,7 @@ module.exports = {
             data: rows.map(row => row.toJSON())
         };
     },
-    buildLimit: function(dbQuery, query)
+    buildLimit: function(query, dbQuery)
     {
         var length = (query.length | 0) || 0;
         if (query.start !== undefined && length > 0)
@@ -141,7 +141,7 @@ module.exports = {
             dbQuery.offset = Math.max(query.start | 0, 0);
         }
     },
-    buildOrder: function(dbQuery, query)
+    buildOrder: function(query, dbQuery)
     {
         if (typeof query.order !== 'object' || !(query.order instanceof Array) || query.order.length <= 0)
             return;
