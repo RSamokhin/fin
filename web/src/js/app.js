@@ -15,6 +15,12 @@ window.Handlers = {
         },
         initTabs: function () {
             window.fin.tabs = $('[data-bind-onload=initTabs]').tabs();   
+            window.fin.tabs.find( ".ui-tabs-nav" ).sortable({
+                  axis: "x",
+                  stop: function() {
+                        window.tabs.tabs( "refresh" );
+                  }
+            });
         }
     },
     click: {
@@ -24,8 +30,14 @@ window.Handlers = {
             return false;
         },
         'openNewTab': function () {
-            var tabName = $(this).attr('data-tab-name');
-            alert('Open tab ' + tabName);
+            var $menuItem = $(this),
+                tabName = $(this).attr('data-tab-name');
+            
+            
+            
+            
+            
+            
         },
         'logout': function () {
             var url = $(this).attr('data-logout-url');
