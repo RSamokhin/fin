@@ -21,6 +21,9 @@ var auth = require("./controllers/auth");
 var pageNotFound = require("./controllers/404");
 var fav = require("./controllers/fav");
 var currency = require("./controllers/currency");
+var operations = require("./controllers/operations");
+var transactions = require("./controllers/transactions");
+var transactiontypes = require("./controllers/transactiontypes");
 
 auth.registerApp(app);
 
@@ -29,21 +32,27 @@ accounts.registerApp(app);
 user.registerApp(app);
 pageNotFound.registerApp(app);
 currency.registerApp(app);
+operations.registerApp(app);
+transactions.registerApp(app);
+transactiontypes.registerApp(app);
 fav.registerApp(app);
 
 app.use(serve('../web/build/'));
 
 co(function * (){
-        yield models.sequelize.sync();
 
-    //try
-    //{
+    try
+    {
+        yield models.sequelize.sync();
     //    yield restoreDatabase();
-    //}
-    //catch(e)
-    //{
-    //    console.log(e);
-    //}
+    }
+    catch(e)
+    {
+        console.log('Database error!');
+        console.log(e.message);
+        console.log(e);
+        return;
+    }
 
     app.listen(config.get('port'));
     console.log('server listening on port ' + config.get('port'));

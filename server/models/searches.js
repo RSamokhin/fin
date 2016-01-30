@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate: function(models) {
-                models.Searches.belongsTo(models.User);
+                this.belongsTo(models.User);
             }
         }
     });

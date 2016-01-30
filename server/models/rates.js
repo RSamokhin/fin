@@ -7,7 +7,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate: function(models) {
-                models.Rates.belongsTo(models.Currency, {foreignKey: 'currencyId'});
+                this.belongsTo(models.Currency, {foreignKey: 'currencyId'});
             }
         },
         indexes: [

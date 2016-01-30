@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
                 isIn: [['Компания', 'ИП', 'Физ-лицо']]
             }
         },
-        isSystem: DataTypes.BOOLEAN()
+        isSystem: {type: DataTypes.BOOLEAN(), defaultValue: false}
     }, {
         classMethods: {
             associate: function(models) {

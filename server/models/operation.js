@@ -1,13 +1,11 @@
 
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define("Operation", {
-        rootTransa
-
+        description: DataTypes.STRING(255)
     }, {
         classMethods: {
             associate: function(models) {
-                models.Operation.belongsTo(models.Account, {foreignKey: 'fromAccountId'});
-                models.Operation.belongsTo(models.Account, {foreignKey: 'toAccountId'});
+                this.belongsTo(models.Transaction, {foreignKey: 'rootTransactionId', constraints: false});
             }
         }
     });

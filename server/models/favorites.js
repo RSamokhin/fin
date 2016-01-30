@@ -8,8 +8,8 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate: function(models) {
-                models.Favorites.belongsTo(models.Subject);
-                models.Favorites.belongsTo(models.User);
+                this.belongsTo(models.Subject);
+                this.belongsTo(models.User);
             }
         }
     });

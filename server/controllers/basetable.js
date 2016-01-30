@@ -1,5 +1,5 @@
 
-module.exports = function(opts)
+module.exports.display = function(opts)
 {
     opts = opts || {};
     opts.columns = opts.columns || [];
