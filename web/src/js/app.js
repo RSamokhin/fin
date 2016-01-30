@@ -21,6 +21,21 @@ window.Handlers = {
                         window.tabs.tabs( "refresh" );
                   }
             });
+        },
+        initDataTables: function()
+        {
+            $('#example').DataTable( {
+                "processing": true,
+                "serverSide": true,
+                "ajax": "subjects/datatable",
+                "columns": [
+                    { "data": "id" },
+                    { "data": "name" },
+                    { "data": "description" },
+                    { "data": "INN" },
+                    { "data": "KPP" }
+                ]
+            } );
         }
     },
     click: {
