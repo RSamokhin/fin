@@ -28,6 +28,7 @@ module.exports = {
         router.del(this.path + '/:id', makeQueryFunc(this.deleteOne, this));
         router.post(this.path, koaBody, koaValidate, csrf.middleware, makeQueryFunc(this.add, this));
         router.post(this.path + '/:id', koaBody, koaValidate, csrf.middleware, makeQueryFunc(this.update, this));
+        router.get(this.path + '/datatable', makeQueryFunc(this.dataTable, this));
     },
     getList: function * (req)
     {
@@ -113,5 +114,51 @@ module.exports = {
     extractUpdateData: function(body)
     {
         return this.extractAddData(body);
+    },
+    dataTable: function * ()
+    {
+        var query = this.req.query || {};
+        var draw = (query.draw | 0) || 0;
+        var totalRows = yield this.model.count();
+        var dbQuery = {};
+        this.buildLimit(query, dbQuery);
+        this.buildOrder(query, dbQuery);
+        //console.log(query, dbQuery);
+        var rows = yield this.model.findAll(dbQuery);
+        this.req.body = {
+            draw: draw,
+            recordsTotal: totalRows,
+            recordsFiltered: totalRows,
+            data: rows.map(row => row.toJSON())
+        };
+    },
+    buildLimit: function(dbQuery, query)
+    {
+        var length = (query.length | 0) || 0;
+        if (query.start !== undefined && length > 0)
+        {
+            dbQuery.limit = length;
+            dbQuery.offset = Math.max(query.start | 0, 0);
+        }
+    },
+    buildOrder: function(dbQuery, query)
+    {
+        if (typeof query.order !== 'object' || !(query.order instanceof Array) || query.order.length <= 0)
+            return;
+
+        var columns = query.columns || [];
+        dbQuery.order = [];
+        query.order.forEach(function(order){
+            var column = order.column | 0;
+            if (column < 0 || column >= columns.length)
+                return;
+            var dir = order.dir;
+            if (dir !== 'desc' && dir !== 'asc')
+                return;
+            var attr = columns[column];
+            if (!this.model.attributes.hasOwnProperty(attr.data))
+                return;
+            dbQuery.order.push([attr.data, dir]);
+        }.bind(this));
     }
 };

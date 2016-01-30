@@ -5,6 +5,7 @@ var config = require('./config'),
     route = require('koa-route'),
     session = require('koa-session'),
     csrf = require('koa-csrf'),
+    koaQs = require('koa-qs'),
     serve = require('koa-static');
 
 var app = koa();
@@ -12,6 +13,7 @@ var app = koa();
 app.keys = [config.get('sessionKey')];
 app.use(session(app));
 csrf(app);
+koaQs(app);
 
 var models = require("./models");
 var subjects = require("./controllers/subjects");
