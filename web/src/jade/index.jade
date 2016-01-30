@@ -2,9 +2,17 @@ doctype html
 html(class='m-main')
     head
         title FinSystem
-        link(rel='stylesheet' href='/css/main.css')
-    body
-
+        link(rel='stylesheet', href='/css/main.css')
+    body 
+        div(class='wrapper')
+            div(class='main__header-container') 
+                include modules/main-header
+            div(class='main__menu-container')
+                include modules/main-menu
+            div(class='main__content-container')
+                include modules/main-content        
+            div(class='main__footer-container') 
+                include modules/main-footer
     script(src="/js/lib/jquery.dataTables.js")
     script(src="/js/lib/jquery.cookie.js")
     script(src="/js/lib/jquery-ui.min.js")

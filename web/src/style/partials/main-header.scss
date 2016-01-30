@@ -1,0 +1,27 @@
+.main__header {
+    &-container {
+        background-color: lightblue;
+        box-sizing: border-box;
+        order: 1;
+        width: 100%;
+        height: 25px;
+        border-bottom: 1px solid black;
+        display: inline-flex;
+        justify-content: space-between;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    &-userblock {
+        line-height: 25px;
+        &.m-hidden {
+            display: none;
+        }
+    }
+    &-exit {
+        line-height: 25px;
+        cursor: pointer;
+    }
+    &-title {
+        line-height: 25px;
+    }
+}

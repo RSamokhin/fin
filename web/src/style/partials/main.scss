@@ -1,0 +1,15 @@
+body, html {
+    min-height: 100% !important;
+    height: 100%;
+    min-width: 1024px;
+}
+.wrapper {
+    max-height: 100%;
+    padding: 2em;
+    display: flex;  
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: space-between;
+    box-sizing: border-box;
+}
