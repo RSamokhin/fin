@@ -20,11 +20,11 @@ function * loadUser(next)
 module.exports.loadUser = loadUser;
 
 router.get('/user', loadUser, function * (){
-    this.body = yield render('user', {
+    this.body = {
         firstName: this.user.firstName,
         lastName: this.user.lastName,
         phone: this.user.firstName
-    });
+    };
 });
 router.post('/user', koaBody, koaValidate, loadUser, function * (){
     this.checkBody('firstName').notEmpty();

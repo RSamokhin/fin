@@ -8,7 +8,7 @@
   "database": {
     "user": "postgres",
     "password": "123qwe",
-    "server": "localhost",
+    "server": "finsystem.cloudapp.net",
     "database": "fin",
     "dialect": "postgres"
   },

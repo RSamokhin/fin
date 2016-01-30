@@ -1,0 +1,16 @@
+div(class='main__menu-header')
+    div(class='main__menu-header__collapse' title='Главное меню' data-bind-click='collapseMainMenu')
+    div(class='main__menu-header__title') Главное меню
+ul(class='main__menu-list')
+    li(data-bind-click='openNewTab' data-tab-name='operations')
+        span Операции
+    li(data-bind-click='openNewTab' data-tab-name='subjects') 
+        span Субъекты
+    li(data-bind-click='openNewTab' data-tab-name='reports')
+        span Отчеты
+    li(data-bind-click='openNewTab' data-tab-name='operations')
+        span Транзакции
+    li(data-bind-click='openNewTab' data-tab-name='currencies') 
+        span Валюты
+    li(data-bind-click='openNewTab' data-tab-name='users') 
+        span Пользователи

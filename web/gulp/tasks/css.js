@@ -5,6 +5,7 @@ var gulp        = require('gulp'),
     prefixer    = require('gulp-autoprefixer'),
     path = require('../config.js').path,
     connect = require('gulp-connect'),
+    gutil = require('gulp-util'),
     cssmin      = require('gulp-cssmin');
 
 
@@ -12,9 +13,11 @@ var gulp        = require('gulp'),
 gulp.task('css',function cssCompile (){
     return gulp
         .src(path.src.css)
-        .pipe(plumber())
+        .pipe(plumber(function(error) {
+            gutil.log(gutil.colors.red(error.message));
+            this.emit('end');
+        }))
         .pipe(sass())
-        .pipe(prefixer())
         .pipe(cssmin())
         .pipe(gulp.dest(path.build.css))
         .pipe(gulpif(global.watch, connect.reload()));
