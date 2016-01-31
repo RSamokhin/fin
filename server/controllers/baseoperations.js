@@ -126,12 +126,12 @@ module.exports = {
         this.buildOrder(query, dbQuery);
         this.buildSearch(query, dbQuery);
         //console.log(query, dbQuery);
-        var rows = yield this.model.findAll(dbQuery);
+        var rows = yield this.model.findAndCountAll(dbQuery);
         this.req.body = {
             draw: draw,
             recordsTotal: totalRows,
-            recordsFiltered: totalRows,
-            data: rows.map(row => row.toJSON())
+            recordsFiltered: rows.count,
+            data: rows.rows.map(row => row.toJSON())
         };
     },
     buildLimit: function(query, dbQuery)
