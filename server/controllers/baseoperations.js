@@ -165,12 +165,9 @@ module.exports = {
     },
     buildSearch: function(query, dbQuery)
     {
-        var globalSearch = [];
-        if (query.search !== undefined)
-        {
-            globalSearch = this.buildGlobalSearch(query);
-        }
-        var columnsSearch = this.buildColumnSearch(query);
+        var columns = this.filterValidColumns(query);
+        var globalSearch = this.buildGlobalSearch(query, columns);
+        var columnsSearch = this.buildColumnSearch(query, columns);
         if (columnsSearch.length > 0)
         {
             if (globalSearch.length > 0)
@@ -190,10 +187,8 @@ module.exports = {
             };
         }
     },
-    buildGlobalSearch: function(query)
+    filterValidColumns: function(query)
     {
-        if (!query.search || !query.search.value)
-            return [];
         var columns = query.columns || [];
         return columns.filter(function(column)
         {
@@ -204,34 +199,33 @@ module.exports = {
             if (this.searchColumns !== null && this.searchColumns.indexOf(column.data) === -1)
                 return false;
             return true;
-        }.bind(this)).map(function(column)
+        }.bind(this));
+    },
+    buildGlobalSearch: function(query, columns)
+    {
+        if (!query.search || !query.search.value)
+            return [];
+        return columns.map(function(column)
         {
             var columnQuery = {};
             columnQuery[column.data] = {
-                '$like': '%' + query.search.value.replace(/[%_]/g, '') + '%'
+                '$iLike': '%' + query.search.value.replace(/[%_]/g, '') + '%'
             };
             return columnQuery;
         }.bind(this));
     },
-    buildColumnSearch: function(query)
+    buildColumnSearch: function(query, columns)
     {
-        var columns = query.columns || [];
         return columns.filter(function(column)
         {
-            if (column.searchable !== 'true')
-                return false;
             if (!column.search || !column.search.value)
-                return false;
-            if (!this.model.attributes.hasOwnProperty(column.data))
-                return false;
-            if (this.searchColumns !== null && this.searchColumns.indexOf(column.data) === -1)
                 return false;
             return true;
         }.bind(this)).map(function(column)
         {
             var columnQuery = {};
             columnQuery[column.data] = {
-                '$like': '%' + column.search.value.replace(/[%_]/g, '') + '%'
+                '$iLike': '%' + column.search.value.replace(/[%_]/g, '') + '%'
             };
             return columnQuery;
         }.bind(this));
