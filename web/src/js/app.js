@@ -75,7 +75,7 @@ window.Handlers = {
             window.fin.$tabs.tabs({ active: $('[data-bind-onload="initTabs"]>div').length - 1});
             postInitFunctions.forEach(function (func) {
                 window.Handlers.postInit[func]();
-            })
+            });
         },
         'logout': function () {
             var url = $(this).attr('data-logout-url'); 
@@ -92,7 +92,7 @@ window.fin={
     },
     templates: (function () {
         var templates = {}
-       $('script[type*=handlebars]').each(function (index, template) {
+        $('script[type*=handlebars]').each(function (index, template) {
             templates[$(template).attr('id')] = $('script[type*=handlebars]').html();
         })
         return templates;
