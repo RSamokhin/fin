@@ -16,9 +16,14 @@ html(class='m-main')
                 
     include modules/templates
     
-    script(src="/js/lib/jquery.js")
-    script(src="/js/lib/jquery.cookie.js")
-    script(src="/js/lib/jquery-ui.min.js")
-    script(src="/js/lib/handlebars.min.js")
-    script(src="/js/lib/jquery.dataTables.js")
+    script
+        include ../js/lib/jquery.js
+    script
+        include ../js/lib/jquery.cookie.js
+    script
+        include ../js/lib/jquery-ui.min.js
+    script
+        include ../js/lib/handlebars.min.js
+    script
+        include ../js/lib/jquery.dataTables.js
     script(src="/js/app.js")
