@@ -2,7 +2,7 @@
 module.exports = function(sequelize, DataTypes) {
     return sequelize.define("Subject", {
         name: DataTypes.STRING(255),
-        description: DataTypes.STRING(255),
+        description: DataTypes.STRING(1024),
         INN: DataTypes.STRING(12),
         KPP: DataTypes.STRING(9),
         type: {
