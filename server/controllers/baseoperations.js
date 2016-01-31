@@ -19,6 +19,7 @@ module.exports = {
     req: null,
     model: null,
     path: '',
+    searchColumns: null,
     registerRoutes: function(router)
     {
         assert(this.model);
@@ -123,6 +124,7 @@ module.exports = {
         var dbQuery = {};
         this.buildLimit(query, dbQuery);
         this.buildOrder(query, dbQuery);
+        this.buildSearch(query, dbQuery);
         //console.log(query, dbQuery);
         var rows = yield this.model.findAll(dbQuery);
         this.req.body = {
@@ -159,6 +161,79 @@ module.exports = {
             if (!this.model.attributes.hasOwnProperty(attr.data))
                 return;
             dbQuery.order.push([attr.data, dir]);
+        }.bind(this));
+    },
+    buildSearch: function(query, dbQuery)
+    {
+        var globalSearch = [];
+        if (query.search !== undefined)
+        {
+            globalSearch = this.buildGlobalSearch(query);
+        }
+        var columnsSearch = this.buildColumnSearch(query);
+        if (columnsSearch.length > 0)
+        {
+            if (globalSearch.length > 0)
+            {
+                columnsSearch.push({
+                    '$or': globalSearch
+                });
+            }
+            dbQuery.where = {
+                '$and': columnsSearch
+            };
+        }
+        else if (globalSearch.length > 0)
+        {
+            dbQuery.where = {
+                '$or': globalSearch
+            };
+        }
+    },
+    buildGlobalSearch: function(query)
+    {
+        if (!query.search || !query.search.value)
+            return [];
+        var columns = query.columns || [];
+        return columns.filter(function(column)
+        {
+            if (column.searchable !== 'true')
+                return false;
+            if (!this.model.attributes.hasOwnProperty(column.data))
+                return false;
+            if (this.searchColumns !== null && this.searchColumns.indexOf(column.data) === -1)
+                return false;
+            return true;
+        }.bind(this)).map(function(column)
+        {
+            var columnQuery = {};
+            columnQuery[column.data] = {
+                '$like': '%' + query.search.value.replace(/[%_]/g, '') + '%'
+            };
+            return columnQuery;
+        }.bind(this));
+    },
+    buildColumnSearch: function(query)
+    {
+        var columns = query.columns || [];
+        return columns.filter(function(column)
+        {
+            if (column.searchable !== 'true')
+                return false;
+            if (!column.search || !column.search.value)
+                return false;
+            if (!this.model.attributes.hasOwnProperty(column.data))
+                return false;
+            if (this.searchColumns !== null && this.searchColumns.indexOf(column.data) === -1)
+                return false;
+            return true;
+        }.bind(this)).map(function(column)
+        {
+            var columnQuery = {};
+            columnQuery[column.data] = {
+                '$like': '%' + column.search.value.replace(/[%_]/g, '') + '%'
+            };
+            return columnQuery;
         }.bind(this));
     }
 };
