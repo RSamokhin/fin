@@ -14,16 +14,27 @@ window.Handlers = {
             });
         },
         initTabs: function () {
-            window.fin.tabs = $('[data-bind-onload=initTabs]').tabs();   
-            window.fin.tabs.find( ".ui-tabs-nav" ).sortable({
+            window.fin.$tabs = $('[data-bind-onload=initTabs]').tabs();   
+            window.fin.$tabs.find( ".ui-tabs-nav" ).sortable({
                   axis: "x",
                   stop: function() {
                         window.tabs.tabs( "refresh" );
                   }
             });
+            window.fin.$tabs.delegate("span.ui-icon-close", "click", function () {
+                var panelId = $(this).closest( "li" ).remove().attr( "aria-controls");
+                $("#" + panelId).remove();
+                window.fin.$tabs.tabs("refresh");
+            });
+            window.fin.$tabs.bind("keyup", function (event) {
+                if (event.altKey && event.keyCode === $.ui.keyCode.BACKSPACE) {
+                    var panelId = window.fin.$tabs.find(".ui-tabs-active").remove().attr("aria-controls");
+                    $("#" + panelId).remove();
+                    window.fin.$tabs.tabs("refresh");
+                }
+            });
         },
-        initDataTables: function()
-        {
+        initDataTables: function () {
             $('#example').DataTable( {
                 "processing": true,
                 "serverSide": true,
@@ -35,7 +46,7 @@ window.Handlers = {
                     { "data": "INN" },
                     { "data": "KPP" }
                 ]
-            } );
+            });
         }
     },
     click: {
@@ -46,13 +57,16 @@ window.Handlers = {
         },
         'openNewTab': function () {
             var $menuItem = $(this),
-                tabName = $(this).attr('data-tab-name');
-            
-            
-            
-            
-            
-            
+                tabLabel = $menuItem.attr('data-tab-label'),
+                tabName = $menuItem.attr('data-tab-name'),
+                tabId = 'tabs' + Math.random(),
+                tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Закрыть вкладку</span></li>",
+                $tab = $(tabTemplate.replace( /#\{href\}/g, "#" + tabId).replace( /#\{label\}/g, tabLabel)),
+                tabContentHtml = 'new tab' + tabName;
+            window.fin.$tabs.find( ".ui-tabs-nav" ).append($tab);
+            window.fin.$tabs.append( "<div id='" + tabId + "'><p>" + tabContentHtml + "</p></div>" );
+            window.fin.$tabs.tabs( "refresh" );
+            window.fin.$tabs.tabs({ active: $('[data-bind-onload="initTabs"]>div').length - 1});
         },
         'logout': function () {
             var url = $(this).attr('data-logout-url');
@@ -61,7 +75,12 @@ window.Handlers = {
     }
 };
 
-window.fin={};
+window.fin={
+    documentation: {
+        $tab: '$ объект для табов в главном контейнере',
+        User: 'Текущий пользователь системы по /user'
+    }
+};
 
 $(function(){
     Object.keys(window.Handlers).forEach(function (bindFunctionEvent) {
