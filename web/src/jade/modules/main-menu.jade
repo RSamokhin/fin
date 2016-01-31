@@ -5,16 +5,19 @@ ul(class='main__menu-list')
     li(
         data-bind-click='openNewTab',
         data-tab-name='subjects',
-        data-tab-label='Субъекты'
+        data-tab-label='Субъекты',
+        data-template='subjects-list',
+        data-post-init='initDataTables'
+        
     ) 
         span Субъекты
-    li(data-bind-click='openNewTab' data-tab-name='operations')
+    li(data-tab-name='operations')
         span Операции
-    li(data-bind-click='openNewTab' data-tab-name='reports')
+    li(data-tab-name='reports')
         span Отчеты
-    li(data-bind-click='openNewTab' data-tab-name='operations')
+    li(data-tab-name='operations')
         span Транзакции
-    li(data-bind-click='openNewTab' data-tab-name='currencies') 
+    li(data-tab-name='currencies') 
         span Валюты
-    li(data-bind-click='openNewTab' data-tab-name='users') 
+    li(data-tab-name='users') 
         span Пользователи

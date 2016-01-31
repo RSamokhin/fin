@@ -33,7 +33,9 @@ window.Handlers = {
                     window.fin.$tabs.tabs("refresh");
                 }
             });
-        },
+        }
+    },
+    postInit: {
         initDataTables: function () {
             $('#example').DataTable( {
                 "processing": true,
@@ -47,7 +49,7 @@ window.Handlers = {
                     { "data": "KPP" }
                 ]
             });
-        }
+        }  
     },
     click: {
         'collapseMainMenu': function () {
@@ -62,11 +64,18 @@ window.Handlers = {
                 tabId = 'tabs' + Math.random(),
                 tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Закрыть вкладку</span></li>",
                 $tab = $(tabTemplate.replace( /#\{href\}/g, "#" + tabId).replace( /#\{label\}/g, tabLabel)),
-                tabContentHtml = 'new tab' + tabName;
+                tabContentHtml = 'new tab' + tabName,
+                tabTemplate = window.fin.templates[$menuItem.attr('data-template')],
+                template = window.Handlebars.compile(tabTemplate),
+                context = {},
+                postInitFunctions = $menuItem.attr('data-post-init').split(' ');
             window.fin.$tabs.find( ".ui-tabs-nav" ).append($tab);
-            window.fin.$tabs.append( "<div id='" + tabId + "'><p>" + tabContentHtml + "</p></div>" );
+            window.fin.$tabs.append( "<div id='" + tabId + "'>" + template(context) + "</div>" );
             window.fin.$tabs.tabs( "refresh" );
             window.fin.$tabs.tabs({ active: $('[data-bind-onload="initTabs"]>div').length - 1});
+            postInitFunctions.forEach(function (func) {
+                window.Handlers.postInit[func]();
+            })
         },
         'logout': function () {
             var url = $(this).attr('data-logout-url'); 
@@ -78,8 +87,16 @@ window.Handlers = {
 window.fin={
     documentation: {
         $tab: '$ объект для табов в главном контейнере',
-        User: 'Текущий пользователь системы по /user'
-    }
+        User: 'Текущий пользователь системы по /user',
+        templates: 'шаблоны Handlebars'
+    },
+    templates: (function () {
+        var templates = {}
+       $('script[type*=handlebars]').each(function (index, template) {
+            templates[$(template).attr('id')] = $('script[type*=handlebars]').html();
+        })
+        return templates;
+    }) ()
 };
 
 $(function(){
