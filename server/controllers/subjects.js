@@ -12,8 +12,8 @@ accounts.validateAdd = function * ()
 {
     this.req.checkBody('name').notEmpty().trim().len(1, 255);
     this.req.checkBody('description').notEmpty().trim().len(1, 255);
-    this.req.checkBody('INN').notEmpty().trim().len(12, 12);
-    this.req.checkBody('KPP').notEmpty().trim().len(1, 9);
+    this.req.checkBody('INN').notEmpty().trim().len(10, 12);
+    this.req.checkBody('KPP').optional().trim().len(1, 9);
     this.req.checkBody('isSystem').optional().toBoolean();
     this.req.checkBody('type').notEmpty().trim().isIn(['Компания', 'ИП', 'Физ-лицо']);
 };
