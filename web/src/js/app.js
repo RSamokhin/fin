@@ -69,7 +69,7 @@ window.Handlers = {
             window.fin.$tabs.tabs({ active: $('[data-bind-onload="initTabs"]>div').length - 1});
         },
         'logout': function () {
-            var url = $(this).attr('data-logout-url');
+            var url = $(this).attr('data-logout-url'); 
             location.href = url;
         }
     }
