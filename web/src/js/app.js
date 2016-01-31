@@ -41,6 +41,7 @@ window.Handlers = {
                 "processing": true,
                 "serverSide": true,
                 "ajax": "subjects/datatable",
+                "searchDelay": 700,
                 "columns": [
                     { "data": "id" },
                     { "data": "name" },
