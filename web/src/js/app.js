@@ -36,27 +36,36 @@ window.Handlers = {
         }
     },
     postInit: {
-        initDataTables: function () {
-            $('#example').DataTable( {
+        initDataTables: function (tabId) {
+            var $tab = window.fin.$tabs.find('[id="' + tabId + '"]'),
+                tabConfig = JSON.parse($tab.find('div[data-tab-config=true]').html());
+                
+            $tab.find('[data-datatables=true]').DataTable( {
                 "processing": true,
                 "serverSide": true,
-                "ajax": "subjects/datatable",
                 "searchDelay": 700,
-                "columns": [
-                    { "data": "id" },
-                    { "data": "name" },
-                    { "data": "description" },
-                    { "data": "INN" },
-                    { "data": "KPP" }
-                ]
+                ajax: tabConfig.dataTables.ajax,
+                columns: tabConfig.dataTables.columns
             });
-        }  
+        },
+        bindClickView: function (tabId) {
+            var $tab = window.fin.$tabs.find('[id="' + tabId + '"]'),
+                tabConfig = JSON.parse($tab.find('div[data-tab-config=true]').html()),
+                tabClickBindings = tabConfig.tabClickBindings;
+            tabClickBindings.forEach(function (binding) {
+                $tab.on(binding.event, binding.selector, window.Handlers[binding.event][binding.func])
+            });
+        }
     },
     click: {
         'collapseMainMenu': function () {
             var $menu = $('.main__menu-container');
             $menu.toggleClass('m-collapsed');
             return false;
+        },
+        'viewRowFromTableView': function () {
+            var $tabRow = $(this);
+                
         },
         'openNewTab': function () {
             var $menuItem = $(this),
@@ -75,7 +84,7 @@ window.Handlers = {
             window.fin.$tabs.tabs( "refresh" );
             window.fin.$tabs.tabs({ active: $('[data-bind-onload="initTabs"]>div').length - 1});
             postInitFunctions.forEach(function (func) {
-                window.Handlers.postInit[func]();
+                window.Handlers.postInit[func](tabId);
             });
         },
         'logout': function () {
@@ -89,7 +98,8 @@ window.fin={
     documentation: {
         $tab: '$ объект для табов в главном контейнере',
         User: 'Текущий пользователь системы по /user',
-        templates: 'шаблоны Handlebars'
+        templates: 'шаблоны Handlebars',
+        fieldValidators: 'Функции - валидаторы для полей форм системы'
     },
     templates: (function () {
         var templates = {}
@@ -97,7 +107,12 @@ window.fin={
             templates[$(template).attr('id')] = $('script[type*=handlebars]').html();
         })
         return templates;
-    }) ()
+    }) (),
+    fieldValidators: {
+        checkInn: function (type) {
+            
+        }
+    }
 };
 
 $(function(){

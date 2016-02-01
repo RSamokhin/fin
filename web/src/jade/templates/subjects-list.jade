@@ -1,18 +1,77 @@
 script(id="subjects-list", type="text/x-handlebars-template")
-    div(class='main__content-data-container'  data-bind-onload='initDataTables')
-        table#example.display(cellspacing='0', width='100%')
+    div(class='main__content-data-container' data-table-click-view='true')
+        div(style='display:none;' data-tab-config='true').
+            {
+                "dataTables": {
+                    "columns": [
+                        {"data": "id"},
+                        {"data": "name"},
+                        {"data": "description"},
+                        {"data": "INN"},
+                        {"data": "KPP"},
+                        {"data": "isSystem"}
+                    ],
+                    "ajax": "subjects/datatable"
+                },
+                "tabClickBindings": [{
+                    "selector": "[data-table-click-view=true] tbody tr",
+                    "event": "click",
+                    "func": "viewRowFromTableView"
+                }],
+                "viewConfig": {
+                    "getElementURL": "/subjects/{id}/",
+                    "viewFieldsConfig": [{
+                        "name": "id",
+                        "label": "ID субъекта",
+                        "editable": false,
+                        "fieldType": "checkbox",
+                        "tooltip": "Идентификатор субъекта, задается при создании автоматически"
+                    }, {
+                        "name": "name",
+                        "label": "Название/ФИО",
+                        "editable": true,
+                        "fieldType": "input",
+                        "tooltip": "Название/ФИО субъекта"
+                    }, {
+                        "name": "type",
+                        "label": "Тип субъекта",
+                        "editable": false,
+                        "fieldType": "selector",
+                        "selectorValues": [
+                            "ИП", "Физ-Лицо", "Компания"
+                        ]
+                        "tooltip": "Тип субъекта (ИП, Физ-Лицо, Компания) задается при создании"
+                    }, {
+                        "name": "INN",
+                        "label": "ИНН",
+                        "editable": true,
+                        "fieldType": "input",
+                        "placeholder": "ИНН субъекта"
+                        "tooltip": "ИНН субъекта, для физ-лиц 12, для юр-лиц 10",
+                        "validate": [{
+                            "func": "checkINN",
+                            "params": [
+                                "INN", "" 
+                            ]
+                        }]
+                    }]
+                }
+            }
+        table(data-datatables='true')
           thead
             tr
-              th id
-              th Name
-              th Description
-              th INN
-              th KPP
+              th ID
+              th Название/ФИО
+              th Описание
+              th ИНН
+              th КПП
+              th Системная
           tfoot
             tr
-              th id
-              th Name
-              th Description
-              th INN
-              th KPP
+              th ID
+              th Название/ФИО
+              th Описание
+              th ИНН
+              th КПП
+              th Системная
             
