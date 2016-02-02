@@ -20,41 +20,8 @@ script(id="subjects-list", type="text/x-handlebars-template")
                 }],
                 "viewConfig": {
                     "getElementURL": "/subjects/{id}/",
-                    "viewFieldsConfig": [{
-                        "name": "id",
-                        "label": "ID субъекта",
-                        "editable": false,
-                        "fieldType": "checkbox",
-                        "tooltip": "Идентификатор субъекта, задается при создании автоматически"
-                    }, {
-                        "name": "name",
-                        "label": "Название/ФИО",
-                        "editable": true,
-                        "fieldType": "input",
-                        "tooltip": "Название/ФИО субъекта"
-                    }, {
-                        "name": "type",
-                        "label": "Тип субъекта",
-                        "editable": false,
-                        "fieldType": "selector",
-                        "selectorValues": [
-                            "ИП", "Физ-Лицо", "Компания"
-                        ]
-                        "tooltip": "Тип субъекта (ИП, Физ-Лицо, Компания) задается при создании"
-                    }, {
-                        "name": "INN",
-                        "label": "ИНН",
-                        "editable": true,
-                        "fieldType": "input",
-                        "placeholder": "ИНН субъекта"
-                        "tooltip": "ИНН субъекта, для физ-лиц 12, для юр-лиц 10",
-                        "validate": [{
-                            "func": "checkINN",
-                            "params": [
-                                "INN", "" 
-                            ]
-                        }]
-                    }]
+                    "postElementURL": "/subjects/{id}",
+                    "formTemplate": "subjects-view"
                 }
             }
         table(data-datatables='true')

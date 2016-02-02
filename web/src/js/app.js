@@ -52,9 +52,13 @@ window.Handlers = {
             var $tab = window.fin.$tabs.find('[id="' + tabId + '"]'),
                 tabConfig = JSON.parse($tab.find('div[data-tab-config=true]').html()),
                 tabClickBindings = tabConfig.tabClickBindings;
-            tabClickBindings.forEach(function (binding) {
-                $tab.on(binding.event, binding.selector, window.Handlers[binding.event][binding.func])
-            });
+                tabClickBindings.forEach(function (binding) {
+                    $tab.on(binding.event, binding.selector, function () {
+                        var args = [tabConfig];
+                        args.push.apply(args, arguments);
+                        window.Handlers[binding.event][binding.func].apply(this, args);
+                    });
+                });
         }
     },
     click: {
@@ -63,9 +67,46 @@ window.Handlers = {
             $menu.toggleClass('m-collapsed');
             return false;
         },
-        'viewRowFromTableView': function () {
-            var $tabRow = $(this);
-                
+        'viewRowFromTableView': function (tabConfig) {
+            var rowId = $(this).data('id');
+            var dataToShow = $.getJSON(
+                tabConfig.viewConfig.getElementURL.replace('{id}', rowId),
+                function (data) {
+                    var dialog = tabConfig.dialog;
+                    if (!dialog)
+                    {
+                        var templateName = tabConfig.viewConfig.formTemplate;
+                        var template = window.fin.templates[templateName];
+                        dialog = tabConfig.dialog = $(template).dialog({
+                            autoOpen: false
+                        });
+                    }
+                    dialog.dialog('option', 'buttons', {
+                        'Сохранить': function(){
+                            var url = tabConfig.viewConfig.postElementURL.replace('{id}', rowId);
+                            var data = $(this).find('form').serialize();
+                            $.ajax(url, {
+                                type: 'POST',
+                                data: data,
+                                success: function () {
+                                    
+                                }
+                            });
+                        },
+                        'Отмена': function () {
+                            dialog.dialog('close');
+                        }
+                    });
+                    data['_csrf'] = $.cookie('csrfToken');
+                    dialog.find('[name]').each(function (index, field){
+                        if (!data.hasOwnProperty(field.name))
+                            return;
+                        
+                        field.value = data[field.name];
+                    });
+                    
+                    dialog.dialog('open');
+                });
         },
         'openNewTab': function () {
             var $menuItem = $(this),
@@ -79,11 +120,11 @@ window.Handlers = {
                 template = window.Handlebars.compile(tabTemplate),
                 context = {},
                 postInitFunctions = $menuItem.attr('data-post-init').split(' ');
-            window.fin.$tabs.find( ".ui-tabs-nav" ).append($tab);
-            window.fin.$tabs.append( "<div id='" + tabId + "'>" + template(context) + "</div>" );
-            window.fin.$tabs.tabs( "refresh" );
-            window.fin.$tabs.tabs({ active: $('[data-bind-onload="initTabs"]>div').length - 1});
-            postInitFunctions.forEach(function (func) {
+                window.fin.$tabs.find( ".ui-tabs-nav" ).append($tab);
+                window.fin.$tabs.append( "<div id='" + tabId + "'>" + template(context) + "</div>" );
+                window.fin.$tabs.tabs( "refresh" );
+                window.fin.$tabs.tabs({ active: $('[data-bind-onload="initTabs"]>div').length - 1});
+                postInitFunctions.forEach(function (func) {
                 window.Handlers.postInit[func](tabId);
             });
         },
@@ -104,12 +145,15 @@ window.fin={
     templates: (function () {
         var templates = {}
         $('script[type*=handlebars]').each(function (index, template) {
-            templates[$(template).attr('id')] = $('script[type*=handlebars]').html();
+            templates[$(template).attr('id')] = $(template).html();
         })
         return templates;
     }) (),
     fieldValidators: {
-        checkInn: function (type) {
+        checkINN: function (type) {
+            
+        },
+        checkLength: function (length) {
             
         }
     }

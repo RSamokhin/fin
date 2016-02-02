@@ -1,0 +1,33 @@
+script(id="subjects-view", type="text/x-handlebars-template")
+    div(
+        class='view-form,'
+        id="subjectsViewDialog", 
+        title="Субъект"
+        data-title-view="Информация по субъекту",
+        data-title-edit="Рекдактирование субъекта",
+        data-title-create="Добавление субъекта",
+    )
+        p(class="validateTips") Все поля формы обязательны для заполнения
+        form        
+            fieldset
+                label(for="id") ID
+                input(type="text", name="id", class="text ui-widget-content ui-corner-all", placeholder="ID субъекта/системное") 
+                label(for="name") Название/ФИО
+                input(type="text", name="name", class="text ui-widget-content ui-corner-all", placeholder='Наименование') 
+                label(for="INN") ИНН
+                input(type="text", name="INN", class="text ui-widget-content ui-corner-all", placeholder='ИНН субъекта') 
+                label(for="KPP") КПП
+                input(type="text", name="KPP", class="text ui-widget-content ui-corner-all", placeholder='КПП субъекта') 
+                label(for="description") Доп. информация
+                textarea(rows="4", name="description", class="text ui-widget-content ui-corner-all", placeholder='Дополнительная информация') 
+                label(for="type") Тип субъекта
+                select(name="type", class="text ui-widget-content ui-corner-all")
+                    option(value="ИП") ИП
+                    option(value="Физ-лицо") Физ-лицо
+                    option(value="Компания") Компания
+                br
+                label(for="isSystem") Системная
+                input(type="checkbox", name="isSystem", class="text ui-widget-content ui-corner-all") 
+                input(type="hidden", name="_csrf")
+            input(type="submit", tabindex="-1", style="position:absolute; top:-1000px")
+

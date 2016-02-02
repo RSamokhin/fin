@@ -131,7 +131,14 @@ module.exports = {
             draw: draw,
             recordsTotal: totalRows,
             recordsFiltered: rows.count,
-            data: rows.rows.map(row => row.toJSON())
+            data: rows.rows.map(function(row)
+            {
+                var data = row.toJSON();
+                data['DT_RowData'] = {
+                    'id': row.id
+                };
+                return data;
+            })
         };
     },
     buildLimit: function(query, dbQuery)
