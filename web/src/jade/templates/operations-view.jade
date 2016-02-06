@@ -1,0 +1,30 @@
+script(id="operations-view", type="text/x-handlebars-template")
+    div(
+        class='view-form,'
+        id="operationsViewDialog",
+        title="Операция"
+        data-title-view="Информация по операции",
+        data-title-edit="Рекдактирование операции",
+        data-title-create="Добавление операции",
+    )
+        p(class="validateTips") Все поля формы обязательны для заполнения
+        form        
+            fieldset
+                label ID
+                    input(type="text", name="id", class="text ui-widget-content ui-corner-all", placeholder="ID операции", readonly)
+            fieldset
+                label Опсиание
+                    br
+                    textarea(rows="4", name="description", class="text ui-widget-content ui-corner-all", placeholder='Опсиание', style="width: 100%")
+            fieldset
+                label Дата операции
+                    input(type="text", name="createdAt", class="text ui-widget-content ui-corner-all", placeholder='Дата операции')
+                br
+                label Дата обновления
+                    input(type="text", name="updatedAt", class="text ui-widget-content ui-corner-all", placeholder='Дата обновления')
+            fieldset
+                label Первая транзакция
+                    input(type="text", name="rootTransactionId", class="text ui-widget-content ui-corner-all", placeholder='Первая транзакция')
+                input(type="hidden", name="_csrf")
+            input(type="submit", tabindex="-1", style="position:absolute; top:-1000px")
+

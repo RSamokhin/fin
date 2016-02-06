@@ -1,0 +1,41 @@
+script(id="operations-list", type="text/x-handlebars-template")
+    div(class='main__content-data-container' data-table-click-view='true')
+        div(style='display:none;' data-tab-config='true').
+            {
+                "dataTables": {
+                    "columns": [
+                        {"data": "id"},
+                        {"data": "description"},
+                        {"data": "createdAt"},
+                        {"data": "updatedAt"},
+                        {"data": "rootTransactionId"}
+                    ],
+                    "ajax": "operations/datatable"
+                },
+                "tabClickBindings": [{
+                    "selector": "[data-table-click-view=true] tbody tr",
+                    "event": "click",
+                    "func": "viewRowFromTableView"
+                }],
+                "viewConfig": {
+                    "getElementURL": "/operations/{id}/",
+                    "postElementURL": "/operations/{id}",
+                    "formTemplate": "operations-view"
+                }
+            }
+        table(data-datatables='true')
+          thead
+            tr
+              th ID
+              th Описание
+              th Дата
+              th Дата обновления
+              th Первая транзакция
+          tfoot
+            tr
+              th ID
+              th Описание
+              th Дата
+              th Дата обновления
+              th Первая транзакция
+            

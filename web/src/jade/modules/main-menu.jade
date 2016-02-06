@@ -11,7 +11,13 @@ ul(class='main__menu-list')
         
     ) 
         span Субъекты
-    li(data-tab-name='operations')
+    li(
+        data-bind-click='openNewTab',
+        data-tab-name='operations',
+        data-tab-label='Операции',
+        data-template='operations-list',
+        data-post-init='initDataTables bindClickView'
+    )
         span Операции
     li(data-tab-name='reports')
         span Отчеты

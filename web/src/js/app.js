@@ -68,6 +68,7 @@ window.Handlers = {
             return false;
         },
         'viewRowFromTableView': function (tabConfig) {
+            var $tableRow = $(this);
             var rowId = $(this).data('id');
             var dataToShow = $.getJSON(
                 tabConfig.viewConfig.getElementURL.replace('{id}', rowId),
@@ -78,7 +79,9 @@ window.Handlers = {
                         var templateName = tabConfig.viewConfig.formTemplate;
                         var template = window.fin.templates[templateName];
                         dialog = tabConfig.dialog = $(template).dialog({
-                            autoOpen: false
+                            autoOpen: false,
+                            width: 800,
+                            height: 540
                         });
                     }
                     dialog.dialog('option', 'buttons', {
@@ -88,8 +91,19 @@ window.Handlers = {
                             $.ajax(url, {
                                 type: 'POST',
                                 data: data,
-                                success: function () {
-                                    
+                                success: function (result) {
+                                    if (!result.errors)
+                                    {
+                                        var tds = $tableRow.find('td');
+                                        tds.each(function(index, td){
+                                            $(td).text(result[tabConfig.dataTables.columns[index].data]);
+                                        });
+                                        dialog.dialog('close');
+                                    }
+                                    else
+                                    {
+                                        alert(result.errors);
+                                    }
                                 }
                             });
                         },
