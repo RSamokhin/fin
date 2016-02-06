@@ -4,12 +4,20 @@ div(class='main__menu-header')
 ul(class='main__menu-list')
     li(
         data-bind-click='openNewTab',
+        data-tab-name='operation-add',
+        data-tab-label='Добавление операции',
+        data-template='operations-add',
+        data-post-init='initOperationsAdd'
+    )
+        span Добавить операцию
+    li(
+        data-bind-click='openNewTab',
         data-tab-name='subjects',
         data-tab-label='Субъекты',
         data-template='subjects-list',
         data-post-init='initDataTables bindClickView'
-        
-    ) 
+
+    )
         span Субъекты
     li(
         data-bind-click='openNewTab',

@@ -59,6 +59,22 @@ window.Handlers = {
                         window.Handlers[binding.event][binding.func].apply(this, args);
                     });
                 });
+        },
+        initOperationsAdd: function(tabId)
+        {
+            var $tab = window.fin.$tabs.find('[id="' + tabId + '"]');
+            var autoCompleteFields = $tab.find('.autocomplete');
+            autoCompleteFields.each(function(index, field){
+                var url = $(field).data('autocompleteUrl');
+                $(field).autocomplete({
+                    source: url,
+                    minLength: 1,
+                    select: function(event, ui){
+                        var id = ui.item ? ui.item.id : -1;
+                        $(this).data('autocompleteId', id);
+                    }
+                });
+            });
         }
     },
     click: {

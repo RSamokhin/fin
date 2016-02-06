@@ -20,12 +20,14 @@ module.exports = {
     model: null,
     path: '',
     searchColumns: null,
+    autoCompleteField: '',
     registerRoutes: function(router)
     {
         assert(this.model);
         assert(this.path);
         router.get(this.path, makeQueryFunc(this.getList, this));
         router.get(this.path + '/datatable', makeQueryFunc(this.dataTable, this));
+        router.get(this.path + '/autocomplete', makeQueryFunc(this.autocomplete, this));
         router.get(this.path + '/:id', makeQueryFunc(this.getOne, this));
         router.del(this.path + '/:id', makeQueryFunc(this.deleteOne, this));
         router.post(this.path, koaBody, koaValidate, csrf.middleware, makeQueryFunc(this.add, this));
@@ -236,5 +238,29 @@ module.exports = {
             };
             return columnQuery;
         }.bind(this));
+    },
+    autocomplete: function * ()
+    {
+        var query = this.req.query || {};
+        var term = query.term || '';
+        if (!term || !this.autoCompleteField)
+        {
+            this.req.body = [];
+            return;
+        }
+
+        var dbQuery = {
+            where: {},
+            limit: 10
+        };
+        dbQuery.where[this.autoCompleteField] = {
+            '$iLike': '%' + term.replace(/[%_]/g, '') + '%'
+        };
+        var rows = yield this.model.findAll(dbQuery);
+        this.req.body = rows.map((row) => this.autoCompleteResult(row));
+    },
+    autoCompleteResult: function(row)
+    {
+        return row.toJSON();
     }
 };

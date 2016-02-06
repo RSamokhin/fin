@@ -28,6 +28,15 @@ accounts.extractAddData = function(body)
         type: body['type']
     };
 };
+accounts.autoCompleteField = 'name';
+accounts.autoCompleteResult = function(subject)
+{
+    return {
+        id: subject.id,
+        label: subject.name,
+        value: subject.name
+    };
+};
 accounts.registerRoutes(router);
 
 //router.get('/subjects', baseTable.display({
