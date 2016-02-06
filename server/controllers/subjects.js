@@ -8,6 +8,7 @@ var accounts = Object.create(baseOperations);
 accounts.model = models.Subject;
 accounts.path = '/subjects';
 accounts.searchColumns = ['name', 'description', 'INN', 'KPP', 'type'];
+accounts.filterColumns = ['name', 'INN', 'KPP', 'type'];
 accounts.validateAdd = function * ()
 {
     this.req.checkBody('name').notEmpty().trim().len(1, 255);

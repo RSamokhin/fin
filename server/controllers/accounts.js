@@ -13,6 +13,7 @@ var render = require('../views');
 var accounts = Object.create(baseOperations);
 accounts.model = models.Account;
 accounts.path = '/accounts';
+accounts.filterColumns = ['SubjectId', 'CurrencyId'];
 accounts.validateAdd = function * ()
 {
     this.req.checkBody('name').notEmpty().trim().len(1, 255);

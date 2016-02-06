@@ -7,6 +7,7 @@ var models = require("../models");
 var accounts = Object.create(baseOperations);
 accounts.model = models.Transaction;
 accounts.path = '/transactions';
+accounts.filterColumns = ['orderNumber', 'OperationId', 'fromSubjectId', 'toSubjectId', 'fromAccountId', 'toAccountId'];
 accounts.validateAdd = function * ()
 {
     this.req.checkBody('tax').notEmpty().trim().toFloat();

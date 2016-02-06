@@ -4,6 +4,7 @@ var assert = require('assert');
 var koaBody = require('koa-body')();
 var koaValidate = require('koa-validate')();
 var csrf = require('koa-csrf');
+var models = require('../models');
 
 var makeQueryFunc = function(func, obj)
 {
@@ -20,6 +21,7 @@ module.exports = {
     model: null,
     path: '',
     searchColumns: null,
+    filterColumns: null,
     autoCompleteField: '',
     registerRoutes: function(router)
     {
@@ -35,7 +37,9 @@ module.exports = {
     },
     getList: function * (req)
     {
-        var records = yield this.model.findAll();
+        var query = this.req.query || {};
+        var dbQuery = this.buildFilter(query);
+        var records = yield this.model.findAll(dbQuery);
         req.body = records.map(record => record.toJSON());
     },
     getOne: function * (req)
@@ -262,5 +266,32 @@ module.exports = {
     autoCompleteResult: function(row)
     {
         return row.toJSON();
+    },
+    buildFilter: function(query)
+    {
+        var dbQuery = {
+            where: {}
+        };
+        if (!this.filterColumns)
+            return {};
+
+        this.filterColumns.forEach(function(column){
+            if (query[column] === undefined)
+                return;
+            var modelColumn = this.model.attributes[column];
+            if (modelColumn === undefined)
+                return;
+
+            if (modelColumn.type instanceof models.Sequelize.INTEGER)
+            {
+                dbQuery.where[column] = query[column] | 0;
+            }
+            else if (modelColumn.type instanceof models.Sequelize.STRING)
+            {
+                dbQuery.where[column] = query[column];
+            }
+
+        }.bind(this));
+        return dbQuery;
     }
 };
