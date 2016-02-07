@@ -1,8 +1,14 @@
 .main__content {
     &-container {
-        background-color: lightgray;
+        border-radius: 20px 0 0 20px;
+        padding: 20px;
+        background-color: #B24926;        
         order: 3;
-        flex: 5 0px; 
+        flex: 5 0px;
+        border-bottom: 1px solid #FAA523;
+        border-top: 1px solid #FAA523;
+        border-left: 1px solid #FAA523;
+        box-sizing: border-box;
     }
     &-data-container {
         background-color: lightblue;

@@ -1,7 +1,11 @@
 .main__menu {
     &-container {
-        border-right: 1px solid black;
+        border-radius: 0 20px 20px 0;
+        border-bottom: 1px solid #FAA523;
+        border-top: 1px solid #FAA523;
+        border-right: 1px solid #FAA523;
         background-color: #B24926;
+        margin-right: 10px;
         color: white;
         order: 2;
         flex: 1 auto;
@@ -26,11 +30,13 @@
     &-header {
         border-bottom: 1px solid black;
         position: relative;
-        line-height: 25px;
+        line-height: 36px;
+        border-radius: 0 22px 0 0;
+        background-color: #A74423;    
         &__collapse {
             cursor: pointer;
             font-size: 18px;
-            line-height: 25px;
+            line-height: 36px;
             position: absolute;
             right: 5px;
             &:after {
