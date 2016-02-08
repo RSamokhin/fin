@@ -15,6 +15,25 @@ ul(class='main__menu-list' data-bind-onload='initMenu')
             li(class="ui-state-disabled") Добавить субъекта
                 span(class='ui-icon ui-icon-circlesmall-plus')
         span(class='ui-icon ui-icon-contact')
+    li(data-tab-name='operations') Транзакции
+        ul
+            li(
+                data-bind-click='openNewTab',
+                data-tab-name='transactions',
+                data-tab-label='Транзакции',
+                data-template='operations-list',
+                data-post-init='initDataTables bindClickView'
+            ) Список транзакций
+                span(class='ui-icon ui-icon-script')
+            li(
+                data-bind-click='openNewTab',
+                data-tab-name='operation-add',
+                data-tab-label='Добавление транзакции',
+                data-template='transactions-add',
+                data-post-init='initOperationsAdd'
+            ) Добавить транзакцию
+                span(class='ui-icon ui-icon-copy')
+        span(class='ui-icon ui-icon-copy')
     li Операция
         ul
             li(
@@ -35,6 +54,5 @@ ul(class='main__menu-list' data-bind-onload='initMenu')
                 span(class='ui-icon ui-icon-circlesmall-plus')
         span(class='ui-icon ui-icon-script')
     li(data-tab-name='reports', class="ui-state-disabled") Отчеты
-    li(data-tab-name='operations', class="ui-state-disabled") Транзакции
     li(data-tab-name='currencies', class="ui-state-disabled") Валюты
     li(data-tab-name='users', class="ui-state-disabled") Пользователи

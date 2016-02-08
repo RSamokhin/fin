@@ -1,0 +1,36 @@
+script(id="operations-add", type="text/x-handlebars-template")
+    div(
+        class="operationsAdd",
+        title="Добавление операция"
+    )
+        form
+            div Операция
+            fieldset
+                label Опсиание
+                    br
+                    textarea(rows="4", name="description", placeholder='Опсиание', style="width: 100%")
+            div Первая транзакция
+            fieldset
+                label Дата
+                    input(type="text", name="submittedAt", placeholder='Дата')
+                label Номер заказа
+                    input(type="text", name="orderNumber", placeholder='Номер заказа')
+                label Сумма
+                    input(type="text", name="fromSum", placeholder='Сумма')
+            fieldset
+                label Со счёта
+                    input(type="text", name="fromAccountId", placeholder='Со счёта' class='autocomplete' data-autocomplete-url='/subjects/autocomplete')
+                label На счёт
+                    input(type="text", name="toAccountId", placeholder='На счёт' class='autocomplete' data-autocomplete-url='/subjects/autocomplete')
+            fieldset
+                label Через субъект
+                    input(type="text", name="fromSubjectId", placeholder='Через субъект' class='autocomplete' data-autocomplete-url='/subjects/autocomplete')
+                label На субъект
+                    input(type="text", name="toSubjectId", placeholder='На субъект' class='autocomplete' data-autocomplete-url='/subjects/autocomplete')
+            fieldset
+                label Комиссия
+                    select(name='tax')
+                        option(value='0.05') 5%
+                        option(value='0.07') 7%
+            input(type="submit")
+
