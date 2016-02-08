@@ -1,0 +1,18 @@
+.main__overlay {
+    z-index: 2 !important;
+    opacity: .9 !important;
+    & .ui-progressbar {
+        z-index: 3;
+        position: absolute;
+        width: 50%;
+        left: 25%;
+        top: 50%;
+    }
+    & .progress-label {
+        position: absolute;
+        left: 50%;
+        top: 4px;
+        font-weight: bold;
+        text-shadow: 1px 1px 0 #fff;
+    }
+}

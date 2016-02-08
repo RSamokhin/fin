@@ -6,6 +6,7 @@
         border-right: 1px solid #FAA523;
         background-color: #B24926;
         margin-right: 10px;
+        box-sizing: border-box;
         color: white;
         order: 2;
         flex: 1 auto;
@@ -50,11 +51,14 @@
     }
     &-list {
         line-height: 20px;
+        border-radius: 0 0 20px 0;
+        z-index: 1;
+        white-space: nowrap;
         & > li {
             cursor: pointer;
             &:hover {
                 opacity: 0.7;
             }
         }
-    }   
+    }
 }

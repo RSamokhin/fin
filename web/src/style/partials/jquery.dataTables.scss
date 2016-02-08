@@ -26,10 +26,13 @@ table.dataTable {
 	 * Body styles
 	 */
 }
+
+
 table.dataTable thead th,
 table.dataTable tfoot th {
 	font-weight: bold;
-	color: #ffffff;
+	color: #000000;
+	background-color: #B24926;
 }
 table.dataTable thead th,
 table.dataTable thead td {
@@ -414,7 +417,7 @@ table.dataTable td {
 .dataTables_wrapper .dataTables_info,
 .dataTables_wrapper .dataTables_processing,
 .dataTables_wrapper .dataTables_paginate {
-	color: #FFFFFF;
+	color: #000000;
 	& select, & input {
 		color: #000000;
 	}

@@ -1,6 +1,28 @@
 window.Handlers = {
     onload: {
+        overlayInit: function () {
+            window.fin.$overlay = window.fin.$overlay ? window.fin.$overlay : $('<div class="main__overlay ui-widget-overlay"><div id="progressbar"><div class="progress-label">Загрузка...</div></div></div>').hide().appendTo('body');
+            $(window).resize(function(){
+                $('.main__overlay').width($(document).width());
+                $('.main__overlay').height($(document).height());            
+            });
+            var progressbar = $( "#progressbar" ),
+                 progressLabel = $( ".progress-label" );
+             
+            progressbar.progressbar({
+                value: false,
+                change: function() {
+                    progressLabel.text( progressbar.progressbar( "value" ) + "%" );
+                },
+                complete: function() {
+                    progressLabel.text( "Complete!" );
+                }
+            });
+            $('.wrapper').show();
+        },
         getUserInfo: function () {
+            var overlay = window.fin.systemFunctions.generateOverlayNumber('getUserInfo');
+            window.fin.systemFunctions.loaderOverlay(1, overlay);
             $.ajax({
                 type: 'get',
                 url: '/user',
@@ -9,11 +31,13 @@ window.Handlers = {
                     window.fin.User = userData;
                     $userContainer.text(userData.firstName + ' ' + userData.firstName);
                     $userContainer.parent().removeClass('m-hidden');
-                    
+                    window.fin.systemFunctions.loaderOverlay(0, overlay);
                 }
             });
         },
         initTabs: function () {
+            var overlay = window.fin.systemFunctions.generateOverlayNumber('initTabs');
+            window.fin.systemFunctions.loaderOverlay(1, overlay);
             window.fin.$tabs = $('[data-bind-onload=initTabs]').tabs();   
             window.fin.$tabs.find( ".ui-tabs-nav" ).sortable({
                   axis: "x",
@@ -33,6 +57,13 @@ window.Handlers = {
                     window.fin.$tabs.tabs("refresh");
                 }
             });
+            window.fin.systemFunctions.loaderOverlay(0, overlay);
+        },
+        initMenu: function () {
+            var overlay = window.fin.systemFunctions.generateOverlayNumber('initMainMenu');
+            window.fin.systemFunctions.loaderOverlay(1, overlay);
+            $('[data-bind-onload=initMenu]').menu();
+            window.fin.systemFunctions.loaderOverlay(0, overlay);
         }
     },
     postInit: {
@@ -84,6 +115,8 @@ window.Handlers = {
             return false;
         },
         'viewRowFromTableView': function (tabConfig) {
+            var overlay = window.fin.systemFunctions.generateOverlayNumber('viewRowFromTableView');
+            window.fin.systemFunctions.loaderOverlay(1, overlay);
             var $tableRow = $(this);
             var rowId = $(this).data('id');
             var dataToShow = $.getJSON(
@@ -134,8 +167,9 @@ window.Handlers = {
                         
                         field.value = data[field.name];
                     });
-                    
+                    dialog.dialog('option', 'modal', 'true')
                     dialog.dialog('open');
+                    window.fin.systemFunctions.loaderOverlay(0, overlay);
                 });
         },
         'openNewTab': function () {
@@ -170,7 +204,9 @@ window.fin={
         $tab: '$ объект для табов в главном контейнере',
         User: 'Текущий пользователь системы по /user',
         templates: 'шаблоны Handlebars',
-        fieldValidators: 'Функции - валидаторы для полей форм системы'
+        fieldValidators: 'Функции - валидаторы для полей форм системы',
+        $overlay: 'Объект оверлея',
+        overlays: 'Объект инициаторов оверлея'
     },
     templates: (function () {
         var templates = {}
@@ -186,16 +222,39 @@ window.fin={
         checkLength: function (length) {
             
         }
-    }
+    },
+    systemFunctions: {
+        loaderOverlay: function (ifShow, initiator) {
+            if (ifShow) {
+                $('.main__overlay').fadeIn();
+                $('.main__overlay').width($(document).width());
+                $('.main__overlay').height($(document).height());
+                window.fin.overlays[initiator] = true;
+            } else if (!ifShow) {
+                window.fin.overlays[initiator] = false;
+                if (Object.keys(window.fin.overlays).every(function (key) {
+                    return window.fin.overlays[key] !== true; 
+                })) {
+                    setInterval(function () {
+                        $('.main__overlay').fadeOut();
+                    }, 2000)
+                }
+            }
+        },
+        generateOverlayNumber: function (func) {
+            return func + Math.random();
+        }
+    },
+    overlays: {}
 };
 
 $(function(){
+    Object.keys(window.Handlers.onload).forEach(function (handler) {
+        window.Handlers.onload[handler]();
+    })
     Object.keys(window.Handlers).forEach(function (bindFunctionEvent) {
         Object.keys(window.Handlers[bindFunctionEvent]).forEach(function (bindFunctionName) {
             $(document.body).on(bindFunctionEvent, '[data-bind-'+bindFunctionEvent+'*='+bindFunctionName+']', window.Handlers[bindFunctionEvent][bindFunctionName]);
         });
     });
-    Object.keys(window.Handlers.onload).forEach(function (handler) {
-        window.Handlers.onload[handler]();
-    })
 });

@@ -1,37 +1,40 @@
 div(class='main__menu-header')
     div(class='main__menu-header__collapse' title='Главное меню' data-bind-click='collapseMainMenu')
     div(class='main__menu-header__title') Главное меню
-ul(class='main__menu-list')
-    li(
-        data-bind-click='openNewTab',
-        data-tab-name='operation-add',
-        data-tab-label='Добавление операции',
-        data-template='operations-add',
-        data-post-init='initOperationsAdd'
-    )
-        span Добавить операцию
-    li(
-        data-bind-click='openNewTab',
-        data-tab-name='subjects',
-        data-tab-label='Субъекты',
-        data-template='subjects-list',
-        data-post-init='initDataTables bindClickView'
-
-    )
-        span Субъекты
-    li(
-        data-bind-click='openNewTab',
-        data-tab-name='operations',
-        data-tab-label='Операции',
-        data-template='operations-list',
-        data-post-init='initDataTables bindClickView'
-    )
-        span Операции
-    li(data-tab-name='reports')
-        span Отчеты
-    li(data-tab-name='operations')
-        span Транзакции
-    li(data-tab-name='currencies') 
-        span Валюты
-    li(data-tab-name='users') 
-        span Пользователи
+ul(class='main__menu-list' data-bind-onload='initMenu')
+    li Субъекты
+        ul
+            li(
+                data-bind-click='openNewTab',
+                data-tab-name='subjects',
+                data-tab-label='Субъекты',
+                data-template='subjects-list',
+                data-post-init='initDataTables bindClickView'
+            ) Список субъектов
+                span(class='ui-icon ui-icon-contact')
+            li(class="ui-state-disabled") Добавить субъекта
+                span(class='ui-icon ui-icon-circlesmall-plus')
+        span(class='ui-icon ui-icon-contact')
+    li Операция
+        ul
+            li(
+                data-bind-click='openNewTab',
+                data-tab-name='operations',
+                data-tab-label='Операции',
+                data-template='operations-list',
+                data-post-init='initDataTables bindClickView'
+            ) Список операций
+                span(class='ui-icon ui-icon-script')
+            li(
+                data-bind-click='openNewTab',
+                data-tab-name='operation-add',
+                data-tab-label='Добавление операции',
+                data-template='operations-add',
+                data-post-init='initOperationsAdd'
+            ) Добавить операцию
+                span(class='ui-icon ui-icon-circlesmall-plus')
+        span(class='ui-icon ui-icon-script')
+    li(data-tab-name='reports', class="ui-state-disabled") Отчеты
+    li(data-tab-name='operations', class="ui-state-disabled") Транзакции
+    li(data-tab-name='currencies', class="ui-state-disabled") Валюты
+    li(data-tab-name='users', class="ui-state-disabled") Пользователи
