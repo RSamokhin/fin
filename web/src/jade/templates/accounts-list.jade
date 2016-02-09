@@ -1,0 +1,35 @@
+div(class='main__content-data-container' data-table-click-view='false' data-subject-accounts="true")
+    div(style='display:none;' data-tab-config='true').
+        {
+            "dataTables": {
+                "columns": [
+                    {"data": "id"},
+                    {"data": "name"},
+                    {"data": "description"},
+                    {"data": "amount"},
+                    {"data": "CurrencyId"}
+                ],
+                "source": {
+                    "url": "/accounts",
+                    "data": {
+                       "SubjectId": "#$#rowId#$#"
+                    }
+                }
+            }        
+        }
+    table(data-datatables='true' )
+      thead
+        tr
+          th ID
+          th Название/ФИО
+          th Описание
+          th Сумма
+          th Валюта
+      tfoot
+        tr
+          th ID
+          th Название/ФИО
+          th Описание
+          th Сумма
+          th Валюта
+        

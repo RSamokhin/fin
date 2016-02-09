@@ -67,21 +67,48 @@ window.Handlers = {
         }
     },
     postInit: {
-        initDataTables: function (tabId) {
-            var $tab = window.fin.$tabs.find('[id="' + tabId + '"]'),
-                tabConfig = JSON.parse($tab.find('div[data-tab-config=true]').html());
-                
-            $tab.find('[data-datatables=true]').DataTable( {
-                "processing": true,
-                "serverSide": true,
-                "searchDelay": 700,
-                ajax: tabConfig.dataTables.ajax,
-                columns: tabConfig.dataTables.columns
-            });
+        initDataTables: function (config) {
+            switch (config.lookBy) {
+                case 'tabId':
+                    var $tab = window.fin.$tabs.find('[id="' + config.tabId + '"]');
+                    break;
+                case 'selector':
+                    var $tab = $(config.selector);
+                    break;
+            }
+            var tabConfig = JSON.parse($tab.find('div[data-tab-config=true]').html());
+            if (tabConfig.dataTables.ajax) { 
+                $tab.find('[data-datatables=true]').DataTable( {
+                    "processing": true,
+                    "serverSide": true,
+                    "searchDelay": 700,
+                    ajax: tabConfig.dataTables.ajax,
+                    columns: tabConfig.dataTables.columns
+                });
+            } else if (tabConfig.dataTables.source) {
+                $.ajax({
+                    url: tabConfig.dataTables.source.url,
+                    data: tabConfig.dataTables.source.data,
+                    success: function (result) {
+                         $tab.find('[data-datatables=true]').DataTable( {
+                            "searchDelay": 700,
+                            data: result,
+                            columns: tabConfig.dataTables.columns
+                        });
+                    }
+                })
+            }
         },
-        bindClickView: function (tabId) {
-            var $tab = window.fin.$tabs.find('[id="' + tabId + '"]'),
-                tabConfig = JSON.parse($tab.find('div[data-tab-config=true]').html()),
+        bindClickView: function (config) {
+            switch (config.lookBy) {
+                case 'tabId':
+                    var $tab = window.fin.$tabs.find('[id="' + config.tabId + '"]');
+                    break;
+                case 'selector':
+                    var $tab = $(config.selector);
+                    break;
+            }
+            var tabConfig = JSON.parse($tab.find('div[data-tab-config=true]').html()),
                 tabClickBindings = tabConfig.tabClickBindings;
                 tabClickBindings.forEach(function (binding) {
                     $tab.on(binding.event, binding.selector, function () {
@@ -91,9 +118,15 @@ window.Handlers = {
                     });
                 });
         },
-        initOperationsAdd: function(tabId)
-        {
-            var $tab = window.fin.$tabs.find('[id="' + tabId + '"]');
+        initTransactionsAdd: function(config) {
+            switch (config.lookBy) {
+                case 'tabId':
+                    var $tab = window.fin.$tabs.find('[id="' + config.tabId + '"]');
+                    break;
+                case 'selector':
+                    var $tab = $(config.selector);
+                    break;
+            }
             var autoCompleteFields = $tab.find('.autocomplete');
             autoCompleteFields.each(function(index, field){
                 var url = $(field).data('autocompleteUrl');
@@ -123,15 +156,27 @@ window.Handlers = {
                 tabConfig.viewConfig.getElementURL.replace('{id}', rowId),
                 function (data) {
                     var dialog = tabConfig.dialog;
-                    if (!dialog)
-                    {
+                    if (!dialog) {
                         var templateName = tabConfig.viewConfig.formTemplate;
                         var template = window.fin.templates[templateName];
-                        dialog = tabConfig.dialog = $(template).dialog({
+                        dialog = $(template).dialog({
                             autoOpen: false,
                             width: 800,
                             height: 540
                         });
+                    }
+                    if (tabConfig.needEvalReplace === "true") {
+                        var splittedHTML = $(dialog).html().split('#$#')
+                        splittedHTML.forEach(function (el, index) {
+                            if (index % 2 === 1) {
+                                try {
+                                    splittedHTML[index] = eval(el);
+                                } catch (e) {
+                                    console.log('failed to eval: ' + el);
+                                }
+                            }
+                        })
+                        $(dialog).html(splittedHTML.join(''));
                     }
                     dialog.dialog('option', 'buttons', {
                         'Сохранить': function(){
@@ -148,6 +193,7 @@ window.Handlers = {
                                             $(td).text(result[tabConfig.dataTables.columns[index].data]);
                                         });
                                         dialog.dialog('close');
+                                        dialog.remove();
                                     }
                                     else
                                     {
@@ -158,6 +204,7 @@ window.Handlers = {
                         },
                         'Отмена': function () {
                             dialog.dialog('close');
+                            dialog.remove();
                         }
                     });
                     data['_csrf'] = $.cookie('csrfToken');
@@ -168,6 +215,11 @@ window.Handlers = {
                         field.value = data[field.name];
                     });
                     dialog.dialog('option', 'modal', 'true')
+                    if (tabConfig.viewConfig.postInit && tabConfig.viewConfig.postInit.length) {
+                        tabConfig.viewConfig.postInit.forEach(function (initiator) {
+                            window.Handlers.postInit[initiator.func].apply(this, (initiator.params && initiator.params.length) ? initiator.params : [])
+                        })
+                    }
                     dialog.dialog('open');
                     window.fin.systemFunctions.loaderOverlay(0, overlay);
                 });
@@ -189,7 +241,10 @@ window.Handlers = {
                 window.fin.$tabs.tabs( "refresh" );
                 window.fin.$tabs.tabs({ active: $('[data-bind-onload="initTabs"]>div').length - 1});
                 postInitFunctions.forEach(function (func) {
-                window.Handlers.postInit[func](tabId);
+                window.Handlers.postInit[func]({
+                    tabId: tabId,
+                    lookBy: 'tabId'
+                });
             });
         },
         'logout': function () {

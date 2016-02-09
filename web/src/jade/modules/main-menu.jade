@@ -27,10 +27,10 @@ ul(class='main__menu-list' data-bind-onload='initMenu')
                 span(class='ui-icon ui-icon-script')
             li(
                 data-bind-click='openNewTab',
-                data-tab-name='operation-add',
+                data-tab-name='transactions-add',
                 data-tab-label='Добавление транзакции',
                 data-template='transactions-add',
-                data-post-init='initOperationsAdd'
+                data-post-init='initTransactionsAdd'
             ) Добавить транзакцию
                 span(class='ui-icon ui-icon-copy')
         span(class='ui-icon ui-icon-copy')
@@ -44,13 +44,7 @@ ul(class='main__menu-list' data-bind-onload='initMenu')
                 data-post-init='initDataTables bindClickView'
             ) Список операций
                 span(class='ui-icon ui-icon-script')
-            li(
-                data-bind-click='openNewTab',
-                data-tab-name='operation-add',
-                data-tab-label='Добавление операции',
-                data-template='operations-add',
-                data-post-init='initOperationsAdd'
-            ) Добавить операцию
+            li(class="ui-state-disabled") Добавить операцию
                 span(class='ui-icon ui-icon-circlesmall-plus')
         span(class='ui-icon ui-icon-script')
     li(data-tab-name='reports', class="ui-state-disabled") Отчеты

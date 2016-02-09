@@ -33,5 +33,11 @@ script(id="subjects-view", type="text/x-handlebars-template")
                 label Системная
                     input(type="checkbox", name="isSystem", class="text ui-widget-content ui-corner-all")
                 input(type="hidden", name="_csrf")
+            fieldset
+                label Счета
+                    include ./accounts-list
+            
+            
             input(type="submit", tabindex="-1", style="position:absolute; top:-1000px")
 
+        

@@ -21,8 +21,16 @@ script(id="subjects-list", type="text/x-handlebars-template")
                 "viewConfig": {
                     "getElementURL": "/subjects/{id}/",
                     "postElementURL": "/subjects/{id}",
-                    "formTemplate": "subjects-view"
-                }
+                    "formTemplate": "subjects-view",
+                    "postInit": [{
+                        "func": "initDataTables",
+                        "params": [{
+                            "selector": "[data-subject-accounts=true]",
+                            "lookBy": "selector"
+                        }]
+                    }]
+                },
+                "needEvalReplace": "true"
             }
         table(data-datatables='true')
           thead
