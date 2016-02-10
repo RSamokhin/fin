@@ -42,7 +42,7 @@ window.Handlers = {
             window.fin.$tabs.find( ".ui-tabs-nav" ).sortable({
                   axis: "x",
                   stop: function() {
-                        window.tabs.tabs( "refresh" );
+                      window.fin.$tabs.tabs( "refresh" );
                   }
             });
             window.fin.$tabs.delegate("span.ui-icon-close", "click", function () {
@@ -67,13 +67,13 @@ window.Handlers = {
         }
     },
     postInit: {
-        initDataTables: function (config) {
+        initDataTables: function (config, parent) {
             switch (config.lookBy) {
                 case 'tabId':
                     var $tab = window.fin.$tabs.find('[id="' + config.tabId + '"]');
                     break;
                 case 'selector':
-                    var $tab = $(config.selector);
+                    var $tab = $(config.selector, parent);
                     break;
             }
             var tabConfig = JSON.parse($tab.find('div[data-tab-config=true]').html());
@@ -232,24 +232,24 @@ window.Handlers = {
                     if (!dialog) {
                         var templateName = tabConfig.viewConfig.formTemplate;
                         var template = window.fin.templates[templateName];
+                        if (tabConfig.needEvalReplace === "true") {
+                            var splittedHTML = template.split('#$#');
+                            splittedHTML.forEach(function (el, index) {
+                                if (index % 2 === 1) {
+                                    try {
+                                        splittedHTML[index] = eval(el);
+                                    } catch (e) {
+                                        console.log('failed to eval: ' + el);
+                                    }
+                                }
+                            });
+                            template = splittedHTML.join('');
+                        }
                         dialog = $(template).dialog({
                             autoOpen: false,
                             width: 800,
                             height: 540
                         });
-                    }
-                    if (tabConfig.needEvalReplace === "true") {
-                        var splittedHTML = $(dialog).html().split('#$#')
-                        splittedHTML.forEach(function (el, index) {
-                            if (index % 2 === 1) {
-                                try {
-                                    splittedHTML[index] = eval(el);
-                                } catch (e) {
-                                    console.log('failed to eval: ' + el);
-                                }
-                            }
-                        })
-                        $(dialog).html(splittedHTML.join(''));
                     }
                     dialog.dialog('option', 'buttons', {
                         'Сохранить': function(){
@@ -290,7 +290,9 @@ window.Handlers = {
                     dialog.dialog('option', 'modal', 'true')
                     if (tabConfig.viewConfig.postInit && tabConfig.viewConfig.postInit.length) {
                         tabConfig.viewConfig.postInit.forEach(function (initiator) {
-                            window.Handlers.postInit[initiator.func].apply(this, (initiator.params && initiator.params.length) ? initiator.params : [])
+                            var args = (initiator.params && initiator.params.length) ? initiator.params : [];
+                            args.push(dialog);
+                            window.Handlers.postInit[initiator.func].apply(this, args);
                         })
                     }
                     dialog.dialog('open');
@@ -301,9 +303,9 @@ window.Handlers = {
             var $menuItem = $(this),
                 tabLabel = $menuItem.attr('data-tab-label'),
                 tabName = $menuItem.attr('data-tab-name'),
-                tabId = 'tabs' + Math.random(),
-                tabTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Закрыть вкладку</span></li>",
-                $tab = $(tabTemplate.replace( /#\{href\}/g, "#" + tabId).replace( /#\{label\}/g, tabLabel)),
+                tabId = 'tabs' + Math.random().toString().slice(2),
+                tabHeaderTemplate = "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close' role='presentation'>Закрыть вкладку</span></li>",
+                $tab = $(tabHeaderTemplate.replace( /#\{href\}/g, "#" + tabId).replace( /#\{label\}/g, tabLabel)),
                 tabContentHtml = 'new tab' + tabName,
                 tabTemplate = window.fin.templates[$menuItem.attr('data-template')],
                 template = window.Handlebars.compile(tabTemplate),
