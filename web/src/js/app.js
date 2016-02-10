@@ -118,7 +118,35 @@ window.Handlers = {
                     });
                 });
         },
-        initTransactionsAdd: function(config) {
+        initSelect: function (config) {
+            var $el = $(this),
+                url = $el.attr('data-url'),
+                labelTemplate = window.Handlebars.compile($el.attr('data-label-template')
+                                            .replace(/\(\(/g, '{{')
+                                            .replace(/\)\)/g, '}}')),
+                dataValue = $el.attr('data-vaue');
+                $.ajax({
+                    url: url,
+                    data: (config && config.ajaxData) ? config.ajaxData : {},
+                    success: function (data) {
+                        data.forEach(function (el) {
+                            var $newOption = $('<option/>')
+                                                .attr({
+                                                    'value': el[dataValue]
+                                                })
+                                                .text(labelTemplate(el));
+                            if ($el.attr('data-target-field-value')) {
+                                $el.attr('data-target-field-value').split('||').forEach(function (val, i) {
+                                    $newOption.attr('data-value-' + val, el[val])
+                                })                       
+                            }
+                            $newOption.appendTo($el);
+                        });
+                        $el.change();
+                    }
+                })
+        },
+        initAddForm: function(config) {
             switch (config.lookBy) {
                 case 'tabId':
                     var $tab = window.fin.$tabs.find('[id="' + config.tabId + '"]');
@@ -127,15 +155,60 @@ window.Handlers = {
                     var $tab = $(config.selector);
                     break;
             }
+            $tab.find('[data-pre-init="true"]').each(function(index, $el) {
+                $el = $($el);
+                switch ($el.attr('data-pre-init-function')) {
+                    case 'fetchSelect':
+                        window.Handlers.postInit.initSelect.call($el);
+                        break;
+                }
+            })
+            
+            
+            var datepickers = $tab.find('.datepicker');
+            datepickers.each(function (index, field) {
+               $(field).datepicker(); 
+            });
+            
             var autoCompleteFields = $tab.find('.autocomplete');
             autoCompleteFields.each(function(index, field){
-                var url = $(field).data('autocompleteUrl');
-                $(field).autocomplete({
+                var $field = $(field),
+                    url = $field.data('autocompleteUrl'),
+                    nameField = $field.attr('data-name-field'),
+                    names = $field.attr('data-name') ? $field.attr('data-name').split(' ') : [],
+                    labelField = $field.attr('data-info-label-field'),
+                    labelSelector = $field.attr('data-info-label') ? $field.attr('data-info-label').split(' ') : [],
+                    postInintSelectors = $field.attr('data-post-init-target') ? $field.attr('data-post-init-target').split(' ') : [];
+                $field.autocomplete({
                     source: url,
                     minLength: 1,
                     select: function(event, ui){
-                        var id = ui.item ? ui.item.id : -1;
-                        $(this).data('autocompleteId', id);
+                        var key = ui.item ? ui.item[nameField] : -1;
+                        if (names.length) {
+                            names.forEach(function (name) {
+                                $field.closest('form').find('[name="' + name + '"]').val(key);
+                            });
+                        }
+                        if (labelSelector.length) {
+                            var label = 'Выбрано: ' + ui.item.label;
+                            labelSelector.forEach(function (selector) {
+                                 $field.closest('form').find('[data-info-label="' + selector + '"]').html(label).show();
+                            });
+                        }
+                        if (postInintSelectors.length) {
+                            postInintSelectors.forEach(function (selector) {
+                                var $element = $(selector),
+                                    postInintFunctions = $element.attr('data-post-init-functions').split(' ');
+                                postInintFunctions.forEach(function (func) {
+                                    var config = {};
+                                    if ($element.attr('data-query-param')) {
+                                        config.ajaxData = {};
+                                        config.ajaxData[$element.attr('data-query-param')] = $($element.attr('data-query-param-value-selector')).val();
+                                    }
+                                    window.Handlers.postInit[func].call($element, config);
+                                });
+                            })
+                        }
                     }
                 });
             });
@@ -250,6 +323,18 @@ window.Handlers = {
         'logout': function () {
             var url = $(this).attr('data-logout-url'); 
             location.href = url;
+        }
+    },
+    change: {
+        'transferValueFromSelect': function () {
+            var $el = $(this),
+                fields = $el.attr('data-target-field-value').split('||'),
+                val = $el.val(),
+                $form = $el.closest('form');
+            fields.forEach(function (field) {
+                $form.find('[data-autofill="' + field + '"]').val($el.find('[value=' + val + ']').attr('data-value-' + field));
+            });
+            
         }
     }
 };
