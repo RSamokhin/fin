@@ -67,13 +67,13 @@ window.Handlers = {
         }
     },
     postInit: {
-        initDataTables: function (config, parent) {
+        initDataTables: function (config) {
             switch (config.lookBy) {
                 case 'tabId':
                     var $tab = window.fin.$tabs.find('[id="' + config.tabId + '"]');
                     break;
                 case 'selector':
-                    var $tab = $(config.selector, parent);
+                    var $tab = $(config.selector);
                     break;
             }
             var tabConfig = JSON.parse($tab.find('div[data-tab-config=true]').html());
@@ -245,10 +245,14 @@ window.Handlers = {
                             });
                             template = splittedHTML.join('');
                         }
-                        dialog = $(template).dialog({
+                        dialog = $($('<div/>').html(template.replace(/(^\s+)|(\s+$)/, '')).contents().get(0)).dialog({
                             autoOpen: false,
                             width: 800,
-                            height: 540
+                            height: 540,
+                            close: function(event, ui)
+                            {
+                                $(this).dialog('destroy').remove();
+                            }
                         });
                     }
                     dialog.dialog('option', 'buttons', {
@@ -266,7 +270,6 @@ window.Handlers = {
                                             $(td).text(result[tabConfig.dataTables.columns[index].data]);
                                         });
                                         dialog.dialog('close');
-                                        dialog.remove();
                                     }
                                     else
                                     {
@@ -277,7 +280,6 @@ window.Handlers = {
                         },
                         'Отмена': function () {
                             dialog.dialog('close');
-                            dialog.remove();
                         }
                     });
                     data['_csrf'] = $.cookie('csrfToken');
@@ -291,7 +293,6 @@ window.Handlers = {
                     if (tabConfig.viewConfig.postInit && tabConfig.viewConfig.postInit.length) {
                         tabConfig.viewConfig.postInit.forEach(function (initiator) {
                             var args = (initiator.params && initiator.params.length) ? initiator.params : [];
-                            args.push(dialog);
                             window.Handlers.postInit[initiator.func].apply(this, args);
                         })
                     }
