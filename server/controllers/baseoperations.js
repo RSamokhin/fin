@@ -68,9 +68,12 @@ module.exports = {
             return;
         }
         var data = this.extractAddData(this.req.request.body);
-        console.log(data);
-        var record = yield this.model.create(data);
+        var record = yield this.model.create(data, this.getCreateOptions());
         this.req.body = record.toJSON();
+
+        //var record = yield models.sequelize.transaction(function(t){
+        //    return this.model.create(data).then(this.afterCreate.bind(this, data, t));
+        //}.bind(this));
     },
     update: function * (req)
     {
@@ -293,5 +296,9 @@ module.exports = {
 
         }.bind(this));
         return dbQuery;
+    },
+    getCreateOptions: function()
+    {
+
     }
 };

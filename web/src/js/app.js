@@ -125,26 +125,27 @@ window.Handlers = {
                                             .replace(/\(\(/g, '{{')
                                             .replace(/\)\)/g, '}}')),
                 dataValue = $el.attr('data-vaue');
-                $.ajax({
-                    url: url,
-                    data: (config && config.ajaxData) ? config.ajaxData : {},
-                    success: function (data) {
-                        data.forEach(function (el) {
-                            var $newOption = $('<option/>')
-                                                .attr({
-                                                    'value': el[dataValue]
-                                                })
-                                                .text(labelTemplate(el));
-                            if ($el.attr('data-target-field-value')) {
-                                $el.attr('data-target-field-value').split('||').forEach(function (val, i) {
-                                    $newOption.attr('data-value-' + val, el[val])
-                                })                       
-                            }
-                            $newOption.appendTo($el);
-                        });
-                        $el.change();
-                    }
-                })
+            $.ajax({
+                url: url,
+                data: (config && config.ajaxData) ? config.ajaxData : {},
+                success: function (data) {
+                    data.forEach(function (el) {
+                        $el.empty();
+                        var $newOption = $('<option/>')
+                                            .attr({
+                                                'value': el[dataValue]
+                                            })
+                                            .text(labelTemplate(el));
+                        if ($el.attr('data-target-field-value')) {
+                            $el.attr('data-target-field-value').split('||').forEach(function (val, i) {
+                                $newOption.attr('data-value-' + val, el[val])
+                            })
+                        }
+                        $newOption.appendTo($el);
+                    });
+                    $el.change();
+                }
+            });
         },
         initAddForm: function(config) {
             switch (config.lookBy) {
@@ -338,6 +339,25 @@ window.Handlers = {
                 $form.find('[data-autofill="' + field + '"]').val($el.find('[value=' + val + ']').attr('data-value-' + field));
             });
             
+        }
+    },
+    submit: {
+        'addNewOperation': function()
+        {
+            $this = $(this);
+            var description = $this.find('[name="description"]').val();
+            if (!description)
+            {
+                alert('');
+            }
+            var csrf = $.cookie('csrfToken');
+            $.post('/operations', {
+                'description': description,
+                '_csrf': csrf
+            }, function(operation){
+
+            });
+            return false;
         }
     }
 };

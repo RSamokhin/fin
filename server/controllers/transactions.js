@@ -21,11 +21,15 @@ accounts.validateAdd = function * ()
     this.req.checkBody('toSubjectId').optional().trim().toInt();
     this.req.checkBody('fromSubjectId').optional().trim().toInt();
     this.req.checkBody('TransactionTypeId').notEmpty().trim().toInt();
-    this.req.checkBody('OperationId').notEmpty().trim().toInt();
+    if (this.req.request.body['OperationId'] !== undefined)
+        this.req.checkBody('OperationId').notEmpty().trim().toInt();
+    else
+        this.req.checkBody('description').notEmpty().trim();
     yield this.validateRefExist(models.Account, 'toAccountId', this.req.request.body['toAccountId']);
     yield this.validateRefExist(models.Account, 'fromAccountId', this.req.request.body['fromAccountId']);
     yield this.validateRefExist(models.TransactionType, 'TransactionTypeId', this.req.request.body['TransactionTypeId']);
-    yield this.validateRefExist(models.Operation, 'OperationId', this.req.request.body['OperationId']);
+    if (this.req.request.body['OperationId'] !== undefined)
+        yield this.validateRefExist(models.Operation, 'OperationId', this.req.request.body['OperationId']);
     if (!isNaN(this.req.request.body['toSubjectId']))
         yield this.validateRefExist(models.Subject, 'toSubjectId', this.req.request.body['toSubjectId']);
     if (!isNaN(this.req.request.body['fromSubjectId']))
@@ -43,8 +47,19 @@ accounts.extractAddData = function(body)
         toAccountId: body['toAccountId'],
         fromAccountId: body['fromAccountId'],
         TransactionTypeId: body['TransactionTypeId'],
-        OperationId: body['OperationId']
+        OperationId: body['OperationId'],
+        description: body['description']
     };
+    if (body['OperationId'] !== undefined)
+    {
+        data['OperationId'] = body['OperationId'];
+    }
+    else
+    {
+        data['Operation'] = {
+            description: body['description']
+        }
+    }
     if (!isNaN(body['fromSubjectId']))
         data['fromSubjectId'] = body['fromSubjectId'];
     if (!isNaN(body['toSubjectId']))
@@ -52,6 +67,13 @@ accounts.extractAddData = function(body)
 
     return data;
 };
+accounts.getCreateOptions = function()
+{
+    return {
+        include: [models.Operation]
+    };
+};
+
 accounts.registerRoutes(router);
 
 module.exports.registerApp = function(app)

@@ -3,12 +3,12 @@ script(id="transactions-add", type="text/x-handlebars-template")
         class="transactionsAdd",
         title="Добавление транзакции"
     )
-        form(action='/transactions')
+        form(action='/transactions' data-bind-submit='addNewOperation')
             div Новая транзакция
             fieldset
                 label Описание
                     br
-                    textarea(rows="4", name="comments", placeholder='Описание', style="width: 100%")
+                    textarea(rows="4", name="description", placeholder='Описание', style="width: 100%")
             fieldset
                 label Тип транзакции
                 select(
