@@ -73,6 +73,12 @@ accounts.getCreateOptions = function()
         include: [models.Operation]
     };
 };
+//accounts.afterCreate = function(data, transaction, object)
+//{
+//    var operation =
+//    object.root
+//    return object;
+//};
 
 accounts.registerRoutes(router);
 

@@ -68,12 +68,13 @@ module.exports = {
             return;
         }
         var data = this.extractAddData(this.req.request.body);
-        var record = yield this.model.create(data, this.getCreateOptions());
-        this.req.body = record.toJSON();
+        //var record = yield this.model.create(data, this.getCreateOptions());
 
-        //var record = yield models.sequelize.transaction(function(t){
-        //    return this.model.create(data).then(this.afterCreate.bind(this, data, t));
-        //}.bind(this));
+        var record = yield models.sequelize.transaction(function(t){
+            return this.model.create(data, this.getCreateOptions()).
+                then(this.afterCreate.bind(this, data, t));
+        }.bind(this));
+        this.req.body = record.toJSON();
     },
     update: function * (req)
     {
@@ -109,8 +110,7 @@ module.exports = {
     },
     validateRefExist: function * (redModel, fieldName, id)
     {
-        var ref = yield redModel.findById(id);
-        if (!ref)
+        if (!id || !(yield redModel.findById(id)))
         {
             var error = {};
             error[fieldName] = 'Not exist ' + fieldName;
@@ -300,5 +300,9 @@ module.exports = {
     getCreateOptions: function()
     {
 
+    },
+    afterCreate: function(data, transaction, object)
+    {
+        return object;
     }
 };

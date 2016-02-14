@@ -4,11 +4,20 @@ script(id="transactions-add", type="text/x-handlebars-template")
         title="Добавление транзакции"
     )
         form(action='/transactions' data-bind-submit='addNewOperation')
+            fieldset
+                label
+                    input(type='checkbox', data-bind-change='toogleElementVisible', data-target-element='.operation-container' name='create_operation')
+                    span Создать операцию
+            div.operation-container(style='display: none') Новая Операция
+                fieldset
+                    label Описание
+                        br
+                        textarea(rows="4", name="description", placeholder='Описание', style="width: 100%")
             div Новая транзакция
             fieldset
-                label Описание
+                label Комментарий
                     br
-                    textarea(rows="4", name="description", placeholder='Описание', style="width: 100%")
+                    textarea(rows="4", name="comments", placeholder='Комментарий', style="width: 100%")
             fieldset
                 label Тип транзакции
                 select(
@@ -36,50 +45,61 @@ script(id="transactions-add", type="text/x-handlebars-template")
                 label От субъекта
                     input(
                         type="text", 
-                        data-name='fromSubjectId throughSubjectId',
+                        data-name='fromAccountSubjectId fromSubjectId',
                         data-name-field='id',
                         data-info-label-field='name', 
-                        data-info-label='fromSubjectIdLabel throughSubjectIdLabel', 
+                        data-info-label='fromAccountSubjectIdLabel fromSubjectIdLabel',
                         placeholder='От субъекта' 
                         class='autocomplete' 
                         data-autocomplete-url='/subjects/autocomplete'
                         data-post-init-target='[name=fromAccountId]'
                     )
-                    input(name="fromSubjectId", style='display:none;')
-                    label(data-info-label="fromSubjectIdLabel", style='display:none;color: green;')
+                    input(name="fromAccountSubjectId", style='display:none;')
+                    label(data-info-label="fromAccountSubjectIdLabel", style='display:none;color: green;')
                 
                 label Через субъекта
                 input(
                     type="text", 
-                    data-name='throughSubjectId',
+                    data-name='fromSubjectId',
                     data-name-field='id',
                     data-info-label-field='name', 
-                    data-info-label='throughSubjectIdLabel', 
+                    data-info-label='fromSubjectIdLabel',
                     placeholder='Через субъект' 
                     class='autocomplete',
-                    data-autocomplete-url='/subjects/autocomplete',
-                    data-post-init-target='[name=fromAccountId]'
+                    data-autocomplete-url='/subjects/autocomplete'
                 )
-                input(name="throughSubjectId", style='display:none;')
-                label(data-info-label="throughSubjectIdLabel", style='display:none;color: green;')
-                
+                input(name="fromSubjectId", style='display:none;')
+                label(data-info-label="fromSubjectIdLabel", style='display:none;color: green;')
+            fieldset
                 label На субъект
-                input(
-                    type="text", 
-                    data-name='toSubjectId',
+                    input(
+                    type="text",
+                    data-name='toAccountSubjectId toSubjectId',
                     data-name-field='id',
-                    data-info-label-field='name', 
-                    data-info-label='toSubjectIdLabel', 
-                    placeholder='На субъект' 
-                    class='autocomplete' 
-                    data-autocomplete-url='/subjects/autocomplete',
+                    data-info-label-field='name',
+                    data-info-label='toAccountSubjectIdLabel toSubjectIdLabel',
+                    placeholder='От субъекта'
+                    class='autocomplete'
+                    data-autocomplete-url='/subjects/autocomplete'
                     data-post-init-target='[name=toAccountId]'
+                    )
+                    input(name="toAccountSubjectId", style='display:none;')
+                    label(data-info-label="toAccountSubjectIdLabel", style='display:none;color: green;')
+
+                label Через субъект
+                input(
+                type="text",
+                data-name='toSubjectId',
+                data-name-field='id',
+                data-info-label-field='name',
+                data-info-label='toSubjectIdLabel',
+                placeholder='Через субъект'
+                class='autocomplete',
+                data-autocomplete-url='/subjects/autocomplete'
                 )
                 input(name="toSubjectId", style='display:none;')
                 label(data-info-label="toSubjectIdLabel", style='display:none;color: green;')
 
-            
-            
             
             fieldset
                 label Со счёта
@@ -92,7 +112,7 @@ script(id="transactions-add", type="text/x-handlebars-template")
                     data-vaue='id',
                     data-post-init-functions='initSelect'
                     data-query-param='SubjectId'
-                    data-query-param-value-selector='[name="throughSubjectId"]'
+                    data-query-param-value-selector='[name="fromSubjectId"]'
                 )
                 label На счёт
                 select(

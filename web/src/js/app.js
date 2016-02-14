@@ -129,8 +129,8 @@ window.Handlers = {
                 url: url,
                 data: (config && config.ajaxData) ? config.ajaxData : {},
                 success: function (data) {
+                    $el.empty();
                     data.forEach(function (el) {
-                        $el.empty();
                         var $newOption = $('<option/>')
                                             .attr({
                                                 'value': el[dataValue]
@@ -339,22 +339,45 @@ window.Handlers = {
                 $form.find('[data-autofill="' + field + '"]').val($el.find('[value=' + val + ']').attr('data-value-' + field));
             });
             
+        },
+        'toogleElementVisible': function()
+        {
+            var $this = $(this);
+            var target = $this.data('targetElement');
+            if (!target)
+                return;
+            var $form = $(this).closest('form');
+            var $element = $form.find(target);
+            if (!$element)
+                return;
+            $element.toggle(this.checked);
         }
     },
     submit: {
         'addNewOperation': function()
         {
-            $this = $(this);
-            var description = $this.find('[name="description"]').val();
-            if (!description)
-            {
-                alert('');
-            }
-            var csrf = $.cookie('csrfToken');
-            $.post('/operations', {
-                'description': description,
-                '_csrf': csrf
-            }, function(operation){
+            var $this = $(this);
+            var data = ['comments', 'TransactionTypeId', 'tax', 'fixedFormula', 'submittedAt',
+                'orderNumber', 'fromSum', 'fromAccountId', 'toAccountId'].reduce(function(prevVal, val){
+                prevVal[val] = $this.find('[name="' + val + '"]').val();
+                return prevVal;
+            }, {});
+
+            var toAccountSubject = $this.find('[name="toAccountSubjectId"]').val();
+            var toSubject = $this.find('[name="toSubjectId"]').val();
+            if (toSubject !== toAccountSubject)
+                data['toSubjectId'] = toSubject;
+
+            var fromAccountSubject = $this.find('[name="fromAccountSubjectId"]').val();
+            var fromSubject = $this.find('[name="fromSubjectId"]').val();
+            if (fromSubject !== fromAccountSubject)
+                data['fromSubjectId'] = fromSubject;
+
+            if ($this.find('[name="create_operation"]').get(0).checked)
+                data['description'] = $this.find('[name="description"]').val();
+
+            data['_csrf'] = $.cookie('csrfToken');
+            $.post('/transactions', data, function(operation){
 
             });
             return false;
