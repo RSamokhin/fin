@@ -1,0 +1,66 @@
+script(id="transactions-list", type="text/x-handlebars-template")
+    div(class='main__content-data-container' data-table-click-view='true')
+        div(style='display:none;' data-tab-config='true').
+            {
+                "dataTables": {
+                    "columns": [
+                        {"data": "id"},
+                        {"data": "tax"},
+                        {"data": "fromSum"},
+                        {"data": "fixedFormula"},
+                        {"data": "orderNumber"},
+                        {"data": "comments"},
+                        {"data": "submittedAt"},
+                        {"data": "createdAt"},
+                        {"data": "toAccountId"},
+                        {"data": "fromAccountId"},
+                        {"data": "toSubjectId"},
+                        {"data": "fromSubjectId"},
+                        {"data": "OperationId"}
+                    ],
+                    "ajax": "transactions/datatable"
+                },
+                "tabClickBindings": [{
+                    "selector": "[data-table-click-view=true] tbody tr",
+                    "event": "click",
+                    "func": "viewRowFromTableView"
+                }],
+                "viewConfig": {
+                    "getElementURL": "/transactions/{id}/",
+                    "postElementURL": "/transactions/{id}",
+                    "formTemplate": "operations-view"
+                }
+            }
+        table(data-datatables='true')
+            thead
+                tr
+                      th ID
+                      th Процент
+                      th Сумма исходная
+                      th Фиксированная формула
+                      th Номер заказа
+                      th Комментарий
+                      th Дата подтверждения
+                      th Дата создания
+                      th На счет
+                      th Со счета
+                      th На субъекта
+                      th От субъекта
+                      th Операция
+
+            tfoot
+                tr
+                    th ID
+                        th Процент
+                        th Сумма исходная
+                        th Фиксированная формула
+                        th Номер заказа
+                        th Комментарий
+                        th Дата подтверждения
+                        th Дата создания
+                        th На счет
+                        th Со счета
+                        th На субъекта
+                        th От субъекта
+                        th Операция
+
