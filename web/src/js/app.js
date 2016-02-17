@@ -81,6 +81,7 @@ window.Handlers = {
                 $tab.find('[data-datatables=true]').DataTable( {
                     "processing": true,
                     "serverSide": true,
+                    "scrollX": tabConfig.dataTables.scrollX ? tabConfig.dataTables.scrollX : false,
                     "searchDelay": 700,
                     ajax: tabConfig.dataTables.ajax,
                     columns: tabConfig.dataTables.columns

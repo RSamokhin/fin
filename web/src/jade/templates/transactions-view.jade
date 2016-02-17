@@ -26,7 +26,5 @@ script(id="operations-view", type="text/x-handlebars-template")
                 label Первая транзакция
                     input(type="text", name="rootTransactionId", class="text ui-widget-content ui-corner-all", placeholder='Первая транзакция')
                 input(type="hidden", name="_csrf")
-            fieldset
-                label Транзакции
-                include ./transactions-list
             input(type="submit", tabindex="-1", style="position:absolute; top:-1000px")
+

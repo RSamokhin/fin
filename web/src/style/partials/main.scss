@@ -13,3 +13,9 @@ body, html {
     align-content: space-between;
     box-sizing: border-box;
 }
+th, td { white-space: nowrap; }
+.ui-dialog-content {
+    & .dataTables_wrapper {
+        width: 711px;
+    }
+}
